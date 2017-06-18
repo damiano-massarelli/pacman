@@ -1,0 +1,43 @@
+32,34
+# la prima riga indica SEMPRE la dimensione: <larghezza>,<altezza>
+# X rappresenta un blocco: muro
+# . rappresenta un dot
+# + rappresenta uno magic dot (fanno diventare "hollow" i fantasmi)
+# - rappresenta un blocco vuoto
+# T rappresenta un punto di teletrasporto
+# U rappresenta un blocco di muro oltrepassabile solo se la direzione e' (0, -1): UP
+# gli spazi tra i caratteri non sono necessari, servono solo a rendere il labirinto leggibile, si possono levare
+X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X
+X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X
+X X . . . . . . . . . . . . . X X . . . . . . . . . . . . . X X
+X X . X X X X . X X X X X X . X X . X X X X X X . X X X X . X X
+X X + X X X X . X X X X X X . X X . X X X X X X . X X X X + X X
+X X . X X X X . X X X X X X . X X . X X X X X X . X X X X . X X
+X X . . . . . . . . . . . . . . . . . . . . . . . . . . . . X X
+X X . X X X X . X X . X X X X X X X X X X . X X . X X X X . X X
+X X . X X X X . X X . X X X X X X X X X X . X X . X X X X . X X
+X X . . . . . . X X . . . . . X X . . . . . X X . . . . . . X X
+X X X X X X X . X X X X X X - X X - X X X X X X . X X X X X X X
+X X X X X X X . X X X X X X - X X - X X X X X X . X X X X X X X
+X X - - - X X . X X - - - - - - - - - - - - X X . X X - - - X X
+X X X X X X X . X X - X X X U U U U X X X - X X . X X X X X X X
+X X X X X X X . X X - X X X U U U U X X X - X X . X X X X X X X
+T - - - - - - . - - - X X - - - - - - X X - - - . - - - - - - T
+X X X X X X X . X X - X X - - - - - - X X - X X . X X X X X X X
+X X X X X X X . X X - X X X X X X X X X X - X X . X X X X X X X
+X X - - - X X . X X - X X X X X X X X X X - X X . X X - - - X X
+X X - - - X X . X X - - - - - - - - - - - - X X . X X - - - X X
+X X X X X X X . X X - X X X X X X X X X X - X X . X X X X X X X
+X X X X X X X . X X - X X X X X X X X X X - X X . X X X X X X X
+X X . . . . . . . . . . . . . X X . . . . . . . . . . . . . X X
+X X . X X X X . X X X X X X . X X - X X X X X X . X X X X . X X
+X X . X X X X . X X X X X X . X X - X X X X X X . X X X X . X X
+X X + . . X X . . . . . . . . - - . . . . . . . . X X . . + X X
+X X X X . X X . X X . X X X X X X X X X X . X X . X X . X X X X 
+X X X X . X X . X X . X X X X X X X X X X . X X . X X . X X X X 
+X X . . . . . . X X . . . . . X X . . . . . X X . . . . . . X X
+X X . X X X X X X X X X X X . X X . X X X X X X X X X X X . X X
+X X . X X X X X X X X X X X . X X . X X X X X X X X X X X . X X
+X X . . . . . . . . . . . . . . . . . . . . . . . . . . . . X X
+X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X
+X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X

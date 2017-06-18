@@ -1,0 +1,48 @@
+package it.uniroma3.pacman.collision;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import it.uniroma3.pacman.ghosts.Ghost;
+import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.movingObjects.MovingObject;
+import it.uniroma3.pacman.pacman.PacMan;
+
+/**
+ * Questo trigger viene usato per scatenare la collisione tra un punto di 
+ * teletrasporto e PacMan.
+ * 
+ * @author damiano
+ */
+public class TeleportCollisionTrigger implements CollisionTrigger {
+	
+	private List<MovingObject> movingObjets;
+	private MovingObject lastCollided;
+	
+	public TeleportCollisionTrigger(PacMan pacman, List<Ghost> ghosts) {
+		movingObjets = new ArrayList<>(ghosts);
+		movingObjets.add(pacman);
+	}
+
+	@Override
+	public boolean collisionOccurred() {
+		for (MovingObject mo : movingObjets) {
+			if (SharedMazeData.getTeleportForPosition(mo.getX(), mo.getY()) != null) {
+				lastCollided = mo;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Object getFirst() {
+		return lastCollided;
+	}
+
+	@Override
+	public Object getSecond() {
+		return SharedMazeData.getTeleportForPosition(lastCollided.getX(), lastCollided.getY());
+	}
+
+}
