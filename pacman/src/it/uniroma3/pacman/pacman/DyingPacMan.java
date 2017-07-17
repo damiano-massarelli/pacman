@@ -27,7 +27,7 @@ public class DyingPacMan extends Arc {
 
 	private Timeline timeline;
 
-	public DyingPacMan(final PacmanGame maze) {
+	public DyingPacMan(final PacmanGame game) {
 		setCenterX(0);
 		setCenterY(0);
 		setRadiusX(13);
@@ -36,8 +36,8 @@ public class DyingPacMan extends Arc {
 		setLength(360);
 		setType(ArcType.ROUND);
 		setFill(Color.YELLOW);
-		maze.getGameField().getChildren().add(this);
-		createTimeline(maze);
+		game.getGameField().getChildren().add(this);
+		createTimeline(game);
 	}
 
 	private void createTimeline(PacmanGame maze) {

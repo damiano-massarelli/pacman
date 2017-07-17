@@ -36,53 +36,43 @@ public abstract class AbstractGhost extends MovingObject {
 
 
 	// the flag is set if a ghost becomes hollow
-	private boolean hollow; // = false;
+	private boolean frightened; // = false;
 	
 	private int stayInCageMovesLimit;
 
 	// the GUI of a ghost
 	@SuppressWarnings("unchecked")
 	public AbstractGhost(String name, int x, int y) {
-
 		super(x, y, new Direction(1, 0));
 
-
+		/* 
+		 * Images loading
+		 */
 		ResourceManager resMgr = ResourceManager.getInstance();
 		
 		Image defaultImage1 = new Image(resMgr.getResourceAsStream("/images/ghost"+name+"1.png"));
 		Image defaultImage2 = new Image(resMgr.getResourceAsStream("/images/ghost"+name+"2.png"));
-		
-		
-		defaultImages = new Image[] {
-				defaultImage1,
-				defaultImage2,
-				defaultImage1,
-				defaultImage2
-		};
+		defaultImages = new Image[] {defaultImage1, defaultImage2, defaultImage1, defaultImage2};
 		
 		Image hollow1 = new Image(resMgr.getResourceAsStream("/images/ghosthollow2.png"));
 		Image hollow2 = new Image(resMgr.getResourceAsStream("/images/ghosthollow3.png"));
 		Image hollow3 = new Image(ResourceManager.getInstance().getResourceAsStream("/images/ghosthollow1.png"));
-		
-		
 		hollowImages = new Image[] {hollow2, hollow1, hollow2, hollow1};
-		
-		flashHollowImages = new Image[] {
-				hollow3,
-				hollow1,
-				hollow3,
-				hollow1
-		};
+		flashHollowImages = new Image[] {hollow3, hollow1, hollow3, hollow1};
 		
 		images = defaultImages;
-		hollow = false;
-
-		// postinit block
+		
+		/*
+		 * Initial status
+		 */
+		frightened = false;
 		initialLocationX = x;
 		initialLocationY = y;
 		initialDirection = new Direction(1, 0);
-		// end postinit block
 
+		/*
+		 * ghost image
+		 */
 		ImageView ghostNode = new ImageView(defaultImage1);
 		ghostNode.xProperty().bind(getXProperty().add(-13));
 		ghostNode.yProperty().bind(getYProperty().add(-13));
@@ -93,7 +83,7 @@ public abstract class AbstractGhost extends MovingObject {
 	}
 	
 	public boolean isFrightened() {
-		return this.hollow;
+		return this.frightened;
 	}
 
 	public void resetPosition()  {
@@ -101,7 +91,8 @@ public abstract class AbstractGhost extends MovingObject {
 		setY(initialLocationY);
 	}
 	
-	/** reset the status of a ghost and place it into the cage */
+	/*
+	 *  reset the status of a ghost and place it into the cage */
 	public void resetStatus() {
 		changeToNormal();
 		stayInCageMovesLimit = STAY_IN_CAGE_DEFAULT_MOVES;
@@ -110,7 +101,7 @@ public abstract class AbstractGhost extends MovingObject {
 		
 		setDirection(new Direction(initialDirection.getDx(), initialDirection.getDy()));
 
-		hollow = false;
+		frightened = false;
 
 		currentImage.set(0);
 
@@ -124,7 +115,7 @@ public abstract class AbstractGhost extends MovingObject {
 	}
 
 	public void changeToFrightened() {
-		hollow = true;
+		frightened = true;
 
 		// switch the animation images
 		images = hollowImages;
@@ -136,7 +127,7 @@ public abstract class AbstractGhost extends MovingObject {
 	}
 	
 	public void changeToNormal() {
-		hollow = false;
+		frightened = false;
 		images = defaultImages;
 		
 		getTimeline().stop();

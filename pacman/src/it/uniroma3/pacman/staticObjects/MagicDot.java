@@ -28,7 +28,6 @@ public class MagicDot extends Dot {
 		
 		this.radius = new SimpleIntegerProperty(5);
 		
-
 		delta = -1;
 		animationRadius = 3;
 		
