@@ -1,7 +1,7 @@
 package it.uniroma3.pacman.collision;
 
+import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.maze.SharedMazeData;
-import it.uniroma3.pacman.pacman.PacMan;
 import it.uniroma3.pacman.staticObjects.Dot;
 /**
  * {@link CollisionTrigger} per individuare collisioni tra PacMan e un
@@ -19,7 +19,7 @@ public class DotCollisionTrigger implements CollisionTrigger {
 
 	@Override
 	public boolean collisionOccurred() {
-		Dot dot = SharedMazeData.getDotForPosition(pacMan.getX(), pacMan.getY());
+		Dot dot = SharedMazeData.getDotForPosition(pacMan.getPacmanView().getX(), pacMan.getPacmanView().getY());
 		return (dot != null && !dot.isEaten());
 	}
 
@@ -30,7 +30,7 @@ public class DotCollisionTrigger implements CollisionTrigger {
 
 	@Override
 	public Object getSecond() {
-		return SharedMazeData.getDotForPosition(pacMan.getX(), pacMan.getY());
+		return SharedMazeData.getDotForPosition(pacMan.getPacmanView().getX(), pacMan.getPacmanView().getY());
 	}
 
 }

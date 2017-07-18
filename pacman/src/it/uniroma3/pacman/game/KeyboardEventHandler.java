@@ -1,7 +1,7 @@
 package it.uniroma3.pacman.game;
 
+import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.movingObjects.MovingObject;
-import it.uniroma3.pacman.pacman.PacMan;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;

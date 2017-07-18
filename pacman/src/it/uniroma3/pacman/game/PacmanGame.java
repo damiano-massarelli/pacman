@@ -3,6 +3,9 @@ package it.uniroma3.pacman.game;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniroma3.pacman.characters.Ghost;
+import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionDetector;
 import it.uniroma3.pacman.collision.DotCollisionTrigger;
 import it.uniroma3.pacman.collision.TeleportCollisionTrigger;
@@ -11,11 +14,10 @@ import it.uniroma3.pacman.collision.handlers.MovingObjectTeleportCollisionHandle
 import it.uniroma3.pacman.collision.handlers.PacManDotCollisionHandler;
 import it.uniroma3.pacman.collision.handlers.PacManGhostCollisionHandler;
 import it.uniroma3.pacman.collision.handlers.PacManMagicDotCollisionHandler;
-import it.uniroma3.pacman.ghosts.Ghost;
+import it.uniroma3.pacman.graphics.PacManView;
 import it.uniroma3.pacman.maze.MazeFileLoader;
 import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
-import it.uniroma3.pacman.pacman.PacMan;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.pacman.staticObjects.Teleport;
@@ -96,7 +98,7 @@ public class PacmanGame extends VBox {
 		gameField.setFocusTraversable(true); // patweb
 		gameField.setOnKeyPressed(new KeyboardEventHandler(this));
 
-		gameField.getChildren().add(pacMan);
+		gameField.getChildren().add(pacMan.getPacmanView());
 		gameField.getChildren().addAll(ghosts);
 		
 		// insert messageBox
@@ -105,18 +107,18 @@ public class PacmanGame extends VBox {
 		
 		// Collision handlers
 		AutomaticCollisionHandler auto = new AutomaticCollisionHandler();
-		auto.addCollisionHandler(new PacManDotCollisionHandler(this), PacMan.class, Dot.class);
+		auto.addCollisionHandler(new PacManDotCollisionHandler(this), PacManView.class, Dot.class);
 		PacManGhostCollisionHandler pacManGhostCollisionHandler = new PacManGhostCollisionHandler(ghosts, this);
-		auto.addCollisionHandler(pacManGhostCollisionHandler, PacMan.class, Ghost.class);
-		auto.addCollisionHandler(new PacManMagicDotCollisionHandler(ghosts, pacManGhostCollisionHandler), PacMan.class, MagicDot.class);
+		auto.addCollisionHandler(pacManGhostCollisionHandler, PacManView.class, Ghost.class);
+		auto.addCollisionHandler(new PacManMagicDotCollisionHandler(ghosts, pacManGhostCollisionHandler), PacManView.class, MagicDot.class);
 		
 		
 		MovingObjectTeleportCollisionHandler teleportHandler = new MovingObjectTeleportCollisionHandler();
-		auto.addCollisionHandler(teleportHandler, PacMan.class, Teleport.class);
+		auto.addCollisionHandler(teleportHandler, PacManView.class, Teleport.class);
 		auto.addCollisionHandler(teleportHandler, Ghost.class, Teleport.class);
 		
 		collisionDetector = new CollisionDetector();
-		collisionDetector.addCollidable(pacMan);
+		collisionDetector.addCollidable(pacMan.getPacmanView());
 		for (Ghost g : ghosts)
 			collisionDetector.addCollidable(g);
 		collisionDetector.addTrigger(new DotCollisionTrigger(pacMan));
@@ -170,7 +172,7 @@ public class PacmanGame extends VBox {
 		waitingForStart = true;
 		messageBox.setText("GAME OVER. PRESS ANY KEY\nTO RESTART");
 		messageBox.setVisible(true);
-		pacMan.stop();
+		pacMan.getPacmanView().stop();
 		for (Ghost g : ghosts)
 			g.stop();
 	}
@@ -182,7 +184,7 @@ public class PacmanGame extends VBox {
 		messageBox.setText("LEVEL COMPLETED! PRESS ANY\nKEY TO START NEXT LEVEL");
 		messageBox.setVisible(true);
 		
-		pacMan.hide();
+		pacMan.getPacmanView().hide();
 		
 		for (Ghost g : ghosts) {
 			g.hide();
@@ -199,7 +201,7 @@ public class PacmanGame extends VBox {
 		SharedMazeData.resetDots();
 		pacMan.setScore(0);
 		pacMan.setDotEatenCount(0);
-		pacMan.resetStatus();
+		pacMan.getPacmanView().resetStatus();
 
 		pacMan.getLivesProperty().set(3);
 
@@ -213,7 +215,7 @@ public class PacmanGame extends VBox {
 	public void startNewLevel() {
 		messageBox.setVisible(false);
 		SharedMazeData.resetDots();
-		pacMan.resetStatus();
+		pacMan.getPacmanView().resetStatus();
 		pacMan.setDotEatenCount(0);
 		level.set(level.get() + 1);;
 
@@ -225,7 +227,7 @@ public class PacmanGame extends VBox {
 
 	// reset status and start a new life
 	public void startNewLife() {
-		pacMan.resetStatus();
+		pacMan.getPacmanView().resetStatus();
 
 		for (Ghost g : ghosts) {
 			g.resetStatus();

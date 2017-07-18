@@ -2,6 +2,7 @@ package it.uniroma3.pacman.ghosts;
 
 import java.util.List;
 
+import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
 import static it.uniroma3.pacman.ghosts.GhostConsts.FRIGHTENED_MOVES_LIMIT;
 import static it.uniroma3.pacman.ghosts.GhostConsts.FALSING_FRIGHTENED_MOVES_LIMIT;

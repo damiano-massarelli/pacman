@@ -2,6 +2,7 @@ package it.uniroma3.pacman.ghosts;
 
 import java.util.List;
 
+import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
 
 public abstract class AbstractMovePolicy implements MovePolicy {

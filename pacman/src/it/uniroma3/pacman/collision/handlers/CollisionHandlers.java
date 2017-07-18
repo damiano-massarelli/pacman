@@ -1,7 +1,7 @@
 package it.uniroma3.pacman.collision.handlers;
 
-import it.uniroma3.pacman.ghosts.Ghost;
-import it.uniroma3.pacman.pacman.PacMan;
+import it.uniroma3.pacman.characters.Ghost;
+import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.Teleport;
 

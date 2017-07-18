@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.ghosts;
+package it.uniroma3.pacman.graphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import it.uniroma3.resources.ResourceManager;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.MovingObject;
+import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -18,7 +19,7 @@ import javafx.scene.image.ImageView;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public abstract class AbstractGhost extends MovingObject {
+public class GhostView extends MovingObject implements OnMoveListener{
 	
 	private static final int STAY_IN_CAGE_DEFAULT_MOVES = 120;
 
@@ -39,12 +40,16 @@ public abstract class AbstractGhost extends MovingObject {
 	private boolean frightened; // = false;
 	
 	private int stayInCageMovesLimit;
+	
+	private OnTurnListener turnListener;
 
 	// the GUI of a ghost
 	@SuppressWarnings("unchecked")
-	public AbstractGhost(String name, int x, int y) {
+	public GhostView(String name, int x, int y) {
 		super(x, y, new Direction(1, 0));
 
+		addOnMoveListener(this);
+		
 		/* 
 		 * Images loading
 		 */
@@ -81,6 +86,11 @@ public abstract class AbstractGhost extends MovingObject {
 
 		getChildren().add(ghostNode);
 	}
+	
+	public void setOnTurnListener(OnTurnListener listener) {
+		this.turnListener = listener;
+	}
+	
 	
 	public boolean isFrightened() {
 		return this.frightened;
@@ -169,7 +179,6 @@ public abstract class AbstractGhost extends MovingObject {
 	}
 
 	private void move() {
-		onMove();
 		if (stayInCageMovesLimit > 0)
 			stayInCageMovesLimit--;
 		
@@ -184,7 +193,8 @@ public abstract class AbstractGhost extends MovingObject {
 			allora valuta la possibilità di girare */
 			if (availableDirs.size() - hasCurrentDirection > 1) {
 				availableDirs.remove(getDirection().getInverse());
-				this.onTurn(availableDirs);
+				if (turnListener != null)
+					turnListener.onTurn(availableDirs);
 			}
 		}
 		
@@ -193,18 +203,14 @@ public abstract class AbstractGhost extends MovingObject {
 		
 	}
 	
-	protected abstract void onMove();
-	
-	protected abstract void onTurn(List<Direction> availableDirections);
-
 
 	public void hide() {
 		setVisible(false);
 		getTimeline().stop();
 	}
 
-	@Override
-	public void moveOneStep() {
+	
+	public void onMove() {
 		move();
 		if ( currentImage.get() < (ANIMATION_STEP - 1) ) {
 			currentImage.set(currentImage.get() + 1);

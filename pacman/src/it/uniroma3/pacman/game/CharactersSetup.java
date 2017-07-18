@@ -2,13 +2,16 @@ package it.uniroma3.pacman.game;
 
 import it.uniroma3.pacman.ghosts.BlinkyChasingMovePolicy;
 import it.uniroma3.pacman.ghosts.ClydeChasingMovePolicy;
-import it.uniroma3.pacman.ghosts.Ghost;
 import it.uniroma3.pacman.ghosts.InkyChasingMovePolicy;
 import it.uniroma3.pacman.ghosts.MovePolicy;
 import it.uniroma3.pacman.ghosts.PinkyChasingMovePolicy;
 import it.uniroma3.pacman.ghosts.ScatteringMovePolicy;
-import it.uniroma3.pacman.pacman.PacMan;
+import it.uniroma3.pacman.graphics.PacManView;
+
 import static it.uniroma3.pacman.ghosts.GhostConsts.*;
+
+import it.uniroma3.pacman.characters.Ghost;
+import it.uniroma3.pacman.characters.PacMan;
 
 
 /**
@@ -19,11 +22,11 @@ import static it.uniroma3.pacman.ghosts.GhostConsts.*;
 public class CharactersSetup {
 	
 	public void setup(PacmanGame game) {
-		PacMan pacman = new PacMan();
-		game.setPacMan(pacman);
+		PacMan pacMan = new PacMan();
+		game.setPacMan(pacMan);
 		
 		MovePolicy blinkyMovePolicy = new ScatteringMovePolicy(null, TOP_RIGHT_CORNER);
-		blinkyMovePolicy.setNextPolicy(new BlinkyChasingMovePolicy(pacman, blinkyMovePolicy));
+		blinkyMovePolicy.setNextPolicy(new BlinkyChasingMovePolicy(pacMan.getPacmanView(), blinkyMovePolicy));
 		
 		Ghost ghostBlinky = new Ghost(
 				"red",
@@ -34,7 +37,7 @@ public class CharactersSetup {
 
 		
 		MovePolicy pinkyMovePolicy = new ScatteringMovePolicy(null, TOP_LEFT_CORNER);
-		pinkyMovePolicy.setNextPolicy(new PinkyChasingMovePolicy(pacman, pinkyMovePolicy));
+		pinkyMovePolicy.setNextPolicy(new PinkyChasingMovePolicy(pacMan.getPacmanView(), pinkyMovePolicy));
 		
 		Ghost ghostPinky = new Ghost(
 				"pink",
@@ -44,7 +47,7 @@ public class CharactersSetup {
 		game.addGhost(ghostPinky);
 		
 		MovePolicy inkyMovePolicy = new ScatteringMovePolicy(null, BOTTOM_RIGHT_CORNER);
-		inkyMovePolicy.setNextPolicy(new InkyChasingMovePolicy(ghostBlinky, pacman, inkyMovePolicy));
+		inkyMovePolicy.setNextPolicy(new InkyChasingMovePolicy(ghostBlinky, pacMan.getPacmanView(), inkyMovePolicy));
 
 		Ghost ghostInky = new Ghost(
 				"cyan",
@@ -54,7 +57,7 @@ public class CharactersSetup {
 		game.addGhost(ghostInky);
 
 		MovePolicy clydeMovePolicy = new ScatteringMovePolicy(null, BOTTOM_LEFT_CORNER);
-		clydeMovePolicy.setNextPolicy(new ClydeChasingMovePolicy(pacman, clydeMovePolicy));
+		clydeMovePolicy.setNextPolicy(new ClydeChasingMovePolicy(pacMan.getPacmanView(), clydeMovePolicy));
 		
 		Ghost ghostClyde = new Ghost(
 				"orange",

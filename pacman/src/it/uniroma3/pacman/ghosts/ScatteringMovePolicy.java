@@ -3,6 +3,7 @@ package it.uniroma3.pacman.ghosts;
 import java.util.Collections;
 import java.util.List;
 
+import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
 import javafx.geometry.Point2D;
 import static it.uniroma3.pacman.ghosts.GhostConsts.SCATTER_MOVES_LIMIT;

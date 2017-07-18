@@ -2,10 +2,10 @@ package it.uniroma3.pacman.collision.handlers;
 
 import java.util.List;
 
+import it.uniroma3.pacman.characters.Ghost;
+import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.game.PacmanGame;
-import it.uniroma3.pacman.ghosts.Ghost;
-import it.uniroma3.pacman.pacman.PacMan;
 import it.uniroma3.pacman.ui.ScoreText;
 
 public class PacManGhostCollisionHandler implements CollisionHandler {
@@ -34,7 +34,7 @@ public class PacManGhostCollisionHandler implements CollisionHandler {
 			pacman.setScore(pacman.getScore() + addScore);
 			
 			ghostEatenMultiplier++;
-			ScoreText score = new ScoreText(""+addScore, game.getGameField(), pacman.getX() - 10, pacman.getY());
+			ScoreText score = new ScoreText(""+addScore, game.getGameField(), pacman.getPacmanView().getX() - 10, pacman.getPacmanView().getY());
 			game.getGameField().getChildren().add(score);
 		}
 		
@@ -42,7 +42,7 @@ public class PacManGhostCollisionHandler implements CollisionHandler {
 			pacman.setLives(pacman.getLives() - 1);
 			
 			pacman.die(game);
-			pacman.stop();
+			pacman.getPacmanView().stop();
 			for (Ghost g : ghosts) {
 				g.hide();
 				g.resetPosition();

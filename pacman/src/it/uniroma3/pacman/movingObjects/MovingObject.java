@@ -1,5 +1,8 @@
 package it.uniroma3.pacman.movingObjects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.uniroma3.pacman.collision.Collidable;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.animation.Animation;
@@ -50,12 +53,16 @@ public abstract class MovingObject extends Parent implements Collidable {
 	private int radius;
 
 	private Timeline timeline;
+	
+	private List<OnMoveListener> moveListeners;
 
 	public MovingObject() {
 		this(0, 0, new Direction(0, 0));
 	}
 	
 	public MovingObject(int x, int y, Direction direction) {
+		
+		moveListeners = new ArrayList<>();
 		
 		currentImage = new SimpleIntegerProperty(0);
 
@@ -127,7 +134,14 @@ public abstract class MovingObject extends Parent implements Collidable {
 	}
 	
 
-	public abstract void moveOneStep();
+	public void addOnMoveListener(OnMoveListener listener) {
+		this.moveListeners.add(listener);
+	}
+	
+	private void moveOneStep() {
+		for (OnMoveListener l : moveListeners)
+			l.onMove();
+	}
 
 	// animation time line, moving the pacman
 

@@ -1,5 +1,6 @@
-package it.uniroma3.pacman.pacman;
+package it.uniroma3.pacman.graphics;
 
+import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.game.PacmanGame;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -23,11 +24,11 @@ import javafx.util.Duration;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class DyingPacMan extends Arc {
+public class DyingPacManView extends Arc {
 
 	private Timeline timeline;
 
-	public DyingPacMan(final PacmanGame game) {
+	public DyingPacManView(final PacmanGame game) {
 		setCenterX(0);
 		setCenterY(0);
 		setRadiusX(13);
@@ -52,7 +53,7 @@ public class DyingPacMan extends Arc {
 		KeyFrame kf2 = new KeyFrame(Duration.millis(1800), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				maze.getGameField().getChildren().remove(DyingPacMan.this);
+				maze.getGameField().getChildren().remove(DyingPacManView.this);
 				if (maze.pacMan.getLives() != 0)
 					maze.startNewLife();
 				else
