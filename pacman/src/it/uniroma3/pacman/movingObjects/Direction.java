@@ -2,56 +2,70 @@ package it.uniroma3.pacman.movingObjects;
 
 import it.uniroma3.pacman.maze.SharedMazeData;
 
-public class Direction {
-	private int dx;
-	private int dy;
-	
-	public Direction(int dx, int dy) {
-		this.dx = dx;
-		this.dy = dy;
-	}
+public enum Direction {
+	NORTH (0, -1) {
 
-	public int getDx() {
-		return dx;
-	}
-
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
-
-	public int getDy() {
-		return dy;
-	}
-
-	public void setDy(int dy) {
-		this.dy = dy;
-	}
-
-	public void setDxDy(int dx, int dy) {
-		setDx(dx);
-		setDy(dy);
+		@Override
+		public Direction getInverse() {
+			return Direction.SOUTH;
+		}
 		
-	}
+	},
 	
+	SOUTH (0, 1) {
+
+		@Override
+		public Direction getInverse() {
+			return Direction.NORTH;
+		}
+		
+	},
+	
+	EST (1, 0) {
+
+		@Override
+		public Direction getInverse() {
+			return OVEST;
+		}
+		
+	},
+	
+	OVEST (-1, 0) {
+
+		@Override
+		public Direction getInverse() {
+			return EST;
+		}
+		
+	};
+	
+	private final int dirX;
+	private final int dirY;
+	
+	private Direction(int dirX, int dirY) {
+		this.dirX = dirX;
+		this.dirY = dirY;
+	}
+
+	public int getDirX() {
+		return dirX;
+	}
+
+
+	public int getDirY() {
+		return dirY;
+	}
 	
 	public int getDeltaX() {
-		return SharedMazeData.GRID_GAP * this.dx;
+		return SharedMazeData.GRID_GAP * this.dirX;
 	}
 	
 	public int getDeltaY() {
-		return SharedMazeData.GRID_GAP * this.dy;
+		return SharedMazeData.GRID_GAP * this.dirY;
 	}
 	
-	public Direction getInverse() {
-		return new Direction(-this.getDx(), -this.getDy());
-	}
-	
-	public boolean equals(Object dir) {
-		if (dir == null) return false;
-		Direction direction = (Direction) dir;
-		return this.getDx() == direction.getDx() && this.getDy() == direction.getDy();
-	}
-	
+	public abstract Direction getInverse();
+		
 }
 
 
