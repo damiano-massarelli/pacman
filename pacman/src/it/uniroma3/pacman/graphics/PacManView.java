@@ -65,8 +65,10 @@ public class PacManView extends MovingObject implements OnMoveListener {
 	
 	private void move() {
 		//System.out.println(">> " + getX() + " " + getY());
-		setX(getX() + (int)getDirection().getDx() * MOVE_SPEED);
-		setY(getY() + (int)getDirection().getDy() * MOVE_SPEED);
+//		setX(getX() + (int)getDirection().getDx() * MOVE_SPEED);
+//		setY(getY() + (int)getDirection().getDy() * MOVE_SPEED);
+		setLayoutX(getLayoutX() + getDirection().getDeltaX() * MOVE_SPEED);
+		setLayoutY(getLayoutY() + getDirection().getDeltaY() * MOVE_SPEED);
 		
 		int nextX = getX() + SharedMazeData.GRID_GAP * getDirection().getDx();
 		int nextY = getY() + SharedMazeData.GRID_GAP * getDirection().getDy();
@@ -80,22 +82,13 @@ public class PacManView extends MovingObject implements OnMoveListener {
 	
 
 	public boolean attemptToSetDirection(Direction dir) {
-		
-		
 		if (this.getDirection().equals(dir))
 			return false;
 		
 		int nextX = (int) (getX() +  dir.getDx() * SharedMazeData.GRID_GAP); 
 		int nextY = (int) (getY() + dir.getDy() * SharedMazeData.GRID_GAP);
 		
-		boolean notOutOfBoundsX = nextX >= 0 && nextX < SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP;
-		boolean notOutOfBuondsY = nextY >= 0 && nextY < SharedMazeData.getGridHeight() * SharedMazeData.GRID_GAP;
-		System.out.println("nx " + nextX +" x " + notOutOfBoundsX + " y " + notOutOfBuondsY + 
-				" %x" + (nextX % SharedMazeData.GRID_GAP == 0) + " %y " +  (nextY % SharedMazeData.GRID_GAP == 0));
-		
-		
 		int nextCollision = SharedMazeData.getDataForPosition(nextX, nextY);
-		System.out.println(nextCollision);
 		if (nextCollision == SharedMazeData.BLOCK || nextCollision == SharedMazeData.CAGE_BOUNDARY_LIMIT || nextCollision == SharedMazeData.INVALID_POINT_IN_MAZE)
 			return false;
 		

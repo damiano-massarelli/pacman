@@ -20,7 +20,9 @@ public class TeleportCollisionTrigger implements CollisionTrigger {
 	private MovingObject lastCollided;
 	
 	public TeleportCollisionTrigger(PacMan pacman, List<Ghost> ghosts) {
-		movingObjets = new ArrayList<>(ghosts);
+		movingObjets = new ArrayList<>();
+		for (Ghost g : ghosts)
+			movingObjets.add(g.getGhostView());
 		movingObjets.add(pacman.getPacmanView());
 	}
 

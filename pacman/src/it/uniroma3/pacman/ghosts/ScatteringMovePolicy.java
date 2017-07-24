@@ -22,7 +22,7 @@ public class ScatteringMovePolicy extends AbstractMovePolicy {
 
 	@Override
 	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
-		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getPosition(), scatterTarget);
+		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getGhostView().getPosition(), scatterTarget);
 		return Collections.min(availableDirections, comparatore);
 	}
 

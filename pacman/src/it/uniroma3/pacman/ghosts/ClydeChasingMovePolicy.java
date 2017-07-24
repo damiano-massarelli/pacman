@@ -27,10 +27,10 @@ public class ClydeChasingMovePolicy extends AbstractMovePolicy {
 	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
 		Direction direzioneScelta = null;
 		
-		double distance = ghost.getPosition().distance(pacManView.getPosition());
+		double distance = ghost.getGhostView().getPosition().distance(pacManView.getPosition());
 		
 		if (distance > SOGLIA_COMPORTAMENTO_BLINKY) {
-			ComparatoreDirezione comparatoreDirezione = new ComparatoreDirezione(ghost.getPosition(), pacManView.getPosition());
+			ComparatoreDirezione comparatoreDirezione = new ComparatoreDirezione(ghost.getGhostView().getPosition(), pacManView.getPosition());
 			direzioneScelta = Collections.min(availableDirections, comparatoreDirezione);
 		}
 		else {

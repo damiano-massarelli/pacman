@@ -4,17 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniroma3.pacman.collision.Collidable;
+import it.uniroma3.pacman.graphics.View;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
@@ -25,11 +21,7 @@ import javafx.util.Duration;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public abstract class MovingObject extends Parent implements Collidable {
-	//public mixin class MovingObject {
-
-	private static final int DEFAULT_RADIUS = 11;
-	
+public abstract class MovingObject extends View implements Collidable {
 	protected static final int ANIMATION_STEP = 4;
 	protected static final int MOVE_SPEED = SharedMazeData.GRID_GAP / ANIMATION_STEP;
 
@@ -43,16 +35,14 @@ public abstract class MovingObject extends Parent implements Collidable {
 
 	protected int state;
 
-	protected IntegerProperty currentImage;
-	protected Image[] images;
-	protected ObjectBinding imageBinding;
+	private int currentImage;
+	private Image[] images;
 
 	private Direction direction;
-	
-	private IntegerProperty x, y;
-	private int radius;
 
 	private Timeline timeline;
+	private int tickElapsed = 0;
+	private int tickPerImage = ANIMATION_STEP;
 	
 	private List<OnMoveListener> moveListeners;
 
@@ -61,69 +51,15 @@ public abstract class MovingObject extends Parent implements Collidable {
 	}
 	
 	public MovingObject(int x, int y, Direction direction) {
-		
+		super(x, y);
 		moveListeners = new ArrayList<>();
 		
-		currentImage = new SimpleIntegerProperty(0);
+		currentImage = 0;
 
-		imageBinding = new ObjectBinding() {
-
-			{
-				super.bind(currentImage);
-			}
-
-			@Override
-			protected Image computeValue() {
-				return images[currentImage.get()];
-			}
-		};
-
-		
 		this.direction = direction;
-		this.x = new SimpleIntegerProperty(x);
-		this.y = new SimpleIntegerProperty(y);
-		
-		this.radius = DEFAULT_RADIUS;
-		
 		timeline = createTimeline();
 	}
 	
-	public int getX() {
-		return x.get();
-	}
-	
-	public int getY() {
-		return y.get();
-	}
-	
-	public Point2D getPosition() {
-		return new Point2D(getX(), getY());
-	}
-	
-	@Override
-	public int getRadius() {
-		return radius;
-	}
-	
-	public void setRadius(int radius) {
-		this.radius = radius;
-	}
-	
-	public void setX(int x) {
-		this.x.set(x);
-	}
-	
-	public void setY(int y) {
-		this.y.set(y);
-	}
-	
-	public IntegerProperty getXProperty() {
-		return this.x;
-	}
-	
-	public IntegerProperty getYProperty() {
-		return this.y;
-	}
 	
 	public Direction getDirection() {
 		return this.direction;
@@ -133,17 +69,42 @@ public abstract class MovingObject extends Parent implements Collidable {
 		this.direction = dir;
 	}
 	
+	public void setImages(Image[] images) {
+		this.images = images;
+		this.currentImage = 0;
+	}
+	
+
+	public int getCurrentImage() {
+		return currentImage;
+	}
+
+	public void setCurrentImage(int currentImage) {
+		this.currentImage = currentImage;
+	}
+
+	public int getTickPerImage() {
+		return tickPerImage;
+	}
+
+	public void setTickPerImage(int tickPerImage) {
+		this.tickPerImage = tickPerImage;
+	}
 
 	public void addOnMoveListener(OnMoveListener listener) {
 		this.moveListeners.add(listener);
 	}
 	
 	private void moveOneStep() {
+		tickElapsed++;
+		if (tickElapsed >= tickPerImage) {
+			currentImage = (currentImage + 1) % images.length;
+			setImage(images[currentImage]);
+		}
+			
 		for (OnMoveListener l : moveListeners)
 			l.onMove();
 	}
-
-	// animation time line, moving the pacman
 
 	private Timeline createTimeline() {
 		timeline = new Timeline();

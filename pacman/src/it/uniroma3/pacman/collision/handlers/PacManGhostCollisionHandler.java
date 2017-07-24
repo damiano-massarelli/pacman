@@ -26,9 +26,9 @@ public class PacManGhostCollisionHandler implements CollisionHandler {
 		PacMan pacman = (PacMan) o1;
 		Ghost ghost = (Ghost) o2;
 		
-		if (ghost.isFrightened()) {
-			ghost.resetPosition();
-			ghost.resetStatus();
+		if (ghost.getGhostView().isFrightened()) { //TODO: da cambiare
+			ghost.getGhostView().resetPosition();
+			ghost.getGhostView().resetStatus();
 			int addScore =  (int) Math.pow(2, ghostEatenMultiplier) * 100;
 			
 			pacman.setScore(pacman.getScore() + addScore);
@@ -44,8 +44,8 @@ public class PacManGhostCollisionHandler implements CollisionHandler {
 			pacman.die(game);
 			pacman.getPacmanView().stop();
 			for (Ghost g : ghosts) {
-				g.hide();
-				g.resetPosition();
+				g.getGhostView().hide();
+				g.getGhostView().resetPosition();
 			}	
 		}
 	}

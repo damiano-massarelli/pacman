@@ -5,6 +5,7 @@ import it.uniroma3.pacman.graphics.DyingPacManView;
 import it.uniroma3.pacman.graphics.PacManView;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.MovingObject;
+import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -15,30 +16,18 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class PacMan {
+public class PacMan implements OnMoveListener {
 	/**
 	 * if score/10'000 is different from lastScoreInTenThausands
 	 * add a life to pacman
 	 */
 	private int lastScoreInTenThousands = 0;
 	
-	/**
-	 * The number of dots eaten.
-	 */
 	private int dotEatenCount;
-	
-	/**
-	 * PacMan lives
-	 */
 	
 	private SimpleIntegerProperty lives;
 
-	/**
-	 * Score of the game.
-	 */
 	private SimpleIntegerProperty score;
-
-	
 
 	/**
 	 * Buffer to keep the keyboard input.
@@ -65,7 +54,7 @@ public class PacMan {
 		keyboardBuffer = -1;
 		
 		this.pacmanView = new PacManView();
-		
+		pacmanView.addOnMoveListener(this);
 	}
 	
 	public int getDotEatenCount() {
@@ -104,13 +93,13 @@ public class PacMan {
 		return lives;
 	}
 
-	
-
 	/**
 	 * Handle keyboard input.
 	 */
 	private void handleKeyboardInput() {
 
+		System.out.println(":)))");
+		
 		if (keyboardBuffer < 0) {
 			return;
 		}
@@ -132,7 +121,6 @@ public class PacMan {
 
 	public void setKeyboardBuffer(int k) {
 		keyboardBuffer = k;
-		handleKeyboardInput();
 	}
 	
 	
@@ -146,6 +134,11 @@ public class PacMan {
 		pacmanView.hide();
 		DyingPacManView dyingPacMan = new DyingPacManView(game);
 		dyingPacMan.startAnimation(pacmanView.getX(), pacmanView.getY());
+	}
+
+	@Override
+	public void onMove() {
+		handleKeyboardInput();
 	}
 
 }

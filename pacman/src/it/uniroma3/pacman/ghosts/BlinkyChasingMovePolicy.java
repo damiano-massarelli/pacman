@@ -21,7 +21,7 @@ public class BlinkyChasingMovePolicy extends AbstractMovePolicy {
 
 	@Override
 	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
-		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getPosition(), pacManView.getPosition());
+		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getGhostView().getPosition(), pacManView.getPosition());
 		return Collections.min(availableDirections, comparatore); // c'e' sempre almeno una direzione
 	}
 

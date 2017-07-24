@@ -44,5 +44,10 @@ public class Ghost implements OnTurnListener, OnMoveListener {
 	public void onMove() {
 		this.movePolicy = movePolicy.nextPolicy();
 	}
+	
+	
+	public GhostView getGhostView() {
+		return ghostView;
+	}
 
 }

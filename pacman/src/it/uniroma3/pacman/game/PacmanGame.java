@@ -99,7 +99,8 @@ public class PacmanGame extends VBox {
 		gameField.setOnKeyPressed(new KeyboardEventHandler(this));
 
 		gameField.getChildren().add(pacMan.getPacmanView());
-		gameField.getChildren().addAll(ghosts);
+		for (Ghost g:ghosts)
+			gameField.getChildren().add(g.getGhostView());
 		
 		// insert messageBox
 		gameField.getChildren().add(messageBox);
@@ -120,7 +121,7 @@ public class PacmanGame extends VBox {
 		collisionDetector = new CollisionDetector();
 		collisionDetector.addCollidable(pacMan.getPacmanView());
 		for (Ghost g : ghosts)
-			collisionDetector.addCollidable(g);
+			collisionDetector.addCollidable(g.getGhostView());
 		collisionDetector.addTrigger(new DotCollisionTrigger(pacMan));
 		collisionDetector.addTrigger(new TeleportCollisionTrigger(pacMan, ghosts));
 		collisionDetector.addCollisionHandler(auto);
@@ -174,7 +175,7 @@ public class PacmanGame extends VBox {
 		messageBox.setVisible(true);
 		pacMan.getPacmanView().stop();
 		for (Ghost g : ghosts)
-			g.stop();
+			g.getGhostView().stop();
 	}
 	
 	public void levelCompleted() {
@@ -187,7 +188,7 @@ public class PacmanGame extends VBox {
 		pacMan.getPacmanView().hide();
 		
 		for (Ghost g : ghosts) {
-			g.hide();
+			g.getGhostView().hide();
 		}
 			
 	}
@@ -206,7 +207,7 @@ public class PacmanGame extends VBox {
 		pacMan.getLivesProperty().set(3);
 
 		for (Ghost g : ghosts) {
-			g.resetStatus();
+			g.getGhostView().resetStatus();
 		}
 
 	}
@@ -220,7 +221,7 @@ public class PacmanGame extends VBox {
 		level.set(level.get() + 1);;
 
 		for (Ghost g : ghosts) {
-			g.resetStatus();
+			g.getGhostView().resetStatus();
 		}
 
 	}
@@ -230,7 +231,7 @@ public class PacmanGame extends VBox {
 		pacMan.getPacmanView().resetStatus();
 
 		for (Ghost g : ghosts) {
-			g.resetStatus();
+			g.getGhostView().resetStatus();
 		}
 	}
 
