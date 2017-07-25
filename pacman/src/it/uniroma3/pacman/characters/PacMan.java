@@ -4,9 +4,10 @@ import it.uniroma3.pacman.game.PacmanGame;
 import it.uniroma3.pacman.graphics.DyingPacManView;
 import it.uniroma3.pacman.graphics.PacManView;
 import it.uniroma3.pacman.movingObjects.Direction;
-import it.uniroma3.pacman.movingObjects.MovingObject;
+import it.uniroma3.pacman.movingObjects.AnimatedView;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.input.KeyCode;
 
 /**
  * PacMan.fx created on 2009-1-1, 11:50:58 <br>
@@ -32,7 +33,7 @@ public class PacMan implements OnMoveListener {
 	/**
 	 * Buffer to keep the keyboard input.
 	 */
-	private int keyboardBuffer;
+	private KeyCode keyboardBuffer;
 
 	/**
 	 * The pacman graphics
@@ -51,7 +52,7 @@ public class PacMan implements OnMoveListener {
 		score = new SimpleIntegerProperty(0);   
 		lives = new SimpleIntegerProperty(3);
 		
-		keyboardBuffer = -1;
+		keyboardBuffer = null;
 		
 		this.pacmanView = new PacManView();
 		pacmanView.addOnMoveListener(this);
@@ -96,31 +97,27 @@ public class PacMan implements OnMoveListener {
 	/**
 	 * Handle keyboard input.
 	 */
-	private void handleKeyboardInput() {
-
-		System.out.println(":)))");
-		
-		if (keyboardBuffer < 0) {
+	private void handleKeyboardInput() {		
+		if (keyboardBuffer == null) {
 			return;
 		}
 		Direction newDirection = null;
-		if (keyboardBuffer == MovingObject.MOVE_LEFT)
+		if (keyboardBuffer == KeyCode.LEFT)
 			newDirection = Direction.WEST;
-		else if (keyboardBuffer == MovingObject.MOVE_RIGHT)
+		else if (keyboardBuffer == KeyCode.RIGHT)
 			newDirection = Direction.EST;
-		else if (keyboardBuffer == MovingObject.MOVE_UP)
+		else if (keyboardBuffer == KeyCode.UP)
 			newDirection = Direction.NORTH;
-		else if (keyboardBuffer == MovingObject.MOVE_DOWN)
+		else if (keyboardBuffer == KeyCode.DOWN)
 			newDirection = Direction.SOUTH;
 		
-		if (pacmanView.attemptToSetDirection(newDirection) == true);
-			//imageDirection.set(keyboardBuffer); // TODO: da cambiare se cambia handleKeyboardInput
+		pacmanView.attemptToSetDirection(newDirection);
 
 	}
 
 
-	public void setKeyboardBuffer(int k) {
-		keyboardBuffer = k;
+	public void setKeyboardBuffer(KeyCode code) {
+		keyboardBuffer = code;
 	}
 	
 	

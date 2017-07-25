@@ -6,7 +6,6 @@ import java.util.List;
 import it.uniroma3.pacman.collision.Collidable;
 import it.uniroma3.pacman.graphics.View;
 import it.uniroma3.pacman.maze.SharedMazeData;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -22,19 +21,10 @@ import javafx.util.Duration;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public abstract class MovingObject extends View implements Collidable {
+public abstract class AnimatedView extends View implements Collidable {
 	protected static final int ANIMATION_STEP = 4;
 	protected static final int MOVE_SPEED = SharedMazeData.GRID_GAP / ANIMATION_STEP;
 
-	protected static final int MOVING = 1;
-	protected static final int STOPPED = 0;
-
-	public static final int MOVE_LEFT = 0;
-	public static final int MOVE_UP = 1;
-	public static final int MOVE_RIGHT = 2;
-	public static final int MOVE_DOWN = 3;
-
-	protected int state;
 
 	private int currentImageIndex;
 	private Image[] images;
@@ -44,14 +34,15 @@ public abstract class MovingObject extends View implements Collidable {
 	private Timeline timeline;
 	private int tickElapsed = 0;
 	private int tickPerImage = ANIMATION_STEP;
+	private boolean paused = false;
 	
 	private List<OnMoveListener> moveListeners;
 
-	public MovingObject() {
+	public AnimatedView() {
 		this(null, 0, 0);
 	}
 	
-	public MovingObject(Image[] images, int x, int y) {
+	public AnimatedView(Image[] images, int x, int y) {
 		super(x, y);
 		moveListeners = new ArrayList<>();
 		
@@ -102,7 +93,7 @@ public abstract class MovingObject extends View implements Collidable {
 	
 	private void moveOneStep() {
 		tickElapsed++;
-		if (tickElapsed >= tickPerImage && images != null) {
+		if (tickElapsed >= tickPerImage && images != null && !paused) {
 			currentImageIndex = (currentImageIndex + 1) % images.length;
 			imageView.setImage(images[currentImageIndex]);
 		}
@@ -131,24 +122,31 @@ public abstract class MovingObject extends View implements Collidable {
 		return timeline;
 	}
 
+	public void pauseImageAnimation(int imageIndex) {
+		pauseImageAnimation();
+		setCurrentImageIndex(imageIndex);
+	}
+	
+	public void pauseImageAnimation() {
+		paused = true;
+	}
+	
+	public void playImageAnimation(int imageIndex) {
+		playImageAnimation();
+		setCurrentImageIndex(imageIndex);
+	}
+	
+	public void playImageAnimation() {
+		paused = false;
+	}
+	
 	public void stop() {
-		timeline.stop();
+		this.timeline.stop();
 	}
-
-	public void pause() {
-		timeline.pause();
-	}
-
+	
 	public void start() {
-		timeline.play();
+		this.timeline.play();
 	}
-
-	public boolean isRunning() {
-		return timeline.getStatus() == Animation.Status.RUNNING;
-	}
-
-	public boolean isPaused() {
-		return timeline.getStatus() == Animation.Status.PAUSED;
-	}
+	
 
 }

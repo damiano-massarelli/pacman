@@ -6,7 +6,6 @@ import it.uniroma3.pacman.ghosts.InkyChasingMovePolicy;
 import it.uniroma3.pacman.ghosts.MovePolicy;
 import it.uniroma3.pacman.ghosts.PinkyChasingMovePolicy;
 import it.uniroma3.pacman.ghosts.ScatteringMovePolicy;
-import it.uniroma3.pacman.graphics.PacManView;
 
 import static it.uniroma3.pacman.ghosts.GhostConsts.*;
 

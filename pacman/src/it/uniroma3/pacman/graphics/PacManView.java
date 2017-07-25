@@ -2,19 +2,18 @@ package it.uniroma3.pacman.graphics;
 
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
-import it.uniroma3.pacman.movingObjects.MovingObject;
+import it.uniroma3.pacman.movingObjects.AnimatedView;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.resources.ResourceManager;
-import javafx.beans.binding.IntegerBinding;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-public class PacManView extends MovingObject implements OnMoveListener {
-	public static int START_POSITION_X = 256;
-	public static int START_POSITION_Y = 400;
+public class PacManView extends AnimatedView implements OnMoveListener {
+	private static final Point2D INITIAL_POSITION = new Point2D(256, 400);
 	
 	private Direction direction;
+	
+	private boolean stopped;
 
 	/**
 	 * Angles of rotating the images.
@@ -22,9 +21,11 @@ public class PacManView extends MovingObject implements OnMoveListener {
 	private static final int[] ROTATION_DEGREE = new int[] {0, 90, 180, 270};
 
 	public PacManView() {
-		super(null, START_POSITION_X, START_POSITION_Y);
+		super();
 		
+		setPosition(INITIAL_POSITION);
 		setDirection(Direction.WEST);
+		stopped = true;
 		
 		addOnMoveListener(this);
 
@@ -51,18 +52,18 @@ public class PacManView extends MovingObject implements OnMoveListener {
 
 	@Override
 	public void onMove() {
-		System.out.println("x: " + getX() + " y: " + getY());
-		if (state == STOPPED) return;
+		if (stopped) return;
 		setX(getX() + getDirection().getDirX() * MOVE_SPEED);
 		setY(getY() + getDirection().getDirY() * MOVE_SPEED);
 		
-		int nextX = (int )getX() + getDirection().getDeltaX();
-		int nextY = (int)getY() + getDirection().getDeltaY();
+		int nextX = getX() + getDirection().getDeltaX();
+		int nextY = getY() + getDirection().getDeltaY();
 		
 		int nextCollision = SharedMazeData.getDataForPosition(nextX, nextY);
 		
 		if (nextCollision == SharedMazeData.BLOCK || nextCollision == SharedMazeData.CAGE_BOUNDARY_LIMIT) {
-			state = STOPPED;
+			stopped = true;
+			pauseImageAnimation(0);
 		}
 	}
 	
@@ -79,41 +80,27 @@ public class PacManView extends MovingObject implements OnMoveListener {
 			return false;
 		
 		this.setDirection(dir);
-		state = MOVING;
+		stopped = false;
 		
+		playImageAnimation();
 		return true;
 	}
 	
-//	@Override
-//	public void onMove() {
-//		// handle keyboard input only when Pac-Man is at a point on the grid
-//		if (currentImage.get() == 0) {
-//			//handleKeyboardInput();
-//		}
-//		if (state == MOVING) {
-//			move();
-//			// switch to the image of the next frame
-//			if (currentImage.get() < ANIMATION_STEP - 1) 
-//				currentImage.set(currentImage.get() + 1);
-//			else
-//				currentImage.set(0);
-//		}
-//	}
 
 	/**
 	 * Place Pac-Man at the startup position for a new game.
 	 */
 	public void resetStatus() {
-		state = MOVING;
+		stopped = false;
 		this.direction = Direction.WEST;
 
 		setCurrentImageIndex(0);
 
-		setX(START_POSITION_X);
-		setY(START_POSITION_Y);
-
-		setVisible(true); // patweb: Added because Pac-Man is invisible at start of new life.
+		setPosition(INITIAL_POSITION);
+		
+		setVisible(true);
 		start();
+		playImageAnimation();
 	}
 	
 	
