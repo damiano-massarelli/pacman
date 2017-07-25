@@ -3,11 +3,30 @@ package it.uniroma3.pacman.movingObjects;
 import it.uniroma3.pacman.maze.SharedMazeData;
 
 public enum Direction {
+	
+	WEST (-1, 0) {
+
+		@Override
+		public Direction getInverse() {
+			return EST;
+		}
+		
+	},
+	
 	NORTH (0, -1) {
 
 		@Override
 		public Direction getInverse() {
 			return Direction.SOUTH;
+		}
+		
+	},
+	
+	EST (1, 0) {
+
+		@Override
+		public Direction getInverse() {
+			return WEST;
 		}
 		
 	},
@@ -19,25 +38,15 @@ public enum Direction {
 			return Direction.NORTH;
 		}
 		
-	},
-	
-	EST (1, 0) {
-
-		@Override
-		public Direction getInverse() {
-			return OVEST;
-		}
-		
-	},
-	
-	OVEST (-1, 0) {
-
-		@Override
-		public Direction getInverse() {
-			return EST;
-		}
-		
 	};
+	
+	
+	public static Direction fromXY(int x, int y) {
+		for (Direction dir : values())
+			if (dir.getDirX() == x && dir.getDirY() == y)
+				return dir;
+		return null;
+	}
 	
 	private final int dirX;
 	private final int dirY;

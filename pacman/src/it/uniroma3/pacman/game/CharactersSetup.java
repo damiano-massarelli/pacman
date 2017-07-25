@@ -24,6 +24,7 @@ public class CharactersSetup {
 	public void setup(PacmanGame game) {
 		PacMan pacMan = new PacMan();
 		game.setPacMan(pacMan);
+	
 		
 		MovePolicy blinkyMovePolicy = new ScatteringMovePolicy(null, TOP_RIGHT_CORNER);
 		blinkyMovePolicy.setNextPolicy(new BlinkyChasingMovePolicy(pacMan.getPacmanView(), blinkyMovePolicy));

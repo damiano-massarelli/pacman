@@ -1,34 +1,66 @@
 package it.uniroma3.pacman.graphics;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
+import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 
-/**
- * This class is used to create visual objects based on an image in fact it extends {@link ImageView}
- * adding some useful methods. Keep in mind that X and Y refer to the top-left corner but {@link View#getCenterPosition()} can
- * be used to get the position of the center.
- * @author damianomassarelli
- *
- */
-public class View extends ImageView {
-	DoubleProperty x, y;
+public class View extends Parent {
+	IntegerProperty xProperty, yProperty;
+	
 
-	public View(double x, double y) {
+	public View(int x, int y) {
 		super();
-		setX(x);
-		setY(y);
+		this.xProperty = new SimpleIntegerProperty(x);
+		this.yProperty = new SimpleIntegerProperty(y);
+	}
+
+	public IntegerProperty getxProperty() {
+		return xProperty;
+	}
+
+	public void setxProperty(IntegerProperty xProperty) {
+		this.xProperty = xProperty;
+	}
+
+	public IntegerProperty getyProperty() {
+		return yProperty;
+	}
+
+	public void setyProperty(IntegerProperty yProperty) {
+		this.yProperty = yProperty;
+	}
+
+	public int getX() {
+		return xProperty.get();
+	}
+
+	public void setX(int x) {
+		this.xProperty.set(x);;
+	}
+
+	public int getY() {
+		return yProperty.get();
+	}
+
+	public void setY(int y) {
+		this.yProperty.set(y);
 	}
 	
 	public Point2D getPosition() {
 		return new Point2D(getX(), getY());
 	}
 	
-	public Point2D getCenterPosition() {
-		double cx = getX() + getImage().getWidth()/2;
-		double cy = getY() + getImage().getHeight()/2;
-		return new Point2D(cx, cy);
+	public void setPosition(Point2D position) {
+		setX((int)position.getX());
+		setY((int)position.getY());
 	}
+	
+	public void bindImageViewCenterPositionToXY(ImageView img) {
+		img.xProperty().bind(xProperty.subtract( (img.getImage().widthProperty()).divide(2))  ) ;
+		img.yProperty().bind(yProperty.subtract( (img.getImage().heightProperty()).divide(2))  ) ;
+	}
+	
 	
 }

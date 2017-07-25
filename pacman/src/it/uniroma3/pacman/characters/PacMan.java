@@ -105,13 +105,13 @@ public class PacMan implements OnMoveListener {
 		}
 		Direction newDirection = null;
 		if (keyboardBuffer == MovingObject.MOVE_LEFT)
-			newDirection = new Direction(-1, 0);
+			newDirection = Direction.WEST;
 		else if (keyboardBuffer == MovingObject.MOVE_RIGHT)
-			newDirection = new Direction(1, 0);
+			newDirection = Direction.EST;
 		else if (keyboardBuffer == MovingObject.MOVE_UP)
-			newDirection = new Direction(0, -1);
+			newDirection = Direction.NORTH;
 		else if (keyboardBuffer == MovingObject.MOVE_DOWN)
-			newDirection = new Direction(0, 1);
+			newDirection = Direction.SOUTH;
 		
 		if (pacmanView.attemptToSetDirection(newDirection) == true);
 			//imageDirection.set(keyboardBuffer); // TODO: da cambiare se cambia handleKeyboardInput

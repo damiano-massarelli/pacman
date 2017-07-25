@@ -8,6 +8,7 @@ import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.MovingObject;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -31,8 +32,7 @@ public class GhostView extends MovingObject implements OnMoveListener{
 	private final Image[] flashHollowImages;
 
 	// initial direction and position of a ghost, used in status reset
-	private  int initialLocationX;
-	private final int initialLocationY;
+	private Point2D initialPosition;
 	private Direction initialDirection;
 
 
@@ -41,17 +41,18 @@ public class GhostView extends MovingObject implements OnMoveListener{
 	
 	private int stayInCageMovesLimit;
 	
+	private Direction direction;
+	
 	private OnTurnListener turnListener;
 
 	// the GUI of a ghost
-	@SuppressWarnings("unchecked")
 	public GhostView(String name, int x, int y) {
-		super(x, y, new Direction(1, 0));
+		super(null, x, y);
 
 		addOnMoveListener(this);
 		
 		/* 
-		 * Images loading
+		 * Image loading
 		 */
 		ResourceManager resMgr = ResourceManager.getInstance();
 		
@@ -65,26 +66,18 @@ public class GhostView extends MovingObject implements OnMoveListener{
 		hollowImages = new Image[] {hollow2, hollow1, hollow2, hollow1};
 		flashHollowImages = new Image[] {hollow3, hollow1, hollow3, hollow1};
 		
-		images = defaultImages;
+		setImages(defaultImages);
+		
+		direction = Direction.EST;
+		
 		
 		/*
 		 * Initial status
 		 */
 		frightened = false;
-		initialLocationX = x;
-		initialLocationY = y;
-		initialDirection = new Direction(1, 0);
+		initialDirection = direction;
+		initialPosition = new Point2D(x, y);
 
-		/*
-		 * ghost image
-		 */
-		ImageView ghostNode = new ImageView(defaultImage1);
-		ghostNode.xProperty().bind(getXProperty().add(-13));
-		ghostNode.yProperty().bind(getYProperty().add(-13));
-		ghostNode.imageProperty().bind(imageBinding);
-		ghostNode.setCache(true);
-
-		getChildren().add(ghostNode);
 	}
 	
 	public void setOnTurnListener(OnTurnListener listener) {
@@ -92,13 +85,20 @@ public class GhostView extends MovingObject implements OnMoveListener{
 	}
 	
 	
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
 	public boolean isFrightened() {
 		return this.frightened;
 	}
 
 	public void resetPosition()  {
-		setX(initialLocationX);
-		setY(initialLocationY);
+		setPosition(initialPosition);
 	}
 	
 	/*
@@ -109,13 +109,11 @@ public class GhostView extends MovingObject implements OnMoveListener{
 		
 		resetPosition();
 		
-		setDirection(new Direction(initialDirection.getDx(), initialDirection.getDy()));
+		setDirection(initialDirection);
 
 		frightened = false;
 
-		currentImage.set(0);
-
-		images = defaultImages;
+		setImages(defaultImages);
 
 		getTimeline().setRate(1.0);
 
@@ -128,7 +126,7 @@ public class GhostView extends MovingObject implements OnMoveListener{
 		frightened = true;
 
 		// switch the animation images
-		images = hollowImages;
+		setImages(hollowImages);
 
 		// make it move slower
 		getTimeline().stop();
@@ -138,7 +136,7 @@ public class GhostView extends MovingObject implements OnMoveListener{
 	
 	public void changeToNormal() {
 		frightened = false;
-		images = defaultImages;
+		setImages(defaultImages);
 		
 		getTimeline().stop();
 		getTimeline().setRate(1.0);
@@ -146,7 +144,7 @@ public class GhostView extends MovingObject implements OnMoveListener{
 	}
 	
 	public void changeToFlashingFrightened() {
-		images = flashHollowImages;
+		setImages(flashHollowImages);
 	}
 
 
@@ -155,8 +153,8 @@ public class GhostView extends MovingObject implements OnMoveListener{
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
 				if (x*x != y*y) { // Non si può andare in diagonale e la direzione (0, 0) non è permessa
-					int nextX = getX() + x * SharedMazeData.GRID_GAP;
-					int nextY = getY() + y * SharedMazeData.GRID_GAP;
+					int nextX = (int) (getX() + x * SharedMazeData.GRID_GAP);
+					int nextY = (int) (getY() + y * SharedMazeData.GRID_GAP);
 					int dataInNextPosition = SharedMazeData.getDataForPosition(nextX, nextY);
 					if (dataInNextPosition != SharedMazeData.BLOCK) {
 						/* Quando il prossimo punto nella mappa non è un blocco si
@@ -167,10 +165,10 @@ public class GhostView extends MovingObject implements OnMoveListener{
 						 */
 						if (dataInNextPosition == SharedMazeData.CAGE_BOUNDARY_LIMIT) {
 							if (x == 0 && y == -1 && stayInCageMovesLimit <= 0) {
-								dirs.add(new Direction(x, y));
+								dirs.add(Direction.fromXY(x, y));
 							}
 						} else
-							dirs.add(new Direction(x, y));
+							dirs.add(Direction.fromXY(x, y));
 					}
 				}
 			}
@@ -178,11 +176,12 @@ public class GhostView extends MovingObject implements OnMoveListener{
 		return dirs;
 	}
 
-	private void move() {
+	@Override
+	public void onMove() {
 		if (stayInCageMovesLimit > 0)
 			stayInCageMovesLimit--;
 		
-		if (SharedMazeData.getDataForPosition(getX(), getY()) != SharedMazeData.INVALID_POINT_IN_MAZE) {
+		if (SharedMazeData.getDataForPosition((int)getX(), (int)getY()) != SharedMazeData.INVALID_POINT_IN_MAZE) {
 			List<Direction> availableDirs = getAvailableDirections();
 			
 			
@@ -198,8 +197,8 @@ public class GhostView extends MovingObject implements OnMoveListener{
 			}
 		}
 		
-		setX(getX() + (int)getDirection().getDx() * MOVE_SPEED);
-		setY(getY() + (int)getDirection().getDy() * MOVE_SPEED);
+		setX(getX() + (int)getDirection().getDirX() * MOVE_SPEED);
+		setY(getY() + (int)getDirection().getDirY() * MOVE_SPEED);
 		
 	}
 	
@@ -210,13 +209,11 @@ public class GhostView extends MovingObject implements OnMoveListener{
 	}
 
 	
-	public void onMove() {
-		move();
-		if ( currentImage.get() < (ANIMATION_STEP - 1) ) {
-			currentImage.set(currentImage.get() + 1);
-		}
-		else {
-			currentImage.set(0);
-		}
+
+
+	@Override
+	public int getRadius() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
@@ -35,10 +36,10 @@ public abstract class MovingObject extends View implements Collidable {
 
 	protected int state;
 
-	private int currentImage;
+	private int currentImageIndex;
 	private Image[] images;
+	private ImageView imageView;
 
-	private Direction direction;
 
 	private Timeline timeline;
 	private int tickElapsed = 0;
@@ -47,40 +48,44 @@ public abstract class MovingObject extends View implements Collidable {
 	private List<OnMoveListener> moveListeners;
 
 	public MovingObject() {
-		this(0, 0, new Direction(0, 0));
+		this(null, 0, 0);
 	}
 	
-	public MovingObject(int x, int y, Direction direction) {
+	public MovingObject(Image[] images, int x, int y) {
 		super(x, y);
 		moveListeners = new ArrayList<>();
 		
-		currentImage = 0;
-
-		this.direction = direction;
-		timeline = createTimeline();
-	}
-	
-	
-	public Direction getDirection() {
-		return this.direction;
-	}
-	
-	public void setDirection(Direction dir) {
-		this.direction = dir;
-	}
-	
-	public void setImages(Image[] images) {
+		currentImageIndex = 0;
+		
 		this.images = images;
-		this.currentImage = 0;
+		imageView = new ImageView();
+		
+
+		timeline = createTimeline();
+		getChildren().add(imageView);
+	}
+	
+		
+	public ImageView getImageView() {
+		return imageView;
+	}
+
+
+	public void setImages(Image[] images) {
+		if (images == null || images.length == 0) throw new IllegalArgumentException("images can be neither null nor empty");
+		this.images = images;
+		this.currentImageIndex = 0;
+		imageView.setImage(images[0]);
+		bindImageViewCenterPositionToXY(imageView);
 	}
 	
 
-	public int getCurrentImage() {
-		return currentImage;
+	public int getCurrentImageIndex() {
+		return currentImageIndex;
 	}
 
-	public void setCurrentImage(int currentImage) {
-		this.currentImage = currentImage;
+	public void setCurrentImageIndex(int currentImage) {
+		this.currentImageIndex = currentImage;
 	}
 
 	public int getTickPerImage() {
@@ -97,9 +102,9 @@ public abstract class MovingObject extends View implements Collidable {
 	
 	private void moveOneStep() {
 		tickElapsed++;
-		if (tickElapsed >= tickPerImage) {
-			currentImage = (currentImage + 1) % images.length;
-			setImage(images[currentImage]);
+		if (tickElapsed >= tickPerImage && images != null) {
+			currentImageIndex = (currentImageIndex + 1) % images.length;
+			imageView.setImage(images[currentImageIndex]);
 		}
 			
 		for (OnMoveListener l : moveListeners)
