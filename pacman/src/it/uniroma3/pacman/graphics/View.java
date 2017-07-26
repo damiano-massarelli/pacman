@@ -57,10 +57,5 @@ public class View extends Parent {
 		setY((int)position.getY());
 	}
 	
-	public void bindImageViewCenterPositionToXY(ImageView img) {
-		img.xProperty().bind(xProperty.subtract( (img.getImage().widthProperty()).divide(2))  ) ;
-		img.yProperty().bind(yProperty.subtract( (img.getImage().heightProperty()).divide(2))  ) ;
-	}
-	
 	
 }

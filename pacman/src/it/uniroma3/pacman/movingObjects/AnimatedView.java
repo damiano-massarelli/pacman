@@ -67,9 +67,13 @@ public abstract class AnimatedView extends View implements Collidable {
 		this.images = images;
 		this.currentImageIndex = 0;
 		imageView.setImage(images[0]);
-		bindImageViewCenterPositionToXY(imageView);
+		bindImageViewCenterPositionToViewXY();
 	}
 	
+	public void bindImageViewCenterPositionToViewXY() {
+		imageView.xProperty().bind(getxProperty().subtract( (imageView.getImage().widthProperty()).divide(2))  ) ;
+		imageView.yProperty().bind(getyProperty().subtract( (imageView.getImage().heightProperty()).divide(2))  ) ;
+	}
 
 	public int getCurrentImageIndex() {
 		return currentImageIndex;
@@ -147,6 +151,8 @@ public abstract class AnimatedView extends View implements Collidable {
 	public void start() {
 		this.timeline.play();
 	}
+	
+	
 	
 
 }
