@@ -1,16 +1,19 @@
-package it.uniroma3.pacman.characterGraphics;
+package it.uniroma3.pacman.graphics;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
 
 public class View extends Parent {
-	IntegerProperty xProperty, yProperty;
-	
+	private IntegerProperty xProperty, yProperty;
+	private int collisionRadius;
 
 	public View(int x, int y) {
+		this(x, y, 0);
+	}
+	
+	public View(int x, int y, int collisionRadius) {
 		super();
 		this.xProperty = new SimpleIntegerProperty(x);
 		this.yProperty = new SimpleIntegerProperty(y);
@@ -57,5 +60,12 @@ public class View extends Parent {
 		setY((int)position.getY());
 	}
 	
+	public int getCollisionRadius() {
+		return this.collisionRadius;
+	}
+	
+	public void setCollisionRadius(int radius) {
+		collisionRadius = radius;
+	}
 	
 }

@@ -1,8 +1,9 @@
 package it.uniroma3.pacman.staticObjects;
 
+import it.uniroma3.pacman.graphics.CollidableModelEntity;
 import it.uniroma3.pacman.staticObjectGraphics.TeleportView;
 
-public class Teleport {
+public class Teleport implements CollidableModelEntity {
 	private Teleport nextTeleport;
 	
 	private TeleportView view;
@@ -19,6 +20,7 @@ public class Teleport {
 		this.nextTeleport = nextTeleport;
 	}
 
+	@Override
 	public TeleportView getView() {
 		return view;
 	}

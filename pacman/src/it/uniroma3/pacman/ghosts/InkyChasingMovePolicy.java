@@ -27,12 +27,12 @@ public class InkyChasingMovePolicy extends AbstractMovePolicy {
 		int pacmanFacingX = pacManView.getX() + pacManView.getDirection().getDeltaX() * 2;
 		int pacmanFacingY = pacManView.getY() + pacManView.getDirection().getDeltaY() * 2;
 		
-		int deltaX = (pacmanFacingX - blinky.getGhostView().getX()) * 2;
-		int deltaY = (pacmanFacingY - blinky.getGhostView().getY()) * 2;
+		int deltaX = (pacmanFacingX - blinky.getView().getX()) * 2;
+		int deltaY = (pacmanFacingY - blinky.getView().getY()) * 2;
 		
-		Point2D targetPos = new Point2D(blinky.getGhostView().getX() + deltaX, blinky.getGhostView().getY() + deltaY);
+		Point2D targetPos = new Point2D(blinky.getView().getX() + deltaX, blinky.getView().getY() + deltaY);
 		
-		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getGhostView().getPosition(), targetPos);
+		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getView().getPosition(), targetPos);
 		
 		return Collections.min(availableDirections, comparatore);
 	}

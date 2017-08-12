@@ -3,6 +3,7 @@ package it.uniroma3.pacman.characters;
 import it.uniroma3.pacman.characterGraphics.DyingPacManView;
 import it.uniroma3.pacman.characterGraphics.PacManView;
 import it.uniroma3.pacman.game.PacmanGame;
+import it.uniroma3.pacman.graphics.CollidableModelEntity;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.AnimatedView;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
@@ -17,7 +18,7 @@ import javafx.scene.input.KeyCode;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class PacMan implements OnMoveListener {
+public class PacMan implements OnMoveListener, CollidableModelEntity {
 	/**
 	 * if score/10'000 is different from lastScoreInTenThausands
 	 * add a life to pacman
@@ -120,8 +121,8 @@ public class PacMan implements OnMoveListener {
 		keyboardBuffer = code;
 	}
 	
-	
-	public PacManView getPacmanView() {
+	@Override
+	public PacManView getView() {
 		return pacmanView;
 	}
 

@@ -98,9 +98,9 @@ public class PacmanGame extends VBox {
 		gameField.setFocusTraversable(true); // patweb
 		gameField.setOnKeyPressed(new KeyboardEventHandler(this));
 
-		gameField.getChildren().add(pacMan.getPacmanView());
+		gameField.getChildren().add(pacMan.getView());
 		for (Ghost g:ghosts)
-			gameField.getChildren().add(g.getGhostView());
+			gameField.getChildren().add(g.getView());
 		
 		// insert messageBox
 		gameField.getChildren().add(messageBox);
@@ -173,9 +173,9 @@ public class PacmanGame extends VBox {
 		waitingForStart = true;
 		messageBox.setText("GAME OVER. PRESS ANY KEY\nTO RESTART");
 		messageBox.setVisible(true);
-		pacMan.getPacmanView().stop();
+		pacMan.getView().stop();
 		for (Ghost g : ghosts)
-			g.getGhostView().stop();
+			g.getView().stop();
 	}
 	
 	public void levelCompleted() {
@@ -185,10 +185,10 @@ public class PacmanGame extends VBox {
 		messageBox.setText("LEVEL COMPLETED! PRESS ANY\nKEY TO START NEXT LEVEL");
 		messageBox.setVisible(true);
 		
-		pacMan.getPacmanView().hide();
+		pacMan.getView().hide();
 		
 		for (Ghost g : ghosts) {
-			g.getGhostView().hide();
+			g.getView().hide();
 		}
 			
 	}
@@ -202,12 +202,12 @@ public class PacmanGame extends VBox {
 		SharedMazeData.resetDots();
 		pacMan.setScore(0);
 		pacMan.setDotEatenCount(0);
-		pacMan.getPacmanView().resetStatus();
+		pacMan.getView().resetStatus();
 
 		pacMan.getLivesProperty().set(3);
 
 		for (Ghost g : ghosts) {
-			g.getGhostView().resetStatus();
+			g.getView().resetStatus();
 		}
 
 	}
@@ -216,22 +216,22 @@ public class PacmanGame extends VBox {
 	public void startNewLevel() {
 		messageBox.setVisible(false);
 		SharedMazeData.resetDots();
-		pacMan.getPacmanView().resetStatus();
+		pacMan.getView().resetStatus();
 		pacMan.setDotEatenCount(0);
 		level.set(level.get() + 1);;
 
 		for (Ghost g : ghosts) {
-			g.getGhostView().resetStatus();
+			g.getView().resetStatus();
 		}
 
 	}
 
 	// reset status and start a new life
 	public void startNewLife() {
-		pacMan.getPacmanView().resetStatus();
+		pacMan.getView().resetStatus();
 
 		for (Ghost g : ghosts) {
-			g.getGhostView().resetStatus();
+			g.getView().resetStatus();
 		}
 	}
 

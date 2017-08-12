@@ -1,10 +1,11 @@
 package it.uniroma3.pacman.staticObjects;
 
 
-import it.uniroma3.pacman.characterGraphics.View;
+import it.uniroma3.pacman.graphics.CollidableModelEntity;
+import it.uniroma3.pacman.graphics.View;
 import it.uniroma3.pacman.staticObjectGraphics.DotView;
 
-public class Dot {
+public class Dot implements CollidableModelEntity {
 	
 	boolean eaten;
 	private DotView dotView;
@@ -31,6 +32,7 @@ public class Dot {
 		this.eaten = eaten;
 	}
 
+	@Override
 	public View getView() {
 		return this.dotView;
 	}

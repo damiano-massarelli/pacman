@@ -1,6 +1,6 @@
 package it.uniroma3.pacman.staticObjectGraphics;
 
-import it.uniroma3.pacman.characterGraphics.View;
+import it.uniroma3.pacman.graphics.View;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

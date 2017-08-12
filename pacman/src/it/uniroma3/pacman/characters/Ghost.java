@@ -6,10 +6,11 @@ import it.uniroma3.pacman.characterGraphics.GhostView;
 import it.uniroma3.pacman.characterGraphics.OnTurnListener;
 import it.uniroma3.pacman.ghosts.FrightenedMovePolicy;
 import it.uniroma3.pacman.ghosts.MovePolicy;
+import it.uniroma3.pacman.graphics.CollidableModelEntity;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 
-public class Ghost implements OnTurnListener, OnMoveListener {
+public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEntity {
 	
 	private MovePolicy movePolicy;
 	
@@ -45,8 +46,8 @@ public class Ghost implements OnTurnListener, OnMoveListener {
 		this.movePolicy = movePolicy.nextPolicy();
 	}
 	
-	
-	public GhostView getGhostView() {
+	@Override
+	public GhostView getView() {
 		return ghostView;
 	}
 

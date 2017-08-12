@@ -26,7 +26,7 @@ public class PinkyChasingMovePolicy extends AbstractMovePolicy {
 		Point2D targetPos = new Point2D(pacManView.getX() + pacManView.getDirection().getDeltaX() * 4, 
 				pacManView.getY() + pacManView.getDirection().getDeltaY() * 4);
 		
-		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getGhostView().getPosition(), targetPos);
+		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getView().getPosition(), targetPos);
 		return Collections.min(availableDirections, comparatore);
 	}
 

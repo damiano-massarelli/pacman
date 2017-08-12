@@ -26,10 +26,10 @@ public class FrightenedMovePolicy extends AbstractMovePolicy {
 	@Override
 	public MovePolicy nextPolicy() {
 		MovePolicy next = super.nextPolicy();
-		if (getRemainingMovesToNextPolicy() == FALSING_FRIGHTENED_MOVES_LIMIT && ghost.getGhostView().isFrightened())
-			ghost.getGhostView().changeToFlashingFrightened();
+		if (getRemainingMovesToNextPolicy() == FALSING_FRIGHTENED_MOVES_LIMIT && ghost.getView().isFrightened())
+			ghost.getView().changeToFlashingFrightened();
 		else if (getRemainingMovesToNextPolicy() == 0)
-			ghost.getGhostView().changeToNormal();
+			ghost.getView().changeToNormal();
 		return next;
 	}
 	

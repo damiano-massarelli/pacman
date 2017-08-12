@@ -25,4 +25,7 @@ public interface Collidable {
 	 * della somma dei loro raggi si scatena una collisione
 	 */
 	public int getRadius();
+	
+	
+	
 }

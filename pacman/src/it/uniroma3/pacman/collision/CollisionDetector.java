@@ -3,6 +3,7 @@ package it.uniroma3.pacman.collision;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniroma3.pacman.graphics.CollidableModelEntity;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -32,10 +33,9 @@ public class CollisionDetector {
 	
 	private Timeline timeline;
 	
-	private List<CollisionHandler> collisionHandlers;
+	private CollisionHandler collisionHandler;
 	
-	private List<Collidable> collidables;
-	private List<CollisionTrigger> triggers;
+	private List<CollidableModelEntity> collidables;
 	
 	/** 
 	 * Crea un nuovo {@link CollisionDetector}
@@ -45,15 +45,13 @@ public class CollisionDetector {
 	 */
 	public CollisionDetector(double detectFrequencyMillis) {
 		collidables = new ArrayList<>();
-		triggers = new ArrayList<>();
-		this.collisionHandlers = new ArrayList<>();
+		this.collisionHandler = new CollisionHandler();
 		
 		timeline = new Timeline();
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		KeyFrame kf = new KeyFrame(Duration.millis(detectFrequencyMillis), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				callTriggers();
 				detectCollisions();
 			}
 		});
@@ -68,58 +66,29 @@ public class CollisionDetector {
 		this(DEFAULT_DETECT_FREQ_MILLIS);
 	}
 	
-	public void callTriggers() {
-		for (CollisionTrigger trigger : triggers)
-			if (trigger.collisionOccurred())
-				handleCollision(trigger.getFirst(), trigger.getSecond());
-	}
 	
 	public void detectCollisions() {
 		for (int i = 0; i < collidables.size(); i++) {
 			for (int j = i+1; j < collidables.size(); j++) {
-				Collidable o1 = collidables.get(i);
-				Collidable o2 = collidables.get(j);
-//				double distX = o1.getX() - o2.getX();
-//				double distY = o1.getY() - o2.getY();
-//				double distance = Math.sqrt(distX * distX + distY * distY);
-				//System.out.println(distance);
+				CollidableModelEntity o1 = collidables.get(i);
+				CollidableModelEntity o2 = collidables.get(j);
 				
-				double distance = o1.getPosition().distance(o2.getPosition());
+				double distance = o1.getView().getPosition().distance(o2.getView().getPosition());
 				
-				if (distance < o1.getRadius() + o2.getRadius())
-					handleCollision(o1, o2);
+				if (distance < o1.getView().getCollisionRadius() + o2.getView().getCollisionRadius())
+					o1.accept(collisionHandler, o2);
 			}
 		}
 	}
 
-	private void handleCollision(Object o1, Object o2) {
-		for (CollisionHandler handler : collisionHandlers)
-			handler.handle(o1, o2);
-	}
 	
 	/**
 	 * Aggiunge un nuovo {@link Collidable} alla lista degli oggetti che possono
 	 * entrare in collisione
 	 * @param collidable l'oggetto da aggiungere
 	 */
-	public void addCollidable(Collidable collidable) {
+	public void addCollidable(CollidableModelEntity collidable) {
 		this.collidables.add(collidable);
-	}
-	
-	/**
-	 * Aggiunge un nuovo {@link CollisionTrigger} alla lista dei collision triggers
-	 * @param trigger il trigger da aggiungere
-	 */
-	public void addTrigger(CollisionTrigger trigger) {
-		this.triggers.add(trigger);
-	}
-	
-	/**
-	 * Aggiunge un nuovo {@link CollisionHandler}
-	 * @param handler il {@link CollisionHandler} da aggiungere
-	 */
-	public void addCollisionHandler(CollisionHandler handler) {
-		this.collisionHandlers.add(handler);
 	}
 	
 }

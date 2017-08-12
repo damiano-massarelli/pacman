@@ -26,7 +26,7 @@ public class CharactersSetup {
 	
 		
 		MovePolicy blinkyMovePolicy = new ScatteringMovePolicy(null, TOP_RIGHT_CORNER);
-		blinkyMovePolicy.setNextPolicy(new BlinkyChasingMovePolicy(pacMan.getPacmanView(), blinkyMovePolicy));
+		blinkyMovePolicy.setNextPolicy(new BlinkyChasingMovePolicy(pacMan.getView(), blinkyMovePolicy));
 		
 		Ghost ghostBlinky = new Ghost(
 				"red",
@@ -37,7 +37,7 @@ public class CharactersSetup {
 
 		
 		MovePolicy pinkyMovePolicy = new ScatteringMovePolicy(null, TOP_LEFT_CORNER);
-		pinkyMovePolicy.setNextPolicy(new PinkyChasingMovePolicy(pacMan.getPacmanView(), pinkyMovePolicy));
+		pinkyMovePolicy.setNextPolicy(new PinkyChasingMovePolicy(pacMan.getView(), pinkyMovePolicy));
 		
 		Ghost ghostPinky = new Ghost(
 				"pink",
@@ -47,7 +47,7 @@ public class CharactersSetup {
 		game.addGhost(ghostPinky);
 		
 		MovePolicy inkyMovePolicy = new ScatteringMovePolicy(null, BOTTOM_RIGHT_CORNER);
-		inkyMovePolicy.setNextPolicy(new InkyChasingMovePolicy(ghostBlinky, pacMan.getPacmanView(), inkyMovePolicy));
+		inkyMovePolicy.setNextPolicy(new InkyChasingMovePolicy(ghostBlinky, pacMan.getView(), inkyMovePolicy));
 
 		Ghost ghostInky = new Ghost(
 				"cyan",
@@ -57,7 +57,7 @@ public class CharactersSetup {
 		game.addGhost(ghostInky);
 
 		MovePolicy clydeMovePolicy = new ScatteringMovePolicy(null, BOTTOM_LEFT_CORNER);
-		clydeMovePolicy.setNextPolicy(new ClydeChasingMovePolicy(pacMan.getPacmanView(), clydeMovePolicy));
+		clydeMovePolicy.setNextPolicy(new ClydeChasingMovePolicy(pacMan.getView(), clydeMovePolicy));
 		
 		Ghost ghostClyde = new Ghost(
 				"orange",
