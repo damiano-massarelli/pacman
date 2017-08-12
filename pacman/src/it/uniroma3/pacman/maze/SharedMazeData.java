@@ -3,8 +3,7 @@ package it.uniroma3.pacman.maze;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.uniroma3.pacman.staticObjectGraphics.DotView;
-import it.uniroma3.pacman.staticObjectGraphics.Teleport;
+import it.uniroma3.pacman.staticObjects.Teleport;
 import it.uniroma3.pacman.staticObjects.Dot;
 import javafx.geometry.Point2D;
 
@@ -197,8 +196,8 @@ public final class SharedMazeData {
 	 * adds a new teleport in the maze
 	 * @param teleport the teleport to add
 	 */
-	public static void setTeleport(Teleport teleport) {
-		Point2D teleportPosition = new Point2D(teleport.getX(), teleport.getY());
+	public static void setTeleport(it.uniroma3.pacman.staticObjects.Teleport teleport) {
+		Point2D teleportPosition = new Point2D(teleport.getView().getX(), teleport.getView().getY());
 		position2teleport.put(teleportPosition, teleport);
 	}
 	

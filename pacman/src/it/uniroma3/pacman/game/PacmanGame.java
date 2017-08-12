@@ -20,7 +20,7 @@ import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.staticObjectGraphics.DotView;
 import it.uniroma3.pacman.staticObjectGraphics.MagicDotView;
-import it.uniroma3.pacman.staticObjectGraphics.Teleport;
+import it.uniroma3.pacman.staticObjectGraphics.TeleportView;
 import it.uniroma3.pacman.ui.MessageBox;
 import it.uniroma3.pacman.ui.CustomText;
 import javafx.beans.property.SimpleIntegerProperty;

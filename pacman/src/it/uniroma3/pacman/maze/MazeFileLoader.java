@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import it.uniroma3.pacman.staticObjectGraphics.DotView;
-import it.uniroma3.pacman.staticObjectGraphics.MagicDotView;
-import it.uniroma3.pacman.staticObjectGraphics.Teleport;
+import it.uniroma3.pacman.staticObjects.Teleport;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.resources.ResourceManager;

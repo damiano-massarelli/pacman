@@ -1,6 +1,7 @@
 package it.uniroma3.pacman.maze;
 
 import it.uniroma3.pacman.staticObjects.Dot;
+import it.uniroma3.pacman.staticObjects.Teleport;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -40,8 +41,11 @@ public class MazeBackgroundGraphics extends Group {
 		for (int x = 0; x < SharedMazeData.getGridWidth(); x++) {
 			for (int y = 0; y < SharedMazeData.getGridHeight(); y++) {
 				Dot dot = SharedMazeData.getDot(x, y);
+				Teleport teleport = SharedMazeData.getTeleportForPosition(x * SharedMazeData.GRID_GAP, y * SharedMazeData.GRID_GAP);
 				if (dot != null)
 					getChildren().add(dot.getView());
+				if (teleport != null)
+					getChildren().add(teleport.getView());
 				if (SharedMazeData.isBlock(x, y) && shouldDrawWall(x, y)) {
 					Rectangle rect = new Rectangle(x * width , y * height, width, height);
 					rect.setFill(Color.CORNFLOWERBLUE);

@@ -1,17 +1,16 @@
-package it.uniroma3.pacman.staticObjectGraphics;
+package it.uniroma3.pacman.staticObjects;
 
+import it.uniroma3.pacman.staticObjectGraphics.TeleportView;
 
 public class Teleport {
-	
 	private Teleport nextTeleport;
-	int x;
-	int y;
+	
+	private TeleportView view;
 
 	public Teleport(int x, int y) {
-		this.x = x;
-		this.y = y;
+		view = new TeleportView(x, y);
 	}
-	
+
 	public Teleport getNextTeleport() {
 		return nextTeleport;
 	}
@@ -20,12 +19,8 @@ public class Teleport {
 		this.nextTeleport = nextTeleport;
 	}
 
-	public int getX() {
-		return x;
+	public TeleportView getView() {
+		return view;
 	}
-
-	public int getY() {
-		return y;
-	}
-
+	
 }
