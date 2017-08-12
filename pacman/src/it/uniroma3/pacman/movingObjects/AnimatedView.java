@@ -3,8 +3,8 @@ package it.uniroma3.pacman.movingObjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniroma3.pacman.characterGraphics.View;
 import it.uniroma3.pacman.collision.Collidable;
-import it.uniroma3.pacman.graphics.View;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -151,8 +151,5 @@ public abstract class AnimatedView extends View implements Collidable {
 	public void start() {
 		this.timeline.play();
 	}
-	
-	
-	
 
 }

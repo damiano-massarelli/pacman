@@ -1,8 +1,8 @@
 package it.uniroma3.pacman.characters;
 
+import it.uniroma3.pacman.characterGraphics.DyingPacManView;
+import it.uniroma3.pacman.characterGraphics.PacManView;
 import it.uniroma3.pacman.game.PacmanGame;
-import it.uniroma3.pacman.graphics.DyingPacManView;
-import it.uniroma3.pacman.graphics.PacManView;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.AnimatedView;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;

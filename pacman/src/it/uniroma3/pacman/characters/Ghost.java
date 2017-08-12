@@ -2,10 +2,10 @@ package it.uniroma3.pacman.characters;
 
 import java.util.List;
 
+import it.uniroma3.pacman.characterGraphics.GhostView;
+import it.uniroma3.pacman.characterGraphics.OnTurnListener;
 import it.uniroma3.pacman.ghosts.FrightenedMovePolicy;
 import it.uniroma3.pacman.ghosts.MovePolicy;
-import it.uniroma3.pacman.graphics.GhostView;
-import it.uniroma3.pacman.graphics.OnTurnListener;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 

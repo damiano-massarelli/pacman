@@ -41,7 +41,7 @@ public class MazeBackgroundGraphics extends Group {
 			for (int y = 0; y < SharedMazeData.getGridHeight(); y++) {
 				Dot dot = SharedMazeData.getDot(x, y);
 				if (dot != null)
-					getChildren().add(dot);
+					getChildren().add(dot.getView());
 				if (SharedMazeData.isBlock(x, y) && shouldDrawWall(x, y)) {
 					Rectangle rect = new Rectangle(x * width , y * height, width, height);
 					rect.setFill(Color.CORNFLOWERBLUE);

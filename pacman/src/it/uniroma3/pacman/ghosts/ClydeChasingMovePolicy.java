@@ -3,9 +3,9 @@ package it.uniroma3.pacman.ghosts;
 import java.util.Collections;
 import java.util.List;
 
+import it.uniroma3.pacman.characterGraphics.PacManView;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
-import it.uniroma3.pacman.graphics.PacManView;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
 

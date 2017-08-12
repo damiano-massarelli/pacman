@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.staticObjects;
+package it.uniroma3.pacman.staticObjectGraphics;
 
 
 public class Teleport {

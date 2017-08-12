@@ -1,27 +1,23 @@
 package it.uniroma3.pacman.staticObjects;
 
-import javafx.scene.Parent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
-/**
- * Dot.fx created on 2008-12-21, 21:59:45 <br>
- * Dot.java created October 2011
- *
- * @author Henry Zhang
- * @author Patrick Webster
- */
-public class Dot extends Parent {
-	private static final int RADIUS = 1;
+import it.uniroma3.pacman.characterGraphics.View;
+import it.uniroma3.pacman.staticObjectGraphics.DotView;
+
+public class Dot {
 	
-	private boolean eaten = false;
-	
-	Circle circle;
+	boolean eaten;
+	private DotView dotView;
 	
 	public Dot(int x, int y) {
-		circle = new Circle(x, y, RADIUS, Color.YELLOW);
-		getChildren().add(circle);
+		this(new DotView(x, y));
 	}
+	
+	public Dot(DotView dotView) {
+		eaten = false;
+		this.dotView = dotView;
+	}
+	
 	
 	public boolean isEaten() {
 		return eaten;
@@ -29,15 +25,13 @@ public class Dot extends Parent {
 
 	public void setEaten(boolean eaten) {
 		if (eaten)
-			setVisible(false);
+			getView().setVisible(false);
 		else
-			setVisible(true);
+			getView().setVisible(true);
 		this.eaten = eaten;
 	}
 
-
-	protected Circle getCircle() {
-		return circle;
+	public View getView() {
+		return this.dotView;
 	}
-	
 }

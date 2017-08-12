@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.graphics;
+package it.uniroma3.pacman.characterGraphics;
 
 import java.util.ArrayList;
 import java.util.List;

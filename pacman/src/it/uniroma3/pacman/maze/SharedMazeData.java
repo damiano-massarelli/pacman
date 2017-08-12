@@ -3,8 +3,9 @@ package it.uniroma3.pacman.maze;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.uniroma3.pacman.staticObjectGraphics.DotView;
+import it.uniroma3.pacman.staticObjectGraphics.Teleport;
 import it.uniroma3.pacman.staticObjects.Dot;
-import it.uniroma3.pacman.staticObjects.Teleport;
 import javafx.geometry.Point2D;
 
 /**

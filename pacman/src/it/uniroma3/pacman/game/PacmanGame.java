@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniroma3.pacman.characterGraphics.PacManView;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionDetector;
@@ -14,13 +15,12 @@ import it.uniroma3.pacman.collision.handlers.MovingObjectTeleportCollisionHandle
 import it.uniroma3.pacman.collision.handlers.PacManDotCollisionHandler;
 import it.uniroma3.pacman.collision.handlers.PacManGhostCollisionHandler;
 import it.uniroma3.pacman.collision.handlers.PacManMagicDotCollisionHandler;
-import it.uniroma3.pacman.graphics.PacManView;
 import it.uniroma3.pacman.maze.MazeFileLoader;
 import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
-import it.uniroma3.pacman.staticObjects.Dot;
-import it.uniroma3.pacman.staticObjects.MagicDot;
-import it.uniroma3.pacman.staticObjects.Teleport;
+import it.uniroma3.pacman.staticObjectGraphics.DotView;
+import it.uniroma3.pacman.staticObjectGraphics.MagicDotView;
+import it.uniroma3.pacman.staticObjectGraphics.Teleport;
 import it.uniroma3.pacman.ui.MessageBox;
 import it.uniroma3.pacman.ui.CustomText;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -107,24 +107,24 @@ public class PacmanGame extends VBox {
 
 		
 		// Collision handlers
-		AutomaticCollisionHandler auto = new AutomaticCollisionHandler();
-		auto.addCollisionHandler(new PacManDotCollisionHandler(this), PacManView.class, Dot.class);
-		PacManGhostCollisionHandler pacManGhostCollisionHandler = new PacManGhostCollisionHandler(ghosts, this);
-		auto.addCollisionHandler(pacManGhostCollisionHandler, PacManView.class, Ghost.class);
-		auto.addCollisionHandler(new PacManMagicDotCollisionHandler(ghosts, pacManGhostCollisionHandler), PacManView.class, MagicDot.class);
-		
-		
-		MovingObjectTeleportCollisionHandler teleportHandler = new MovingObjectTeleportCollisionHandler();
-		auto.addCollisionHandler(teleportHandler, PacManView.class, Teleport.class);
-		auto.addCollisionHandler(teleportHandler, Ghost.class, Teleport.class);
-		
-		collisionDetector = new CollisionDetector();
-		collisionDetector.addCollidable(pacMan.getPacmanView());
-		for (Ghost g : ghosts)
-			collisionDetector.addCollidable(g.getGhostView());
-		collisionDetector.addTrigger(new DotCollisionTrigger(pacMan));
-		collisionDetector.addTrigger(new TeleportCollisionTrigger(pacMan, ghosts));
-		collisionDetector.addCollisionHandler(auto);
+//		AutomaticCollisionHandler auto = new AutomaticCollisionHandler();
+//		auto.addCollisionHandler(new PacManDotCollisionHandler(this), PacManView.class, DotView.class);
+//		PacManGhostCollisionHandler pacManGhostCollisionHandler = new PacManGhostCollisionHandler(ghosts, this);
+//		auto.addCollisionHandler(pacManGhostCollisionHandler, PacManView.class, Ghost.class);
+//		auto.addCollisionHandler(new PacManMagicDotCollisionHandler(ghosts, pacManGhostCollisionHandler), PacManView.class, MagicDotView.class);
+//		
+//		
+//		MovingObjectTeleportCollisionHandler teleportHandler = new MovingObjectTeleportCollisionHandler();
+//		auto.addCollisionHandler(teleportHandler, PacManView.class, Teleport.class);
+//		auto.addCollisionHandler(teleportHandler, Ghost.class, Teleport.class);
+//		
+//		collisionDetector = new CollisionDetector();
+//		collisionDetector.addCollidable(pacMan.getPacmanView());
+//		for (Ghost g : ghosts)
+//			collisionDetector.addCollidable(g.getGhostView());
+//		collisionDetector.addTrigger(new DotCollisionTrigger(pacMan));
+//		collisionDetector.addTrigger(new TeleportCollisionTrigger(pacMan, ghosts));
+//		collisionDetector.addCollisionHandler(auto);
 	}
 
 	public Pane getGameField() {

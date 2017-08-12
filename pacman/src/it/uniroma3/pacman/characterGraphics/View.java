@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.graphics;
+package it.uniroma3.pacman.characterGraphics;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

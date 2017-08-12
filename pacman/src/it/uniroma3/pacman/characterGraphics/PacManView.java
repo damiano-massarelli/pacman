@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.graphics;
+package it.uniroma3.pacman.characterGraphics;
 
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;

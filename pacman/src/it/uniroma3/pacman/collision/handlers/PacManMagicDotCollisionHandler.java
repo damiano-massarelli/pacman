@@ -4,7 +4,7 @@ import java.util.List;
 
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.staticObjects.MagicDot;
+import it.uniroma3.pacman.staticObjectGraphics.MagicDotView;
 
 public class PacManMagicDotCollisionHandler implements CollisionHandler {
 
@@ -21,7 +21,7 @@ public class PacManMagicDotCollisionHandler implements CollisionHandler {
 
 	@Override
 	public void handle(Object o1, Object o2) {
-		MagicDot dot = (MagicDot) o2;
+		MagicDotView dot = (MagicDotView) o2;
 		dot.setEaten(true);
 		for (Ghost g : ghosts)
 			g.changeToFrightened();
