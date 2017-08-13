@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.staticObjectGraphics;
+package it.uniroma3.pacman.graphics.staticObjects;
 
 import it.uniroma3.pacman.graphics.View;
 import javafx.scene.paint.Color;

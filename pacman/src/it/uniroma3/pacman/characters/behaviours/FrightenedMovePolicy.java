@@ -1,11 +1,12 @@
-package it.uniroma3.pacman.ghosts;
+package it.uniroma3.pacman.characters.behaviours;
+
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.FALSING_FRIGHTENED_MOVES_LIMIT;
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.FRIGHTENED_MOVES_LIMIT;
 
 import java.util.List;
 
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
-import static it.uniroma3.pacman.ghosts.GhostConsts.FRIGHTENED_MOVES_LIMIT;
-import static it.uniroma3.pacman.ghosts.GhostConsts.FALSING_FRIGHTENED_MOVES_LIMIT;
 public class FrightenedMovePolicy extends AbstractMovePolicy {
 	
 	private Ghost ghost;

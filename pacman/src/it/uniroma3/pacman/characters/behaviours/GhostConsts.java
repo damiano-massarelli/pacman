@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.ghosts;
+package it.uniroma3.pacman.characters.behaviours;
 
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.geometry.Point2D;

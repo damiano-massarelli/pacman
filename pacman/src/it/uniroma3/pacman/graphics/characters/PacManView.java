@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.characterGraphics;
+package it.uniroma3.pacman.graphics.characters;
 
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
@@ -110,10 +110,4 @@ public class PacManView extends AnimatedView implements OnMoveListener {
 		getTimeline().stop();
 	}
 
-
-	@Override
-	public int getRadius() {
-		return 0;
-	}
-	
 }

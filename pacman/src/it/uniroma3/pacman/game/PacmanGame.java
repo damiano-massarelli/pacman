@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.uniroma3.pacman.characterGraphics.PacManView;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionDetector;
@@ -15,12 +14,13 @@ import it.uniroma3.pacman.collision.handlers.MovingObjectTeleportCollisionHandle
 import it.uniroma3.pacman.collision.handlers.PacManDotCollisionHandler;
 import it.uniroma3.pacman.collision.handlers.PacManGhostCollisionHandler;
 import it.uniroma3.pacman.collision.handlers.PacManMagicDotCollisionHandler;
+import it.uniroma3.pacman.graphics.characters.PacManView;
+import it.uniroma3.pacman.graphics.staticObjects.DotView;
+import it.uniroma3.pacman.graphics.staticObjects.MagicDotView;
+import it.uniroma3.pacman.graphics.staticObjects.TeleportView;
 import it.uniroma3.pacman.maze.MazeFileLoader;
 import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
-import it.uniroma3.pacman.staticObjectGraphics.DotView;
-import it.uniroma3.pacman.staticObjectGraphics.MagicDotView;
-import it.uniroma3.pacman.staticObjectGraphics.TeleportView;
 import it.uniroma3.pacman.ui.MessageBox;
 import it.uniroma3.pacman.ui.CustomText;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -105,7 +105,10 @@ public class PacmanGame extends VBox {
 		// insert messageBox
 		gameField.getChildren().add(messageBox);
 
-		
+		CollisionDetector collisionDetector = new CollisionDetector();
+		collisionDetector.addCollidable(pacMan);
+		for (Ghost g : ghosts)
+			collisionDetector.addCollidable(g);
 		// Collision handlers
 //		AutomaticCollisionHandler auto = new AutomaticCollisionHandler();
 //		auto.addCollisionHandler(new PacManDotCollisionHandler(this), PacManView.class, DotView.class);

@@ -1,8 +1,8 @@
-package it.uniroma3.pacman.graphics;
+package it.uniroma3.pacman.collision;
 
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
-import it.uniroma3.pacman.collision.CollisionHandler;
+import it.uniroma3.pacman.graphics.View;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.pacman.staticObjects.Teleport;

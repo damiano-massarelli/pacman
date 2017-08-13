@@ -3,8 +3,8 @@ package it.uniroma3.pacman.collision.handlers;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.game.PacmanGame;
+import it.uniroma3.pacman.graphics.staticObjects.DotView;
 import it.uniroma3.pacman.maze.SharedMazeData;
-import it.uniroma3.pacman.staticObjectGraphics.DotView;
 
 public class PacManDotCollisionHandler implements CollisionHandler {
 

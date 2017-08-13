@@ -3,8 +3,7 @@ package it.uniroma3.pacman.movingObjects;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.uniroma3.pacman.characterGraphics.View;
-import it.uniroma3.pacman.collision.Collidable;
+import it.uniroma3.pacman.graphics.View;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,7 +20,7 @@ import javafx.util.Duration;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public abstract class AnimatedView extends View implements Collidable {
+public class AnimatedView extends View {
 	protected static final int ANIMATION_STEP = 4;
 	protected static final int MOVE_SPEED = SharedMazeData.GRID_GAP / ANIMATION_STEP;
 
@@ -151,5 +150,6 @@ public abstract class AnimatedView extends View implements Collidable {
 	public void start() {
 		this.timeline.play();
 	}
+
 
 }

@@ -1,16 +1,15 @@
 package it.uniroma3.pacman.game;
 
-import it.uniroma3.pacman.ghosts.BlinkyChasingMovePolicy;
-import it.uniroma3.pacman.ghosts.ClydeChasingMovePolicy;
-import it.uniroma3.pacman.ghosts.InkyChasingMovePolicy;
-import it.uniroma3.pacman.ghosts.MovePolicy;
-import it.uniroma3.pacman.ghosts.PinkyChasingMovePolicy;
-import it.uniroma3.pacman.ghosts.ScatteringMovePolicy;
-
-import static it.uniroma3.pacman.ghosts.GhostConsts.*;
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.*;
 
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
+import it.uniroma3.pacman.characters.behaviours.BlinkyChasingMovePolicy;
+import it.uniroma3.pacman.characters.behaviours.ClydeChasingMovePolicy;
+import it.uniroma3.pacman.characters.behaviours.InkyChasingMovePolicy;
+import it.uniroma3.pacman.characters.behaviours.MovePolicy;
+import it.uniroma3.pacman.characters.behaviours.PinkyChasingMovePolicy;
+import it.uniroma3.pacman.characters.behaviours.ScatteringMovePolicy;
 
 
 /**

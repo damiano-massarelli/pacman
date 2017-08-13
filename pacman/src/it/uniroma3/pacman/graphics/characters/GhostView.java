@@ -1,4 +1,4 @@
-package it.uniroma3.pacman.characterGraphics;
+package it.uniroma3.pacman.graphics.characters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -209,11 +209,4 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 	}
 
 	
-
-
-	@Override
-	public int getRadius() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

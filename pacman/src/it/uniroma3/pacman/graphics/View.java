@@ -10,11 +10,12 @@ public class View extends Parent {
 	private int collisionRadius;
 
 	public View(int x, int y) {
-		this(x, y, 0);
+		this(x, y, 10);
 	}
 	
 	public View(int x, int y, int collisionRadius) {
 		super();
+		this.collisionRadius = collisionRadius;
 		this.xProperty = new SimpleIntegerProperty(x);
 		this.yProperty = new SimpleIntegerProperty(y);
 	}

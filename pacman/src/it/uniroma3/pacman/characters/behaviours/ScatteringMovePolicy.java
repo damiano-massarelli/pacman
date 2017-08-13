@@ -1,4 +1,6 @@
-package it.uniroma3.pacman.ghosts;
+package it.uniroma3.pacman.characters.behaviours;
+
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.SCATTER_MOVES_LIMIT;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,7 +8,6 @@ import java.util.List;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
 import javafx.geometry.Point2D;
-import static it.uniroma3.pacman.ghosts.GhostConsts.SCATTER_MOVES_LIMIT;
 
 public class ScatteringMovePolicy extends AbstractMovePolicy {
 	

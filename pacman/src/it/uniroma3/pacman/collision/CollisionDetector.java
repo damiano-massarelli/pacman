@@ -1,9 +1,9 @@
 package it.uniroma3.pacman.collision;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import it.uniroma3.pacman.graphics.CollidableModelEntity;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -68,6 +68,7 @@ public class CollisionDetector {
 	
 	
 	public void detectCollisions() {
+		//System.out.println("detecting..");
 		for (int i = 0; i < collidables.size(); i++) {
 			for (int j = i+1; j < collidables.size(); j++) {
 				CollidableModelEntity o1 = collidables.get(i);
@@ -75,8 +76,10 @@ public class CollisionDetector {
 				
 				double distance = o1.getView().getPosition().distance(o2.getView().getPosition());
 				
-				if (distance < o1.getView().getCollisionRadius() + o2.getView().getCollisionRadius())
+				if (distance < o1.getView().getCollisionRadius() + o2.getView().getCollisionRadius()) {
+					System.out.println("collided " + o1.getClass() + " " + o2.getClass());
 					o1.accept(collisionHandler, o2);
+				}
 			}
 		}
 	}
@@ -90,5 +93,6 @@ public class CollisionDetector {
 	public void addCollidable(CollidableModelEntity collidable) {
 		this.collidables.add(collidable);
 	}
+
 	
 }

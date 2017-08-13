@@ -4,7 +4,7 @@ import java.util.List;
 
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.staticObjectGraphics.MagicDotView;
+import it.uniroma3.pacman.graphics.staticObjects.MagicDotView;
 
 public class PacManMagicDotCollisionHandler implements CollisionHandler {
 

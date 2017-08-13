@@ -1,12 +1,16 @@
 package it.uniroma3.pacman.characters;
 
-import it.uniroma3.pacman.characterGraphics.DyingPacManView;
-import it.uniroma3.pacman.characterGraphics.PacManView;
+import it.uniroma3.pacman.collision.CollidableModelEntity;
+import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.game.PacmanGame;
-import it.uniroma3.pacman.graphics.CollidableModelEntity;
+import it.uniroma3.pacman.graphics.characters.DyingPacManView;
+import it.uniroma3.pacman.graphics.characters.PacManView;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.AnimatedView;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
+import it.uniroma3.pacman.staticObjects.Dot;
+import it.uniroma3.pacman.staticObjects.MagicDot;
+import it.uniroma3.pacman.staticObjects.Teleport;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
 
@@ -139,4 +143,40 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 		handleKeyboardInput();
 	}
 
+	@Override
+	public void accept(CollisionHandler visitor, CollidableModelEntity other) {
+		other.collidedWith(this, visitor);
+		
+	}
+
+	@Override
+	public void collidedWith(PacMan pacMan, CollisionHandler visitor) {
+		// PacMan can't collide with itself
+	}
+
+	@Override
+	public void collidedWith(Ghost ghost, CollisionHandler visitor) {
+		visitor.handle(this, ghost);
+	}
+
+	@Override
+	public void collidedWith(Dot dot, CollisionHandler visitor) {
+		visitor.handle(this, dot);
+		
+	}
+
+	@Override
+	public void collidedWith(MagicDot magicDot, CollisionHandler visitor) {
+		visitor.handle(this, magicDot);
+		
+	}
+
+	@Override
+	public void collidedWith(Teleport teleport, CollisionHandler visitor) {
+		visitor.handle(this, teleport);
+		
+	}
+
+	
+	
 }

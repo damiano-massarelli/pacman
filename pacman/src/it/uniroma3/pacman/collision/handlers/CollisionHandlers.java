@@ -2,8 +2,8 @@ package it.uniroma3.pacman.collision.handlers;
 
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
-import it.uniroma3.pacman.staticObjectGraphics.DotView;
-import it.uniroma3.pacman.staticObjectGraphics.Teleport;
+import it.uniroma3.pacman.graphics.staticObjects.DotView;
+import it.uniroma3.pacman.graphics.staticObjects.Teleport;
 
 public class CollisionHandlers {
 	

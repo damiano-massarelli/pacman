@@ -1,8 +1,8 @@
 package it.uniroma3.pacman.collision.handlers;
 
 import it.uniroma3.pacman.collision.CollisionHandler;
+import it.uniroma3.pacman.graphics.staticObjects.Teleport;
 import it.uniroma3.pacman.movingObjects.AnimatedView;
-import it.uniroma3.pacman.staticObjectGraphics.Teleport;
 
 public class MovingObjectTeleportCollisionHandler implements CollisionHandler {
 
