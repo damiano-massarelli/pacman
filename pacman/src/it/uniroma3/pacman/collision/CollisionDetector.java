@@ -43,9 +43,9 @@ public class CollisionDetector {
 	 * collisione
 	 * @param handler un {@link CollisionHandler} che gestirà le collisioni
 	 */
-	public CollisionDetector(double detectFrequencyMillis) {
+	public CollisionDetector(CollisionHandler handler, double detectFrequencyMillis) {
 		collidables = new ArrayList<>();
-		this.collisionHandler = new CollisionHandler();
+		this.collisionHandler = handler;
 		
 		timeline = new Timeline();
 		timeline.setCycleCount(Timeline.INDEFINITE);
@@ -62,8 +62,8 @@ public class CollisionDetector {
 	 * Crea un nuovo {@link CollisionDetector}
 	 * @param handler un {@link CollisionHandler} che gestirà le collisioni
 	 */
-	public CollisionDetector() {
-		this(DEFAULT_DETECT_FREQ_MILLIS);
+	public CollisionDetector(CollisionHandler handler) {
+		this(handler, DEFAULT_DETECT_FREQ_MILLIS);
 	}
 	
 	
@@ -77,7 +77,7 @@ public class CollisionDetector {
 				double distance = o1.getView().getPosition().distance(o2.getView().getPosition());
 				
 				if (distance < o1.getView().getCollisionRadius() + o2.getView().getCollisionRadius()) {
-					System.out.println("collided " + o1.getClass() + " " + o2.getClass());
+					// System.out.println("collided " + o1.getClass() + " " + o2.getClass());
 					o1.accept(collisionHandler, o2);
 				}
 			}
@@ -92,6 +92,10 @@ public class CollisionDetector {
 	 */
 	public void addCollidable(CollidableModelEntity collidable) {
 		this.collidables.add(collidable);
+	}
+	
+	public void addCollidables(List<CollidableModelEntity> collidables) {
+		this.collidables.addAll(collidables);
 	}
 
 	

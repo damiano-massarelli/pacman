@@ -20,6 +20,7 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	
 	private GhostView ghostView;
 	
+	private boolean frightened;
 
 	public Ghost(String name, MovePolicy movePolicy, int x, int y) {
 		ghostView = new GhostView(name, x, y);
@@ -27,6 +28,7 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 		ghostView.addOnMoveListener(this);
 		
 		this.movePolicy = movePolicy;
+		this.frightened = false;
 	}
 	
 
@@ -42,9 +44,15 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 
 	public void changeToFrightened() {
 		this.movePolicy = new FrightenedMovePolicy(this.movePolicy, this);
+		this.frightened = true;
 		ghostView.changeToFrightened();  // Cambia aspetto grafico
 	}
 
+	public boolean isFrightened() {
+		return frightened;
+	}
+	
+	
 	@Override
 	public void onMove() {
 		this.movePolicy = movePolicy.nextPolicy();
