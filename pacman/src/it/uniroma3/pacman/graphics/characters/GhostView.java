@@ -10,7 +10,6 @@ import it.uniroma3.pacman.movingObjects.AnimatedView;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Ghost.fx created on 2009-1-28, 14:26:09 <br>
@@ -48,7 +47,7 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 	// the GUI of a ghost
 	public GhostView(String name, int x, int y) {
 		super(null, x, y);
-
+		setCollisionRadius(10);
 		addOnMoveListener(this);
 		
 		/* 

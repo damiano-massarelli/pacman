@@ -71,13 +71,6 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 
 
 	@Override
-	public void collidedWith(Ghost ghost, CollisionHandler visitor) {
-		// Ghost colliding with each other is not supported yet
-		
-	}
-
-
-	@Override
 	public void collidedWith(Dot dot, CollisionHandler visitor) {
 		// we don't care
 		
@@ -94,6 +87,13 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	@Override
 	public void collidedWith(Teleport teleport, CollisionHandler visitor) {
 		visitor.handle(this, teleport);
+		
+	}
+
+
+	@Override
+	public void collidedWith(Ghost ghost, CollisionHandler visitor) {
+		// not supported yet
 		
 	}
 

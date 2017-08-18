@@ -163,13 +163,6 @@ public class PacmanGame extends VBox {
 		this.waitingForStart = waitingForStart;
 	}
 
-	public MessageBox getMessageBox() {
-		return messageBox;
-	}
-
-	public void setMessageBox(MessageBox messageBox) {
-		this.messageBox = messageBox;
-	}
 
 	public void gameOver() {
 		lastGameResultIsGameOver = true;

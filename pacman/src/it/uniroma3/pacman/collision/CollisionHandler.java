@@ -39,4 +39,5 @@ public class CollisionHandler {
 	public void handle(Ghost ghost, Teleport teleport) {
 		
 	}
+
 }

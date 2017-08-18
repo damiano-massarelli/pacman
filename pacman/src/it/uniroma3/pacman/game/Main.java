@@ -34,7 +34,7 @@ public class Main extends Application {
 		final Group root = new Group();
 		final Scene scene = new Scene(root);
 		root.getChildren().add(maze);
-		primaryStage.setWidth(SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP - SharedMazeData.GRID_GAP);
+		primaryStage.setWidth(SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP);
 		primaryStage.setHeight(SharedMazeData.getGridHeight() * SharedMazeData.GRID_GAP + 100);
 		primaryStage.setScene(scene);
 		primaryStage.show();
