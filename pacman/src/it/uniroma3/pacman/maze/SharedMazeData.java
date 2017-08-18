@@ -1,6 +1,8 @@
 package it.uniroma3.pacman.maze;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.uniroma3.pacman.staticObjects.Teleport;
@@ -180,6 +182,16 @@ public final class SharedMazeData {
 			for (Dot dot : row)
 				if (dot != null)
 					dot.setEaten(false);
+	}
+	
+	public static List<Dot> getDots() {
+		List<Dot> dots = new ArrayList<>();
+		for (Dot[] row : mazeDots)
+			for (Dot dot : row)
+				if (dot != null)
+					dots.add(dot);
+		
+		return dots;
 	}
 	
 	/**

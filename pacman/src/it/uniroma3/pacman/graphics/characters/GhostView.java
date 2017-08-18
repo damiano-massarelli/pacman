@@ -36,7 +36,6 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 
 
 	// the flag is set if a ghost becomes hollow
-	private boolean frightened; // = false;
 	
 	private int stayInCageMovesLimit;
 	
@@ -73,7 +72,6 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 		/*
 		 * Initial status
 		 */
-		frightened = false;
 		initialDirection = direction;
 		initialPosition = new Point2D(x, y);
 
@@ -92,10 +90,6 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 		this.direction = direction;
 	}
 
-	public boolean isFrightened() {
-		return this.frightened;
-	}
-
 	public void resetPosition()  {
 		setPosition(initialPosition);
 	}
@@ -110,8 +104,6 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 		
 		setDirection(initialDirection);
 
-		frightened = false;
-
 		setImages(defaultImages);
 
 		getTimeline().setRate(1.0);
@@ -122,8 +114,7 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 	}
 
 	public void changeToFrightened() {
-		frightened = true;
-
+		
 		// switch the animation images
 		setImages(hollowImages);
 
@@ -134,7 +125,6 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 	}
 	
 	public void changeToNormal() {
-		frightened = false;
 		setImages(defaultImages);
 		
 		getTimeline().stop();

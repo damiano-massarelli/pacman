@@ -7,6 +7,7 @@ import java.util.List;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionDetector;
+import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.collision.DotCollisionTrigger;
 import it.uniroma3.pacman.collision.TeleportCollisionTrigger;
 import it.uniroma3.pacman.collision.handlers.AutomaticCollisionHandler;
@@ -21,6 +22,7 @@ import it.uniroma3.pacman.graphics.staticObjects.TeleportView;
 import it.uniroma3.pacman.maze.MazeFileLoader;
 import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.ui.MessageBox;
 import it.uniroma3.pacman.ui.CustomText;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -40,12 +42,12 @@ import javafx.scene.text.Text;
  * @author Patrick Webster
  */
 
-public class PacmanGame extends VBox {
+public class PacmanGame {
 
 	// Pac-Man Character
-	public PacMan pacMan;
+	private PacMan pacMan;
 
-	public final List<Ghost> ghosts;
+	private final List<Ghost> ghosts;
 
 	// level of the game
 	private SimpleIntegerProperty level;
@@ -53,62 +55,39 @@ public class PacmanGame extends VBox {
 	private boolean lastGameResultIsGameOver = true;
 
 	private boolean waitingForStart;
-
-	private MessageBox messageBox;
-
-	private final Pane gameField;
 	
 	private CollisionDetector collisionDetector;
+	
+	private PacmanGameView gameView;
 
 	public PacmanGame() throws IOException {
-		setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-		MazeBackgroundGraphics backgroundGraphics = new MazeBackgroundGraphics();
 		MazeFileLoader builder = new MazeFileLoader("/resources/maze.txt");
 		builder.readMazeData();
-		backgroundGraphics.createBackground();
 		
-		setFocused(true);
+		this.level = new SimpleIntegerProperty(1);
+		ghosts = new ArrayList<Ghost>();
 		
-		gameField = new Pane(); 
-		gameField.setPrefSize(SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP, SharedMazeData.getGridHeight() * SharedMazeData.GRID_GAP);
-
-		getChildren().add(gameField);
-
-		ghosts = new ArrayList<Ghost>(4);
+		
 		new CharactersSetup().setup(this);
-		level = new SimpleIntegerProperty(1);
 		
+		
+		gameView = new PacmanGameView(level, pacMan.getLivesProperty(), pacMan.getScoreProperty());
+		this.gameView.setPacManView(pacMan.getView());
+		for (Ghost g : ghosts)
+			this.gameView.addGhostView(g.getView());
 		
 		waitingForStart = true;
-
-		messageBox = new MessageBox("PRESS ANY KEY TO START");
-
-		gameField.getChildren().add(backgroundGraphics);
-
-		CustomText textScore = new CustomText(pacMan.getScoreProperty().asString("SCORE: %1d"));
-		getChildren().add(textScore);
+//		
+//		gameField.setFocusTraversable(true); // patweb
+//		gameField.setOnKeyPressed(new KeyboardEventHandler(this));
 
 
-		Text textLevel = new CustomText(level.asString("LEVEL: %1d "));
-		getChildren().add(textLevel);
-		
-		Text textLives = new CustomText(pacMan.getLivesProperty().asString("LIVES: %1d"));
-		getChildren().add(textLives);
-		
-		gameField.setFocusTraversable(true); // patweb
-		gameField.setOnKeyPressed(new KeyboardEventHandler(this));
-
-		gameField.getChildren().add(pacMan.getView());
-		for (Ghost g:ghosts)
-			gameField.getChildren().add(g.getView());
-		
-		// insert messageBox
-		gameField.getChildren().add(messageBox);
-
-		CollisionDetector collisionDetector = new CollisionDetector();
+		collisionDetector = new CollisionDetector(new CollisionHandler(this));
 		collisionDetector.addCollidable(pacMan);
 		for (Ghost g : ghosts)
 			collisionDetector.addCollidable(g);
+		for (Dot d : SharedMazeData.getDots())
+			collisionDetector.addCollidable(d);
 		// Collision handlers
 //		AutomaticCollisionHandler auto = new AutomaticCollisionHandler();
 //		auto.addCollisionHandler(new PacManDotCollisionHandler(this), PacManView.class, DotView.class);
@@ -128,16 +107,25 @@ public class PacmanGame extends VBox {
 //		collisionDetector.addTrigger(new DotCollisionTrigger(pacMan));
 //		collisionDetector.addTrigger(new TeleportCollisionTrigger(pacMan, ghosts));
 //		collisionDetector.addCollisionHandler(auto);
+		
+		this.gameView.setOnKeyPressed(new KeyboardEventHandler(this));
 	}
 
-	public Pane getGameField() {
-		return this.gameField;
+//	public Pane getGameField() {
+//		return this.gameField;
+//	}
+	
+	public VBox getView() {
+		return this.gameView;
 	}
 	
 	public void addGhost(Ghost ghost) {
 		ghosts.add(ghost);
 	}
-	
+
+	public List<Ghost> getGhosts() {
+		return this.ghosts;
+	}
 	
 	public PacMan getPacMan() {
 		return pacMan;
@@ -145,6 +133,7 @@ public class PacmanGame extends VBox {
 
 	public void setPacMan(PacMan pacMan) {
 		this.pacMan = pacMan;
+		
 	}
 
 	public boolean lastGameResultIsGameOver() {
@@ -167,68 +156,39 @@ public class PacmanGame extends VBox {
 	public void gameOver() {
 		lastGameResultIsGameOver = true;
 		waitingForStart = true;
-		messageBox.setText("GAME OVER. PRESS ANY KEY\nTO RESTART");
-		messageBox.setVisible(true);
-		pacMan.getView().stop();
-		for (Ghost g : ghosts)
-			g.getView().stop();
+		this.gameView.gameOver();
 	}
 	
 	public void levelCompleted() {
 		lastGameResultIsGameOver = false;
 		waitingForStart = true;
-		
-		messageBox.setText("LEVEL COMPLETED! PRESS ANY\nKEY TO START NEXT LEVEL");
-		messageBox.setVisible(true);
-		
-		pacMan.getView().hide();
-		
-		for (Ghost g : ghosts) {
-			g.getView().hide();
-		}
-			
+		this.gameView.levelCompleted();
 	}
 
 	// reset status and start a new game
 	public void startNewGame() {
-		messageBox.setVisible(false);
 		level.set(1);
 		
 		
-		SharedMazeData.resetDots();
+//		SharedMazeData.resetDots();
 		pacMan.setScore(0);
 		pacMan.setDotEatenCount(0);
-		pacMan.getView().resetStatus();
 
 		pacMan.getLivesProperty().set(3);
-
-		for (Ghost g : ghosts) {
-			g.getView().resetStatus();
-		}
-
+		this.gameView.startNewGame();
 	}
 
 	// reset status and start a new level
 	public void startNewLevel() {
-		messageBox.setVisible(false);
-		SharedMazeData.resetDots();
-		pacMan.getView().resetStatus();
+//		SharedMazeData.resetDots();
 		pacMan.setDotEatenCount(0);
-		level.set(level.get() + 1);;
-
-		for (Ghost g : ghosts) {
-			g.getView().resetStatus();
-		}
-
+		level.set(level.get() + 1);
+		this.gameView.startNewLevel();
 	}
 
 	// reset status and start a new life
 	public void startNewLife() {
-		pacMan.getView().resetStatus();
-
-		for (Ghost g : ghosts) {
-			g.getView().resetStatus();
-		}
+		this.gameView.startNewLife();
 	}
 
 }

@@ -1,28 +1,47 @@
 package it.uniroma3.pacman.game;
 
 
-import it.uniroma3.pacman.characters.Ghost;
+import java.beans.EventHandler;
+import java.util.ArrayList;
+import java.util.List;
+
 import it.uniroma3.pacman.graphics.View;
+import it.uniroma3.pacman.graphics.characters.GhostView;
+import it.uniroma3.pacman.graphics.characters.PacManView;
+import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.ui.CustomText;
 import it.uniroma3.pacman.ui.MessageBox;
 import javafx.beans.property.IntegerProperty;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class PacmanGameView extends VBox {
 
 	private Pane gameField;
 	private MessageBox messageBox;
+	private PacManView pacManView;
+	private List<GhostView> ghostViews;
 
 	public PacmanGameView(IntegerProperty level, IntegerProperty pacManScore, IntegerProperty pacManLives) {
-		setFocused(true);
+		//setFocused(true);
+		//setFocusTraversable(true); // patweb
+		//requestFocus();
+		setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+		
+		MazeBackgroundGraphics backgroundGraphics = new MazeBackgroundGraphics();
+		backgroundGraphics.createBackground();
 
 		gameField = new Pane(); 
-		gameField.setFocusTraversable(true); // patweb
+		
 		gameField.setPrefSize(SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP, SharedMazeData.getGridHeight() * SharedMazeData.GRID_GAP);
 		getChildren().add(gameField);
+		gameField.getChildren().add(backgroundGraphics);
 
 		messageBox = new MessageBox("PRESS ANY KEY TO START");
 		gameField.getChildren().add(messageBox);
@@ -35,28 +54,45 @@ public class PacmanGameView extends VBox {
 
 		Text textLives = new CustomText(pacManLives.asString("LIVES: %1d"));
 		getChildren().add(textLives);
+		
+		ghostViews = new ArrayList<>();
+	}
+	
+	public void setKeyboardHandler(KeyboardEventHandler handler) {
+		gameField.setOnKeyPressed(handler);
 	}
 
 	public void addViewToGameField(View view) {
 		this.gameField.getChildren().add(view);
 	}
+	
+	
+	public void setPacManView(PacManView view) {
+		this.pacManView = view;
+		addViewToGameField(pacManView);
+	}
+	
+	public void addGhostView(GhostView view) {
+		this.ghostViews.add(view);
+		addViewToGameField(view);
+	}
 
 	public void gameOver() {
 		messageBox.setText("GAME OVER. PRESS ANY KEY\nTO RESTART");
 		messageBox.setVisible(true);
-		pacMan.getView().stop();
-		for (Ghost g : ghosts)
-			g.getView().stop();
+		pacManView.stop();
+		for (GhostView g : ghostViews)
+			g.stop();
 	}
 
 	public void levelCompleted() {	
 		messageBox.setText("LEVEL COMPLETED! PRESS ANY\nKEY TO START NEXT LEVEL");
 		messageBox.setVisible(true);
 
-		pacMan.getView().hide();
+		pacManView.hide();
 
-		for (Ghost g : ghosts) {
-			g.getView().hide();
+		for (GhostView g : ghostViews) {
+			g.hide();
 		}
 	}
 
@@ -64,30 +100,30 @@ public class PacmanGameView extends VBox {
 		messageBox.setVisible(false);
 
 		SharedMazeData.resetDots();
-		pacMan.getView().resetStatus();
+		pacManView.resetStatus();
 
-		for (Ghost g : ghosts) {
-			g.getView().resetStatus();
+		for (GhostView g : ghostViews) {
+			g.resetStatus();
 		}
 	}
 	
 	public void startNewLevel() {
 		messageBox.setVisible(false);
 		SharedMazeData.resetDots();
-		pacMan.getView().resetStatus();
+		pacManView.resetStatus();
 
-		for (Ghost g : ghosts) {
-			g.getView().resetStatus();
+		for (GhostView g : ghostViews) {
+			g.resetStatus();
 		}
 
 	}
 
 	// reset status and start a new life
 	public void startNewLife() {
-		pacMan.getView().resetStatus();
+		pacManView.resetStatus();
 
-		for (Ghost g : ghosts) {
-			g.getView().resetStatus();
+		for (GhostView g : ghostViews) {
+			g.resetStatus();
 		}
 	}
 }

@@ -27,17 +27,18 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		PacmanGame maze = new PacmanGame();
+		PacmanGame game = new PacmanGame();
 		primaryStage.setTitle("Pac-Man by Henry Zhang www.javafxgame.com and Patrick Webster");
 		//primaryStage.setResizable(true);
 
 		final Group root = new Group();
 		final Scene scene = new Scene(root);
-		root.getChildren().add(maze);
+		root.getChildren().add(game.getView());
 		primaryStage.setWidth(SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP);
 		primaryStage.setHeight(SharedMazeData.getGridHeight() * SharedMazeData.GRID_GAP + 100);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		game.getView().requestFocus();
 	}
 
 }
