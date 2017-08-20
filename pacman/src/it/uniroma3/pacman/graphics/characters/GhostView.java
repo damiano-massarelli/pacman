@@ -42,6 +42,8 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 	private Direction direction;
 	
 	private OnTurnListener turnListener;
+	
+	private boolean usingFrightenedImages;
 
 	// the GUI of a ghost
 	public GhostView(String name, int x, int y) {
@@ -68,7 +70,7 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 		
 		direction = Direction.EST;
 		
-		
+		usingFrightenedImages = false;
 		/*
 		 * Initial status
 		 */
@@ -114,7 +116,7 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 	}
 
 	public void changeToFrightened() {
-		
+		usingFrightenedImages = true;
 		// switch the animation images
 		setImages(hollowImages);
 
@@ -124,7 +126,9 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 		getTimeline().play();
 	}
 	
+	
 	public void changeToNormal() {
+		usingFrightenedImages = false;
 		setImages(defaultImages);
 		
 		getTimeline().stop();
@@ -132,6 +136,10 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 		getTimeline().play();
 	}
 	
+	public boolean isUsingFrightenedImages() {
+		return usingFrightenedImages;
+	}
+
 	public void changeToFlashingFrightened() {
 		setImages(flashHollowImages);
 	}

@@ -20,7 +20,6 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	
 	private GhostView ghostView;
 	
-	private boolean frightened;
 
 	public Ghost(String name, MovePolicy movePolicy, int x, int y) {
 		ghostView = new GhostView(name, x, y);
@@ -28,7 +27,6 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 		ghostView.addOnMoveListener(this);
 		
 		this.movePolicy = movePolicy;
-		this.frightened = false;
 	}
 	
 
@@ -44,17 +42,23 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 
 	public void changeToFrightened() {
 		this.movePolicy = new FrightenedMovePolicy(this.movePolicy, this);
-		this.frightened = true;
 		ghostView.changeToFrightened();  // Cambia aspetto grafico
 	}
 
 	public boolean isFrightened() {
-		return frightened;
+		return getView().isUsingFrightenedImages();
 	}
 	
 	
 	@Override
 	public void onMove() {
+		/*
+		 * TODO: change movePolicy to implement an iterable interface, if next() is FrightenedMovePolicy.class
+		 * then change to hollow ghost, when movePolicy is FrightenedMovePolicy.class and remainingTime is equal
+		 * to something (say 7) then switch to flashing. If next() is not equal to FrightenedMovePolicy.class then
+		 * change to normal. I'm a bit concerned it may be difficult to understand but as long as it is simple it
+		 * make sense to have this code here
+		 */
 		this.movePolicy = movePolicy.nextPolicy();
 	}
 	

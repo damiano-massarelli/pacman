@@ -15,10 +15,15 @@ import it.uniroma3.pacman.staticObjects.Teleport;
  */
 public class CollisionHandler {
 	
+	private static final int GHOST_EATEN_SCORE = 200;
+	
 	private PacmanGame pacmanGame;
+	
+	private int ghostsEatenScoreMultiplier;
 	
 	public CollisionHandler(PacmanGame pacmanGame) {
 		this.pacmanGame = pacmanGame;
+		ghostsEatenScoreMultiplier = 1;
 	}
 	/**
 	 * handle viene chiamato dal {@link CollisionDetector} a cui questo handler è
@@ -28,7 +33,12 @@ public class CollisionHandler {
 	 * @param o2 il secondo oggetto
 	 */
 	public void handle(PacMan pacMan, Ghost ghost) {
-		System.out.println("PacMan - Ghost :)");
+		if (ghost.isFrightened()) {
+			ghost.getView().resetStatus();
+			pacMan.setScore(pacMan.getScore() );
+		} else {
+			pacmanGame.startNewLife();
+		}
 	}
 	
 	public void handle(PacMan pacMan, Dot dot) {
@@ -36,7 +46,8 @@ public class CollisionHandler {
 		if (!dot.isEaten()) {
 			dot.setEaten(true);
 			pacMan.setDotEatenCount(pacMan.getDotEatenCount() + 1);
-			pacMan.setScore(pacMan.getScore() + 10);
+			pacMan.setScore(pacMan.getScore() + GHOST_EATEN_SCORE * ghostsEatenScoreMultiplier);
+			ghostsEatenScoreMultiplier++;
 		}
 	}
 	
