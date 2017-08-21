@@ -71,7 +71,7 @@ public class PacmanGame {
 		new CharactersSetup().setup(this);
 		
 		
-		gameView = new PacmanGameView(level, pacMan.getLivesProperty(), pacMan.getScoreProperty());
+		gameView = new PacmanGameView(level, pacMan.getScoreProperty(), pacMan.getLivesProperty());
 		this.gameView.setPacManView(pacMan.getView());
 		for (Ghost g : ghosts)
 			this.gameView.addGhostView(g.getView());
@@ -115,7 +115,7 @@ public class PacmanGame {
 //		return this.gameField;
 //	}
 	
-	public VBox getView() {
+	public PacmanGameView getView() {
 		return this.gameView;
 	}
 	
@@ -188,6 +188,7 @@ public class PacmanGame {
 
 	// reset status and start a new life
 	public void startNewLife() {
+		this.pacMan.reset();
 		this.gameView.startNewLife();
 	}
 

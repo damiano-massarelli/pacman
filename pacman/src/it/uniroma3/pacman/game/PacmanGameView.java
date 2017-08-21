@@ -1,7 +1,6 @@
 package it.uniroma3.pacman.game;
 
 
-import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.ui.CustomText;
 import it.uniroma3.pacman.ui.MessageBox;
 import javafx.beans.property.IntegerProperty;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -29,9 +27,6 @@ public class PacmanGameView extends VBox {
 	private List<GhostView> ghostViews;
 
 	public PacmanGameView(IntegerProperty level, IntegerProperty pacManScore, IntegerProperty pacManLives) {
-		//setFocused(true);
-		//setFocusTraversable(true); // patweb
-		//requestFocus();
 		setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		
 		MazeBackgroundGraphics backgroundGraphics = new MazeBackgroundGraphics();
@@ -66,6 +61,9 @@ public class PacmanGameView extends VBox {
 		this.gameField.getChildren().add(view);
 	}
 	
+	public Pane getGameField() {
+		return this.gameField;
+	}
 	
 	public void setPacManView(PacManView view) {
 		this.pacManView = view;

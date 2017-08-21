@@ -92,7 +92,7 @@ public class PacManView extends AnimatedView implements OnMoveListener {
 	 */
 	public void resetStatus() {
 		stopped = false;
-		this.direction = Direction.WEST;
+		setDirection(Direction.WEST);
 
 		setCurrentImageIndex(0);
 

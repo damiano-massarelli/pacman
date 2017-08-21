@@ -125,6 +125,11 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 		keyboardBuffer = code;
 	}
 	
+	public void reset() {
+		this.getView().resetStatus();
+		this.keyboardBuffer = null;
+	}
+	
 	@Override
 	public PacManView getView() {
 		return pacmanView;
