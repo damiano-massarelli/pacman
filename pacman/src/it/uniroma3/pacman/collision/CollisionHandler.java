@@ -3,6 +3,7 @@ package it.uniroma3.pacman.collision;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.game.PacmanGame;
+import it.uniroma3.pacman.graphics.characters.DyingPacManSprite;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.pacman.staticObjects.Teleport;
@@ -37,16 +38,23 @@ public class CollisionHandler {
 	 * @param o2 il secondo oggetto
 	 */
 	public void handle(PacMan pacMan, Ghost ghost) {
+		Pane gameField = pacmanGame.getView().getGameField();
 		if (ghost.isFrightened()) {
 			ghost.getView().resetStatus();
 			int score = GHOST_EATEN_SCORE * ghostsEatenScoreMultiplier;
 			pacMan.setScore(pacMan.getScore() + score);
 			ghostsEatenScoreMultiplier *= 2;
 			
-			Pane gameField = pacmanGame.getView().getGameField();
-			gameField.getChildren().add(new ScoreText(""+score, gameField, pacMan.getView().getX(), pacMan.getView().getY()));
+			gameField.getChildren().add(new ScoreText(String.valueOf(score), gameField, pacMan.getView().getX(), pacMan.getView().getY()));
 		} else {
-			pacmanGame.startNewLife();
+			pacMan.setLives(pacMan.getLives() - 1);
+			
+			pacmanGame.getCollisionDetector().stopDetecting();
+			pacmanGame.getView().stopAndHideCharacters();
+			
+			DyingPacManSprite dyingPacManSprite = new DyingPacManSprite(pacMan.getView().getPosition(), gameField);
+			dyingPacManSprite.setOnAnimationEndListener(pacmanGame);
+			gameField.getChildren().add(dyingPacManSprite);
 		}
 	}
 	

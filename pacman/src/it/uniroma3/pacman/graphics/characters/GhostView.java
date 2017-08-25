@@ -68,7 +68,7 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 		
 		setImages(defaultImages);
 		
-		direction = Direction.EST;
+		direction = Direction.RIGHT;
 		
 		usingFrightenedImages = false;
 		/*

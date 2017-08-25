@@ -75,22 +75,31 @@ public class PacmanGameView extends VBox {
 		addViewToGameField(view);
 	}
 
+	public void stopAndHideCharacters() {
+		pacManView.stop();
+		pacManView.setVisible(false);
+		for (GhostView g : ghostViews) {
+			g.setVisible(false);
+			g.stop();
+		}
+	}
+	
 	public void gameOver() {
 		messageBox.setText("GAME OVER. PRESS ANY KEY\nTO RESTART");
 		messageBox.setVisible(true);
-		pacManView.stop();
-		for (GhostView g : ghostViews)
-			g.stop();
+		
 	}
 
 	public void levelCompleted() {	
 		messageBox.setText("LEVEL COMPLETED! PRESS ANY\nKEY TO START NEXT LEVEL");
 		messageBox.setVisible(true);
 
-		pacManView.hide();
+		pacManView.stop();
+		pacManView.setVisible(false);
 
 		for (GhostView g : ghostViews) {
-			g.hide();
+			g.stop();
+			g.setVisible(false);
 		}
 	}
 

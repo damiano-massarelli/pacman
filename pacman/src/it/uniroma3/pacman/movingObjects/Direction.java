@@ -4,38 +4,38 @@ import it.uniroma3.pacman.maze.SharedMazeData;
 
 public enum Direction {
 	
-	WEST (-1, 0) {
+	LEFT (-1, 0) {
 
 		@Override
 		public Direction getInverse() {
-			return EST;
+			return RIGHT;
 		}
 		
 	},
 	
-	NORTH (0, -1) {
+	UP (0, -1) {
 
 		@Override
 		public Direction getInverse() {
-			return Direction.SOUTH;
+			return Direction.DOWN;
 		}
 		
 	},
 	
-	EST (1, 0) {
+	RIGHT (1, 0) {
 
 		@Override
 		public Direction getInverse() {
-			return WEST;
+			return LEFT;
 		}
 		
 	},
 	
-	SOUTH (0, 1) {
+	DOWN (0, 1) {
 
 		@Override
 		public Direction getInverse() {
-			return Direction.NORTH;
+			return Direction.UP;
 		}
 		
 	};

@@ -2,11 +2,8 @@ package it.uniroma3.pacman.characters;
 
 import it.uniroma3.pacman.collision.CollidableModelEntity;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.game.PacmanGame;
-import it.uniroma3.pacman.graphics.characters.DyingPacManView;
 import it.uniroma3.pacman.graphics.characters.PacManView;
 import it.uniroma3.pacman.movingObjects.Direction;
-import it.uniroma3.pacman.movingObjects.AnimatedView;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
@@ -108,15 +105,16 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 		}
 		Direction newDirection = null;
 		if (keyboardBuffer == KeyCode.LEFT)
-			newDirection = Direction.WEST;
+			newDirection = Direction.LEFT;
 		else if (keyboardBuffer == KeyCode.RIGHT)
-			newDirection = Direction.EST;
+			newDirection = Direction.RIGHT;
 		else if (keyboardBuffer == KeyCode.UP)
-			newDirection = Direction.NORTH;
+			newDirection = Direction.UP;
 		else if (keyboardBuffer == KeyCode.DOWN)
-			newDirection = Direction.SOUTH;
+			newDirection = Direction.DOWN;
 		
-		pacmanView.attemptToSetDirection(newDirection);
+		if (newDirection != null)
+			pacmanView.attemptToSetDirection(newDirection);
 
 	}
 
@@ -133,14 +131,6 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 	@Override
 	public PacManView getView() {
 		return pacmanView;
-	}
-
-	
-	// TODO: not here, DyingPacmanView should be created within a collision handler
-	public void die(PacmanGame game) {
-		pacmanView.hide();
-		DyingPacManView dyingPacMan = new DyingPacManView(game);
-		dyingPacMan.startAnimation(pacmanView.getX(), pacmanView.getY());
 	}
 
 	@Override

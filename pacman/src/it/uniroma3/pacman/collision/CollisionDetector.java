@@ -1,9 +1,7 @@
 package it.uniroma3.pacman.collision;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -36,6 +34,7 @@ public class CollisionDetector {
 	private CollisionHandler collisionHandler;
 	
 	private List<CollidableModelEntity> collidables;
+	
 	
 	/** 
 	 * Crea un nuovo {@link CollisionDetector}
@@ -98,5 +97,12 @@ public class CollisionDetector {
 		this.collidables.addAll(collidables);
 	}
 
+	public void stopDetecting() {
+		this.timeline.pause();
+	}
+	
+	public void startDetecting() {
+		this.timeline.play();
+	}
 	
 }

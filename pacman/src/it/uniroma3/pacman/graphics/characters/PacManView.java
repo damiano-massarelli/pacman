@@ -24,7 +24,7 @@ public class PacManView extends AnimatedView implements OnMoveListener {
 		super();
 		
 		setPosition(INITIAL_POSITION);
-		setDirection(Direction.WEST);
+		setDirection(Direction.LEFT);
 		stopped = true;
 		
 		addOnMoveListener(this);
@@ -92,7 +92,7 @@ public class PacManView extends AnimatedView implements OnMoveListener {
 	 */
 	public void resetStatus() {
 		stopped = false;
-		setDirection(Direction.WEST);
+		setDirection(Direction.LEFT);
 
 		setCurrentImageIndex(0);
 
@@ -103,11 +103,4 @@ public class PacManView extends AnimatedView implements OnMoveListener {
 		playImageAnimation();
 	}
 	
-	
-
-	public void hide() {
-		setVisible(false);
-		getTimeline().stop();
-	}
-
 }

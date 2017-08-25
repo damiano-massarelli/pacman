@@ -8,30 +8,12 @@ import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionDetector;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.collision.DotCollisionTrigger;
-import it.uniroma3.pacman.collision.TeleportCollisionTrigger;
-import it.uniroma3.pacman.collision.handlers.AutomaticCollisionHandler;
-import it.uniroma3.pacman.collision.handlers.MovingObjectTeleportCollisionHandler;
-import it.uniroma3.pacman.collision.handlers.PacManDotCollisionHandler;
-import it.uniroma3.pacman.collision.handlers.PacManGhostCollisionHandler;
-import it.uniroma3.pacman.collision.handlers.PacManMagicDotCollisionHandler;
-import it.uniroma3.pacman.graphics.characters.PacManView;
-import it.uniroma3.pacman.graphics.staticObjects.DotView;
-import it.uniroma3.pacman.graphics.staticObjects.MagicDotView;
-import it.uniroma3.pacman.graphics.staticObjects.TeleportView;
+import it.uniroma3.pacman.graphics.characters.OnAnimationEndListener;
 import it.uniroma3.pacman.maze.MazeFileLoader;
-import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.staticObjects.Dot;
-import it.uniroma3.pacman.ui.MessageBox;
-import it.uniroma3.pacman.ui.CustomText;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+
 
 /**
  * Maze.fx created on 2<<008-12-20, 20:22:15 <br>
@@ -42,7 +24,7 @@ import javafx.scene.text.Text;
  * @author Patrick Webster
  */
 
-public class PacmanGame {
+public class PacmanGame implements OnAnimationEndListener {
 
 	// Pac-Man Character
 	private PacMan pacMan;
@@ -77,10 +59,6 @@ public class PacmanGame {
 			this.gameView.addGhostView(g.getView());
 		
 		waitingForStart = true;
-//		
-//		gameField.setFocusTraversable(true); // patweb
-//		gameField.setOnKeyPressed(new KeyboardEventHandler(this));
-
 
 		collisionDetector = new CollisionDetector(new CollisionHandler(this));
 		collisionDetector.addCollidable(pacMan);
@@ -110,13 +88,13 @@ public class PacmanGame {
 		
 		this.gameView.setOnKeyPressed(new KeyboardEventHandler(this));
 	}
-
-//	public Pane getGameField() {
-//		return this.gameField;
-//	}
 	
 	public PacmanGameView getView() {
 		return this.gameView;
+	}
+	
+	public CollisionDetector getCollisionDetector() {
+		return this.collisionDetector;
 	}
 	
 	public void addGhost(Ghost ghost) {
@@ -167,8 +145,8 @@ public class PacmanGame {
 
 	// reset status and start a new game
 	public void startNewGame() {
+		this.collisionDetector.startDetecting();
 		level.set(1);
-		
 		
 //		SharedMazeData.resetDots();
 		pacMan.setScore(0);
@@ -188,8 +166,19 @@ public class PacmanGame {
 
 	// reset status and start a new life
 	public void startNewLife() {
+		this.collisionDetector.startDetecting();
 		this.pacMan.reset();
 		this.gameView.startNewLife();
+	}
+	
+	/** This method is called by DyingPacManSprite when its animation is over */
+	@Override
+	public void onAnimationEnd() {
+		if (pacMan.getLives() == 0)
+			this.gameOver();
+		else
+			this.startNewLife();
+		
 	}
 
 }
