@@ -209,7 +209,7 @@ public final class SharedMazeData {
 	 * @param teleport the teleport to add
 	 */
 	public static void setTeleport(it.uniroma3.pacman.staticObjects.Teleport teleport) {
-		Point2D teleportPosition = new Point2D(teleport.getView().getX(), teleport.getView().getY());
+		Point2D teleportPosition = new Point2D(teleport.getSprite().getX(), teleport.getSprite().getY());
 		position2teleport.put(teleportPosition, teleport);
 	}
 	

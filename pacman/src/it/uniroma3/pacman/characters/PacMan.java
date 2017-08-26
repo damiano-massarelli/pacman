@@ -2,7 +2,7 @@ package it.uniroma3.pacman.characters;
 
 import it.uniroma3.pacman.collision.CollidableModelEntity;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.graphics.characters.PacManView;
+import it.uniroma3.pacman.graphics.characters.PacManSprite;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.pacman.staticObjects.Dot;
@@ -40,7 +40,7 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 	/**
 	 * The pacman graphics
 	 */
-	private PacManView pacmanView;
+	private PacManSprite pacmanSprite;
 
 	/**
 	 * Constructor.
@@ -56,8 +56,8 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 		
 		keyboardBuffer = null;
 		
-		this.pacmanView = new PacManView();
-		pacmanView.addOnMoveListener(this);
+		this.pacmanSprite = new PacManSprite();
+		pacmanSprite.addOnMoveListener(this);
 	}
 	
 	public int getDotEatenCount() {
@@ -114,7 +114,7 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 			newDirection = Direction.DOWN;
 		
 		if (newDirection != null)
-			pacmanView.attemptToSetDirection(newDirection);
+			pacmanSprite.attemptToSetDirection(newDirection);
 
 	}
 
@@ -124,13 +124,13 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 	}
 	
 	public void reset() {
-		this.getView().resetStatus();
+		this.getSprite().resetStatus();
 		this.keyboardBuffer = null;
 	}
 	
 	@Override
-	public PacManView getView() {
-		return pacmanView;
+	public PacManSprite getSprite() {
+		return pacmanSprite;
 	}
 
 	@Override

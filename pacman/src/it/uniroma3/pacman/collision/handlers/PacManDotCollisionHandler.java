@@ -3,7 +3,7 @@ package it.uniroma3.pacman.collision.handlers;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.game.PacmanGame;
-import it.uniroma3.pacman.graphics.staticObjects.DotView;
+import it.uniroma3.pacman.graphics.staticObjects.DotSprite;
 import it.uniroma3.pacman.maze.SharedMazeData;
 
 public class PacManDotCollisionHandler implements CollisionHandler {
@@ -20,7 +20,7 @@ public class PacManDotCollisionHandler implements CollisionHandler {
 	@Override
 	public void handle(Object o1, Object o2) {
 		PacMan pacman = (PacMan) o1;
-		DotView dot = (DotView) o2;
+		DotSprite dot = (DotSprite) o2;
 		
 		dot.setEaten(true);
 		pacman.setDotEatenCount(pacman.getDotEatenCount() + 1);

@@ -5,21 +5,21 @@ import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollidableModelEntity;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.graphics.View;
-import it.uniroma3.pacman.graphics.staticObjects.DotView;
+import it.uniroma3.pacman.graphics.Sprite;
+import it.uniroma3.pacman.graphics.staticObjects.DotSprite;
 
 public class Dot implements CollidableModelEntity {
 	
 	boolean eaten;
-	private DotView dotView;
+	private DotSprite dotSprite;
 	
 	public Dot(int x, int y) {
-		this(new DotView(x, y));
+		this(new DotSprite(x, y));
 	}
 	
-	public Dot(DotView dotView) {
+	public Dot(DotSprite dotView) {
 		eaten = false;
-		this.dotView = dotView;
+		this.dotSprite = dotView;
 	}
 	
 	
@@ -29,15 +29,15 @@ public class Dot implements CollidableModelEntity {
 
 	public void setEaten(boolean eaten) {
 		if (eaten)
-			getView().setVisible(false);
+			getSprite().setVisible(false);
 		else
-			getView().setVisible(true);
+			getSprite().setVisible(true);
 		this.eaten = eaten;
 	}
 
 	@Override
-	public View getView() {
-		return this.dotView;
+	public Sprite getSprite() {
+		return this.dotSprite;
 	}
 
 	@Override

@@ -73,9 +73,9 @@ public class CollisionDetector {
 				CollidableModelEntity o1 = collidables.get(i);
 				CollidableModelEntity o2 = collidables.get(j);
 				
-				double distance = o1.getView().getPosition().distance(o2.getView().getPosition());
+				double distance = o1.getSprite().getPosition().distance(o2.getSprite().getPosition());
 				
-				if (distance < o1.getView().getCollisionRadius() + o2.getView().getCollisionRadius()) {
+				if (distance < o1.getSprite().getCollisionRadius() + o2.getSprite().getCollisionRadius()) {
 					// System.out.println("collided " + o1.getClass() + " " + o2.getClass());
 					o1.accept(collisionHandler, o2);
 				}

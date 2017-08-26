@@ -5,15 +5,15 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 
-public class View extends Parent {
+public class Sprite extends Parent {
 	private IntegerProperty xProperty, yProperty;
 	private int collisionRadius;
 
-	public View(int x, int y) {
+	public Sprite(int x, int y) {
 		this(x, y, 10);
 	}
 	
-	public View(int x, int y, int collisionRadius) {
+	public Sprite(int x, int y, int collisionRadius) {
 		super();
 		this.collisionRadius = collisionRadius;
 		this.xProperty = new SimpleIntegerProperty(x);

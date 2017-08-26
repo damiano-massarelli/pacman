@@ -15,7 +15,7 @@ import javafx.util.Duration;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class MagicDotView extends DotView {
+public class MagicDotSprite extends DotSprite {
 	private IntegerProperty radius;
 
 	// variables for magic dot's growing/shrinking animation
@@ -23,7 +23,7 @@ public class MagicDotView extends DotView {
 	private int delta;
 	private Timeline timeline;
 
-	public MagicDotView(int x, int y) {
+	public MagicDotSprite(int x, int y) {
 		super(x, y);
 		
 		this.radius = new SimpleIntegerProperty(5);

@@ -3,7 +3,7 @@ package it.uniroma3.pacman.movingObjects;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.uniroma3.pacman.graphics.View;
+import it.uniroma3.pacman.graphics.Sprite;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +20,7 @@ import javafx.util.Duration;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class AnimatedView extends View {
+public class AnimatedSprite extends Sprite {
 	protected static final int ANIMATION_STEP = 4;
 	protected static final int MOVE_SPEED = SharedMazeData.GRID_GAP / ANIMATION_STEP;
 
@@ -37,11 +37,11 @@ public class AnimatedView extends View {
 	
 	private List<OnMoveListener> moveListeners;
 
-	public AnimatedView() {
+	public AnimatedSprite() {
 		this(null, 0, 0);
 	}
 	
-	public AnimatedView(Image[] images, int x, int y) {
+	public AnimatedSprite(Image[] images, int x, int y) {
 		super(x, y);
 		moveListeners = new ArrayList<>();
 		

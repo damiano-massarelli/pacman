@@ -1,7 +1,7 @@
 package it.uniroma3.pacman.graphics.characters;
 
 import it.uniroma3.pacman.game.PacmanGame;
-import it.uniroma3.pacman.graphics.View;
+import it.uniroma3.pacman.graphics.Sprite;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -22,7 +22,7 @@ import javafx.util.Duration;
  * <br />
  * This Sprite doesn't have a corresponding domain class
  */
-public class DyingPacManSprite extends View {
+public class DyingPacManSprite extends Sprite {
 
 	private static final int RADIUS = 13;
 	

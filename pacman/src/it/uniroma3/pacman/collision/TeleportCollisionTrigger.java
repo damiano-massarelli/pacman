@@ -6,7 +6,7 @@ import java.util.List;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.maze.SharedMazeData;
-import it.uniroma3.pacman.movingObjects.AnimatedView;
+import it.uniroma3.pacman.movingObjects.AnimatedSprite;
 
 /**
  * Questo trigger viene usato per scatenare la collisione tra un punto di 
@@ -16,8 +16,8 @@ import it.uniroma3.pacman.movingObjects.AnimatedView;
  */
 public class TeleportCollisionTrigger implements CollisionTrigger {
 	
-	private List<AnimatedView> movingObjets;
-	private AnimatedView lastCollided;
+	private List<AnimatedSprite> movingObjets;
+	private AnimatedSprite lastCollided;
 	
 	public TeleportCollisionTrigger(PacMan pacman, List<Ghost> ghosts) {
 		movingObjets = new ArrayList<>();
@@ -28,7 +28,7 @@ public class TeleportCollisionTrigger implements CollisionTrigger {
 
 	@Override
 	public boolean collisionOccurred() {
-		for (AnimatedView mo : movingObjets) {
+		for (AnimatedSprite mo : movingObjets) {
 			if (SharedMazeData.getTeleportForPosition(mo.getX(), mo.getY()) != null) {
 				lastCollided = mo;
 				return true;

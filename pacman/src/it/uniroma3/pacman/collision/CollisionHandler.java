@@ -40,19 +40,19 @@ public class CollisionHandler {
 	public void handle(PacMan pacMan, Ghost ghost) {
 		Pane gameField = pacmanGame.getView().getGameField();
 		if (ghost.isFrightened()) {
-			ghost.getView().resetStatus();
+			ghost.getSprite().resetStatus();
 			int score = GHOST_EATEN_SCORE * ghostsEatenScoreMultiplier;
 			pacMan.setScore(pacMan.getScore() + score);
 			ghostsEatenScoreMultiplier *= 2;
 			
-			gameField.getChildren().add(new ScoreText(String.valueOf(score), gameField, pacMan.getView().getX(), pacMan.getView().getY()));
+			gameField.getChildren().add(new ScoreText(String.valueOf(score), gameField, pacMan.getSprite().getX(), pacMan.getSprite().getY()));
 		} else {
 			pacMan.setLives(pacMan.getLives() - 1);
 			
 			pacmanGame.getCollisionDetector().stopDetecting();
 			pacmanGame.getView().stopAndHideCharacters();
 			
-			DyingPacManSprite dyingPacManSprite = new DyingPacManSprite(pacMan.getView().getPosition(), gameField);
+			DyingPacManSprite dyingPacManSprite = new DyingPacManSprite(pacMan.getSprite().getPosition(), gameField);
 			dyingPacManSprite.setOnAnimationEndListener(pacmanGame);
 			gameField.getChildren().add(dyingPacManSprite);
 		}

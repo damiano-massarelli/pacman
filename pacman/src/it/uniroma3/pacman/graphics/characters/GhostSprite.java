@@ -6,7 +6,7 @@ import java.util.List;
 import it.uniroma3.resources.ResourceManager;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
-import it.uniroma3.pacman.movingObjects.AnimatedView;
+import it.uniroma3.pacman.movingObjects.AnimatedSprite;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -19,7 +19,7 @@ import javafx.scene.image.Image;
  * @author Henry Zhang
  * @author Patrick Webster
  */
-public class GhostView extends AnimatedView implements OnMoveListener{
+public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 	
 	private static final int STAY_IN_CAGE_DEFAULT_MOVES = 120;
 
@@ -46,7 +46,7 @@ public class GhostView extends AnimatedView implements OnMoveListener{
 	private boolean usingFrightenedImages;
 
 	// the GUI of a ghost
-	public GhostView(String name, int x, int y) {
+	public GhostSprite(String name, int x, int y) {
 		super(null, x, y);
 		setCollisionRadius(10);
 		addOnMoveListener(this);

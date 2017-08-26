@@ -28,9 +28,9 @@ public class FrightenedMovePolicy extends AbstractMovePolicy {
 	public MovePolicy nextPolicy() {
 		MovePolicy next = super.nextPolicy();
 		if (getRemainingMovesToNextPolicy() == FALSING_FRIGHTENED_MOVES_LIMIT && ghost.isFrightened())
-			ghost.getView().changeToFlashingFrightened();
+			ghost.getSprite().changeToFlashingFrightened();
 		else if (getRemainingMovesToNextPolicy() == 0)
-			ghost.getView().changeToNormal();
+			ghost.getSprite().changeToNormal();
 		return next;
 	}
 }

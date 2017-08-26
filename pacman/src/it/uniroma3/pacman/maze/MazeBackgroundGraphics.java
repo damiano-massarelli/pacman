@@ -43,9 +43,9 @@ public class MazeBackgroundGraphics extends Group {
 				Dot dot = SharedMazeData.getDot(x, y);
 				Teleport teleport = SharedMazeData.getTeleportForPosition(x * SharedMazeData.GRID_GAP, y * SharedMazeData.GRID_GAP);
 				if (dot != null)
-					getChildren().add(dot.getView());
+					getChildren().add(dot.getSprite());
 				if (teleport != null)
-					getChildren().add(teleport.getView());
+					getChildren().add(teleport.getSprite());
 				if (SharedMazeData.isBlock(x, y) && shouldDrawWall(x, y)) {
 					Rectangle rect = new Rectangle(x * width , y * height, width, height);
 					rect.setFill(Color.CORNFLOWERBLUE);

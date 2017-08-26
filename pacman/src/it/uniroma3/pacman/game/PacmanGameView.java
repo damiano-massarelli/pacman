@@ -4,9 +4,9 @@ package it.uniroma3.pacman.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.uniroma3.pacman.graphics.View;
-import it.uniroma3.pacman.graphics.characters.GhostView;
-import it.uniroma3.pacman.graphics.characters.PacManView;
+import it.uniroma3.pacman.graphics.Sprite;
+import it.uniroma3.pacman.graphics.characters.GhostSprite;
+import it.uniroma3.pacman.graphics.characters.PacManSprite;
 import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.ui.CustomText;
@@ -23,8 +23,8 @@ public class PacmanGameView extends VBox {
 
 	private Pane gameField;
 	private MessageBox messageBox;
-	private PacManView pacManView;
-	private List<GhostView> ghostViews;
+	private PacManSprite pacManSprite;
+	private List<GhostSprite> ghostSprites;
 
 	public PacmanGameView(IntegerProperty level, IntegerProperty pacManScore, IntegerProperty pacManLives) {
 		setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
@@ -50,35 +50,35 @@ public class PacmanGameView extends VBox {
 		Text textLives = new CustomText(pacManLives.asString("LIVES: %1d"));
 		getChildren().add(textLives);
 		
-		ghostViews = new ArrayList<>();
+		ghostSprites = new ArrayList<>();
 	}
 	
 	public void setKeyboardHandler(KeyboardEventHandler handler) {
 		gameField.setOnKeyPressed(handler);
 	}
 
-	public void addViewToGameField(View view) {
-		this.gameField.getChildren().add(view);
+	public void addSpriteToGameField(Sprite sprite) {
+		this.gameField.getChildren().add(sprite);
 	}
 	
 	public Pane getGameField() {
 		return this.gameField;
 	}
 	
-	public void setPacManView(PacManView view) {
-		this.pacManView = view;
-		addViewToGameField(pacManView);
+	public void setPacManSprite(PacManSprite sprite) {
+		this.pacManSprite = sprite;
+		addSpriteToGameField(pacManSprite);
 	}
 	
-	public void addGhostView(GhostView view) {
-		this.ghostViews.add(view);
-		addViewToGameField(view);
+	public void addGhostSprite(GhostSprite sprite) {
+		this.ghostSprites.add(sprite);
+		addSpriteToGameField(sprite);
 	}
 
 	public void stopAndHideCharacters() {
-		pacManView.stop();
-		pacManView.setVisible(false);
-		for (GhostView g : ghostViews) {
+		pacManSprite.stop();
+		pacManSprite.setVisible(false);
+		for (GhostSprite g : ghostSprites) {
 			g.setVisible(false);
 			g.stop();
 		}
@@ -94,10 +94,10 @@ public class PacmanGameView extends VBox {
 		messageBox.setText("LEVEL COMPLETED! PRESS ANY\nKEY TO START NEXT LEVEL");
 		messageBox.setVisible(true);
 
-		pacManView.stop();
-		pacManView.setVisible(false);
+		pacManSprite.stop();
+		pacManSprite.setVisible(false);
 
-		for (GhostView g : ghostViews) {
+		for (GhostSprite g : ghostSprites) {
 			g.stop();
 			g.setVisible(false);
 		}
@@ -107,9 +107,9 @@ public class PacmanGameView extends VBox {
 		messageBox.setVisible(false);
 
 		SharedMazeData.resetDots();
-		pacManView.resetStatus();
+		pacManSprite.resetStatus();
 
-		for (GhostView g : ghostViews) {
+		for (GhostSprite g : ghostSprites) {
 			g.resetStatus();
 		}
 	}
@@ -117,9 +117,9 @@ public class PacmanGameView extends VBox {
 	public void startNewLevel() {
 		messageBox.setVisible(false);
 		SharedMazeData.resetDots();
-		pacManView.resetStatus();
+		pacManSprite.resetStatus();
 
-		for (GhostView g : ghostViews) {
+		for (GhostSprite g : ghostSprites) {
 			g.resetStatus();
 		}
 
@@ -127,9 +127,9 @@ public class PacmanGameView extends VBox {
 
 	// reset status and start a new life
 	public void startNewLife() {
-		pacManView.resetStatus();
+		pacManSprite.resetStatus();
 
-		for (GhostView g : ghostViews) {
+		for (GhostSprite g : ghostSprites) {
 			g.resetStatus();
 		}
 	}

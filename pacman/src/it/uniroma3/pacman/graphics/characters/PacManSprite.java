@@ -2,13 +2,13 @@ package it.uniroma3.pacman.graphics.characters;
 
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
-import it.uniroma3.pacman.movingObjects.AnimatedView;
+import it.uniroma3.pacman.movingObjects.AnimatedSprite;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.resources.ResourceManager;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
-public class PacManView extends AnimatedView implements OnMoveListener {
+public class PacManSprite extends AnimatedSprite implements OnMoveListener {
 	private static final Point2D INITIAL_POSITION = new Point2D(256, 400);
 	
 	private Direction direction;
@@ -20,7 +20,7 @@ public class PacManView extends AnimatedView implements OnMoveListener {
 	 */														
 	private static final int[] ROTATION_DEGREE = new int[] {0, 90, 180, 270};
 
-	public PacManView() {
+	public PacManSprite() {
 		super();
 		
 		setPosition(INITIAL_POSITION);

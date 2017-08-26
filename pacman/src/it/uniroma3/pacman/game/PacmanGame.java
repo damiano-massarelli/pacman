@@ -54,9 +54,9 @@ public class PacmanGame implements OnAnimationEndListener {
 		
 		
 		gameView = new PacmanGameView(level, pacMan.getScoreProperty(), pacMan.getLivesProperty());
-		this.gameView.setPacManView(pacMan.getView());
+		this.gameView.setPacManSprite(pacMan.getSprite());
 		for (Ghost g : ghosts)
-			this.gameView.addGhostView(g.getView());
+			this.gameView.addGhostSprite(g.getSprite());
 		
 		waitingForStart = true;
 

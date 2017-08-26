@@ -6,7 +6,7 @@ import it.uniroma3.pacman.characters.behaviours.FrightenedMovePolicy;
 import it.uniroma3.pacman.characters.behaviours.MovePolicy;
 import it.uniroma3.pacman.collision.CollidableModelEntity;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.graphics.characters.GhostView;
+import it.uniroma3.pacman.graphics.characters.GhostSprite;
 import it.uniroma3.pacman.graphics.characters.OnTurnListener;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
@@ -18,13 +18,13 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	
 	private MovePolicy movePolicy;
 	
-	private GhostView ghostView;
+	private GhostSprite ghostSprite;
 	
 
 	public Ghost(String name, MovePolicy movePolicy, int x, int y) {
-		ghostView = new GhostView(name, x, y);
-		ghostView.setOnTurnListener(this);
-		ghostView.addOnMoveListener(this);
+		ghostSprite = new GhostSprite(name, x, y);
+		ghostSprite.setOnTurnListener(this);
+		ghostSprite.addOnMoveListener(this);
 		
 		this.movePolicy = movePolicy;
 	}
@@ -36,17 +36,17 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 		
 		direzioneScelta = movePolicy.makeDecision(this, availableDirections);
 		
-		ghostView.setDirection(direzioneScelta);
+		ghostSprite.setDirection(direzioneScelta);
 	}
 
 
 	public void changeToFrightened() {
 		this.movePolicy = new FrightenedMovePolicy(this.movePolicy, this);
-		ghostView.changeToFrightened();  // Cambia aspetto grafico
+		ghostSprite.changeToFrightened();  // Cambia aspetto grafico
 	}
 
 	public boolean isFrightened() {
-		return getView().isUsingFrightenedImages();
+		return getSprite().isUsingFrightenedImages();
 	}
 	
 	
@@ -63,8 +63,8 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	}
 	
 	@Override
-	public GhostView getView() {
-		return ghostView;
+	public GhostSprite getSprite() {
+		return ghostSprite;
 	}
 
 

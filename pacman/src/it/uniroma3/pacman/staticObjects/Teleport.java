@@ -4,15 +4,15 @@ import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollidableModelEntity;
 import it.uniroma3.pacman.collision.CollisionHandler;
-import it.uniroma3.pacman.graphics.staticObjects.TeleportView;
+import it.uniroma3.pacman.graphics.staticObjects.TeleportSprite;
 
 public class Teleport implements CollidableModelEntity {
 	private Teleport nextTeleport;
 	
-	private TeleportView view;
+	private TeleportSprite teleportSprite;
 
 	public Teleport(int x, int y) {
-		view = new TeleportView(x, y);
+		teleportSprite = new TeleportSprite(x, y);
 	}
 
 	public Teleport getNextTeleport() {
@@ -24,8 +24,8 @@ public class Teleport implements CollidableModelEntity {
 	}
 
 	@Override
-	public TeleportView getView() {
-		return view;
+	public TeleportSprite getSprite() {
+		return teleportSprite;
 	}
 
 	@Override
