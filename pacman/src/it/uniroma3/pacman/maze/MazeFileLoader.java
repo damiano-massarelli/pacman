@@ -18,22 +18,24 @@ import it.uniroma3.resources.ResourceManager;
  *
  */
 public class MazeFileLoader {
-	Teleport firstTeleport = null;
-	BufferedReader br;
-
+	private Teleport firstTeleport = null;
+	private MazeAssets mazeAssets;
 	/**
 	 * Creates a new instance of MazeFileLoader
 	 * @param filePath the maze file to read
 	 * @throws IOException
 	 */
 	public MazeFileLoader(String filePath) throws IOException {
-
-		this.br = null;
+		mazeAssets = new MazeAssets();
+		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(ResourceManager.getInstance().getResourceAsStream("/maze.txt"), "UTF-8"));
+			readMazeData(br);
 		} catch (IOException e) {
-			br.close();
 			throw e;
+		} finally {
+			if (br != null)
+				br.close();
 		}
 	}
 	
@@ -41,20 +43,10 @@ public class MazeFileLoader {
 	 * Reads the file and puts its content in SharedMazeData
 	 * @throws IOException
 	 */
-	public void readMazeData() throws IOException {
+	public void readMazeData(BufferedReader br) throws IOException {
 		String line;
 		int yPos = 0;
 		int xPos = 0;
-		try {
-			line = br.readLine();
-			String[] dimension = line.split(",");
-			int mazeWidth = Integer.parseInt(dimension[0]);
-			int mazeHeight = Integer.parseInt(dimension[1]);
-			SharedMazeData.create(mazeWidth, mazeHeight);
-		} catch (Exception e) {
-			throw new IOException("First line of maze file must contain maze's dimension as integers: <width>,<height>");
-		}
-		
 		while ((line = br.readLine()) != null) {
 			if (line.startsWith("#")) continue; // la linea è un commento
 			xPos = 0;
@@ -67,32 +59,26 @@ public class MazeFileLoader {
 			}
 			yPos++;
 		}
-		br.close();
 	}
 
 	private void setMazeData(int xPos, int yPos, char blockType) {
-		int value = SharedMazeData.BLOCK;
-		Dot dot = null;
 		switch (blockType) {
 		case 'X':
-			value = SharedMazeData.BLOCK;
-			break;
-		case '-':
-			value = SharedMazeData.EMPTY;
+			//value = SharedMazeData.BLOCK;
 			break;
 		case '.':
-			value = SharedMazeData.NORMAL_DOT;
-			dot = new Dot(SharedMazeData.xPositionForGridX(xPos), SharedMazeData.yPositionForGridY(yPos));
+							  // convert matrix pos to absolute pos
+			Dot dot = new Dot(xPos * SharedMazeData.GRID_GAP, yPos * SharedMazeData.GRID_GAP); 
+			mazeAssets.addDot(dot);
 			break;
 		case '+':
-			value = SharedMazeData.MAGIC_DOT;
-			dot = new MagicDot(SharedMazeData.xPositionForGridX(xPos), SharedMazeData.yPositionForGridY(yPos));
+			Dot magicDot = new MagicDot(xPos * SharedMazeData.GRID_GAP, yPos * SharedMazeData.GRID_GAP);
+			mazeAssets.addDot(magicDot);
 			break;
 		case 'U':
-			value = SharedMazeData.CAGE_BOUNDARY_LIMIT;
+			//value = SharedMazeData.CAGE_BOUNDARY_LIMIT;
 			break;
 		case 'T':
-			value = SharedMazeData.TELEPORT;
 			Teleport teleport = new Teleport(SharedMazeData.xPositionForGridX(xPos), SharedMazeData.yPositionForGridY(yPos));
 			if (firstTeleport != null) {
 				firstTeleport.setNextTeleport(teleport);
@@ -101,15 +87,13 @@ public class MazeFileLoader {
 			else
 				firstTeleport = teleport;
 			
-			SharedMazeData.setTeleport(teleport);
+			mazeAssets.addTeleport(teleport);
 			break;
 		}
-
-		if (dot != null) 
-			SharedMazeData.setDot(xPos, yPos, dot);
-			
-
-		SharedMazeData.setData(xPos, yPos, value);
+	}
+	
+	public MazeAssets getMazeAssets() {
+		return mazeAssets;
 	}
 
 }
