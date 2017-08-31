@@ -12,23 +12,23 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class MazeBackgroundGraphics extends Group {
-	public MazeBackgroundGraphics() {
+	MazeAssets mazeAssets;
+	MazeBlockMatrix blockMatrix;
+	
+	public MazeBackgroundGraphics(MazeAssets mazeAssets) {
+		this.mazeAssets = mazeAssets;
+		this.blockMatrix = mazeAssets.getBlockMatrix();
 	}
 
 	private boolean isCorner(int x, int y) {
-		return (!SharedMazeData.isBlock(x + 1, y + 1) &&
-				SharedMazeData.isBlock(x + 1, y) &&
-				SharedMazeData.isBlock(x, y + 1));
+		return (!blockMatrix.isBlockAt(x + 1, y + 1) &&
+				blockMatrix.isBlockAt(x + 1, y) &&
+				blockMatrix.isBlockAt(x, y + 1));
 	}
 
 	private boolean shouldDrawWall(int x, int y) {
-		try {	
-			return (!isCorner(x, y) && SharedMazeData.isBlock(x + 1, y)
-					&& SharedMazeData.isBlock(x, y + 1));
-
-		} catch (IndexOutOfBoundsException e) {
-			return false;
-		}
+			return (!isCorner(x, y) && blockMatrix.isBlockAt(x + 1, y)
+					&& blockMatrix.isBlockAt(x, y + 1));
 	}
 
 	/**
@@ -38,15 +38,12 @@ public class MazeBackgroundGraphics extends Group {
 	public void createBackground() {
 		int width = SharedMazeData.GRID_GAP;
 		int height = SharedMazeData.GRID_GAP;
-		for (int x = 0; x < SharedMazeData.getGridWidth(); x++) {
-			for (int y = 0; y < SharedMazeData.getGridHeight(); y++) {
-				Dot dot = SharedMazeData.getDot(x, y);
-				Teleport teleport = SharedMazeData.getTeleportForPosition(x * SharedMazeData.GRID_GAP, y * SharedMazeData.GRID_GAP);
-				if (dot != null)
-					getChildren().add(dot.getSprite());
-				if (teleport != null)
-					getChildren().add(teleport.getSprite());
-				if (SharedMazeData.isBlock(x, y) && shouldDrawWall(x, y)) {
+		for (int x = 0; x < blockMatrix.getWidth(); x++) {
+			for (int y = 0; y < blockMatrix.getHeight(); y++) {
+				System.out.println("x: " + x + " y: " + y);
+				System.out.println("\t should " + shouldDrawWall(x, y));
+				System.out.println("\t corner " + isCorner(x, y));
+				if (blockMatrix.isBlockAt(x, y) && shouldDrawWall(x, y)) {
 					Rectangle rect = new Rectangle(x * width , y * height, width, height);
 					rect.setFill(Color.CORNFLOWERBLUE);
 					getChildren().add(rect);
@@ -54,5 +51,9 @@ public class MazeBackgroundGraphics extends Group {
 				}
 			}
 		}
+		for (Dot d : mazeAssets.getDots())
+			getChildren().add(d.getSprite());
+		for (Teleport t : mazeAssets.getTeleports())
+			getChildren().add(t.getSprite());
 	}
 }

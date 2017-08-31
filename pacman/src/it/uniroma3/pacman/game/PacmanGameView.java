@@ -7,6 +7,7 @@ import java.util.List;
 import it.uniroma3.pacman.graphics.Sprite;
 import it.uniroma3.pacman.graphics.characters.GhostSprite;
 import it.uniroma3.pacman.graphics.characters.PacManSprite;
+import it.uniroma3.pacman.maze.MazeAssets;
 import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.ui.CustomText;
@@ -26,19 +27,21 @@ public class PacmanGameView extends VBox {
 	private PacManSprite pacManSprite;
 	private List<GhostSprite> ghostSprites;
 
-	public PacmanGameView(IntegerProperty level, IntegerProperty pacManScore, IntegerProperty pacManLives) {
+	public PacmanGameView(MazeAssets mazeAssets, IntegerProperty level, IntegerProperty pacManScore, IntegerProperty pacManLives) {
 		setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		
-		MazeBackgroundGraphics backgroundGraphics = new MazeBackgroundGraphics();
+		MazeBackgroundGraphics backgroundGraphics = new MazeBackgroundGraphics(mazeAssets);
 		backgroundGraphics.createBackground();
 
 		gameField = new Pane(); 
 		
-		gameField.setPrefSize(SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP, SharedMazeData.getGridHeight() * SharedMazeData.GRID_GAP);
+		int width = mazeAssets.getBlockMatrix().getWidth() * SharedMazeData.GRID_GAP;
+		int height = mazeAssets.getBlockMatrix().getHeight() * SharedMazeData.GRID_GAP;
+		gameField.setPrefSize(width, height);
 		getChildren().add(gameField);
 		gameField.getChildren().add(backgroundGraphics);
 
-		messageBox = new MessageBox("PRESS ANY KEY TO START");
+		messageBox = new MessageBox("PRESS ANY KEY TO START", width/2, height/2);
 		gameField.getChildren().add(messageBox);
 
 		CustomText textScore = new CustomText(pacManScore.asString("SCORE: %1d"));
@@ -106,7 +109,6 @@ public class PacmanGameView extends VBox {
 	public void startNewGame() {
 		messageBox.setVisible(false);
 
-		SharedMazeData.resetDots();
 		pacManSprite.resetStatus();
 
 		for (GhostSprite g : ghostSprites) {

@@ -2,6 +2,8 @@ package it.uniroma3.pacman.game;
 
 import java.io.IOException;
 
+import it.uniroma3.pacman.maze.MazeAssets;
+import it.uniroma3.pacman.maze.MazeFileLoader;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -27,15 +29,17 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		PacmanGame game = new PacmanGame();
+		MazeFileLoader loader = new MazeFileLoader("/resources/maze.txt");
+		MazeAssets mazeAssets = loader.getMazeAssets();
+		PacmanGame game = new PacmanGame(mazeAssets);
 		primaryStage.setTitle("Pac-Man by Henry Zhang www.javafxgame.com and Patrick Webster");
 		//primaryStage.setResizable(true);
 
 		final Group root = new Group();
 		final Scene scene = new Scene(root);
 		root.getChildren().add(game.getView());
-		primaryStage.setWidth(SharedMazeData.getGridWidth() * SharedMazeData.GRID_GAP);
-		primaryStage.setHeight(SharedMazeData.getGridHeight() * SharedMazeData.GRID_GAP + 100);
+		primaryStage.setWidth(mazeAssets.getBlockMatrix().getWidth() * SharedMazeData.GRID_GAP);
+		primaryStage.setHeight(mazeAssets.getBlockMatrix().getHeight() * SharedMazeData.GRID_GAP + 100);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		game.getView().requestFocus();

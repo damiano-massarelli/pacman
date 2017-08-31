@@ -9,9 +9,11 @@ import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.collision.CollisionDetector;
 import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.graphics.characters.OnAnimationEndListener;
+import it.uniroma3.pacman.maze.MazeAssets;
 import it.uniroma3.pacman.maze.MazeFileLoader;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.staticObjects.Dot;
+import it.uniroma3.pacman.staticObjects.Teleport;
 import javafx.beans.property.SimpleIntegerProperty;
 
 
@@ -41,10 +43,11 @@ public class PacmanGame implements OnAnimationEndListener {
 	private CollisionDetector collisionDetector;
 	
 	private PacmanGameView gameView;
+	
+	private MazeAssets mazeAssets;
 
-	public PacmanGame() throws IOException {
-		MazeFileLoader builder = new MazeFileLoader("/resources/maze.txt");
-		builder.readMazeData();
+	public PacmanGame(MazeAssets mazeAssets) throws IOException {
+		this.mazeAssets = mazeAssets;
 		
 		this.level = new SimpleIntegerProperty(1);
 		ghosts = new ArrayList<Ghost>();
@@ -53,7 +56,7 @@ public class PacmanGame implements OnAnimationEndListener {
 		new CharactersSetup().setup(this);
 		
 		
-		gameView = new PacmanGameView(level, pacMan.getScoreProperty(), pacMan.getLivesProperty());
+		gameView = new PacmanGameView(mazeAssets, level, pacMan.getScoreProperty(), pacMan.getLivesProperty());
 		this.gameView.setPacManSprite(pacMan.getSprite());
 		for (Ghost g : ghosts)
 			this.gameView.addGhostSprite(g.getSprite());
@@ -64,27 +67,10 @@ public class PacmanGame implements OnAnimationEndListener {
 		collisionDetector.addCollidable(pacMan);
 		for (Ghost g : ghosts)
 			collisionDetector.addCollidable(g);
-		for (Dot d : SharedMazeData.getDots())
+		for (Dot d : mazeAssets.getDots())
 			collisionDetector.addCollidable(d);
-		// Collision handlers
-//		AutomaticCollisionHandler auto = new AutomaticCollisionHandler();
-//		auto.addCollisionHandler(new PacManDotCollisionHandler(this), PacManView.class, DotView.class);
-//		PacManGhostCollisionHandler pacManGhostCollisionHandler = new PacManGhostCollisionHandler(ghosts, this);
-//		auto.addCollisionHandler(pacManGhostCollisionHandler, PacManView.class, Ghost.class);
-//		auto.addCollisionHandler(new PacManMagicDotCollisionHandler(ghosts, pacManGhostCollisionHandler), PacManView.class, MagicDotView.class);
-//		
-//		
-//		MovingObjectTeleportCollisionHandler teleportHandler = new MovingObjectTeleportCollisionHandler();
-//		auto.addCollisionHandler(teleportHandler, PacManView.class, Teleport.class);
-//		auto.addCollisionHandler(teleportHandler, Ghost.class, Teleport.class);
-//		
-//		collisionDetector = new CollisionDetector();
-//		collisionDetector.addCollidable(pacMan.getPacmanView());
-//		for (Ghost g : ghosts)
-//			collisionDetector.addCollidable(g.getGhostView());
-//		collisionDetector.addTrigger(new DotCollisionTrigger(pacMan));
-//		collisionDetector.addTrigger(new TeleportCollisionTrigger(pacMan, ghosts));
-//		collisionDetector.addCollisionHandler(auto);
+		for (Teleport t : mazeAssets.getTeleports())
+			collisionDetector.addCollidable(t);
 		
 		this.gameView.setOnKeyPressed(new KeyboardEventHandler(this));
 	}
@@ -145,6 +131,9 @@ public class PacmanGame implements OnAnimationEndListener {
 
 	// reset status and start a new game
 	public void startNewGame() {
+		for (Dot d : mazeAssets.getDots())
+			d.setEaten(false);
+		
 		this.collisionDetector.startDetecting();
 		level.set(1);
 		

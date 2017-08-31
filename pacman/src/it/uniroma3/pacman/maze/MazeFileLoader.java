@@ -32,6 +32,7 @@ public class MazeFileLoader {
 			br = new BufferedReader(new InputStreamReader(ResourceManager.getInstance().getResourceAsStream("/maze.txt"), "UTF-8"));
 			readMazeData(br);
 		} catch (IOException e) {
+			System.out.println("impossibile caricare il labirinto");
 			throw e;
 		} finally {
 			if (br != null)
@@ -40,10 +41,11 @@ public class MazeFileLoader {
 	}
 	
 	/**
-	 * Reads the file and puts its content in SharedMazeData
+	 * Reads the file and puts its content in a {@link MazeAssets} object
 	 * @throws IOException
+	 * @see {@link MazeFileLoader#getMazeAssets()}
 	 */
-	public void readMazeData(BufferedReader br) throws IOException {
+	private void readMazeData(BufferedReader br) throws IOException {
 		String line;
 		int yPos = 0;
 		int xPos = 0;
@@ -64,7 +66,7 @@ public class MazeFileLoader {
 	private void setMazeData(int xPos, int yPos, char blockType) {
 		switch (blockType) {
 		case 'X':
-			//value = SharedMazeData.BLOCK;
+			mazeAssets.getBlockMatrix().setBlockAt(xPos, yPos);
 			break;
 		case '.':
 							  // convert matrix pos to absolute pos
@@ -76,7 +78,7 @@ public class MazeFileLoader {
 			mazeAssets.addDot(magicDot);
 			break;
 		case 'U':
-			//value = SharedMazeData.CAGE_BOUNDARY_LIMIT;
+			mazeAssets.getBlockMatrix().setCageBoundaryBlockAt(xPos, yPos);
 			break;
 		case 'T':
 			Teleport teleport = new Teleport(SharedMazeData.xPositionForGridX(xPos), SharedMazeData.yPositionForGridY(yPos));

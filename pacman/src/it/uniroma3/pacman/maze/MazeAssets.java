@@ -13,6 +13,7 @@ public class MazeAssets {
 	private MazeBlockMatrix blockMatrix;
 	
 	public MazeAssets() {
+		blockMatrix = new MazeBlockMatrix();
 		teleports = new ArrayList<>();
 		dots = new ArrayList<>();
 	}
