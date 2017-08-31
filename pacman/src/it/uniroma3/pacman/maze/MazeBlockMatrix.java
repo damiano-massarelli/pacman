@@ -22,14 +22,11 @@ import javafx.geometry.Point2D;
  * @author damiano
  *
  */
-public class MazeBlockMatrix {
-	private static final Integer BLOCK = 1;
-	private static final Integer CAGE_BOUNDARY_BLOCK = 2;
-	
+public class MazeBlockMatrix {	
 	/** a matrix whose dimensions don't have do be specified before having read
 	* the whole maze file. <b>Note: Point2D here is used for matrix position</b>
 	*/
-	private Map<Point2D, Integer> blockMatrix;
+	private Map<Point2D, BlockType> blockMatrix;
 	private int width;
 	private int height;
 	
@@ -46,65 +43,63 @@ public class MazeBlockMatrix {
 	 * @return
 	 */
 	private boolean check(Point2D pos) {
-		int x = (int)pos.getX();
-		int y = (int)pos.getY();
+		double x = pos.getX();
+		double y = pos.getY();
 		boolean validPosition = (x % SharedMazeData.GRID_GAP == 0 && y % SharedMazeData.GRID_GAP == 0);
-		return validPosition && getAt(pos) != null;
+		return validPosition && getAtPosition(pos) != null;
 	}
 	
 	/** matrix position */
-	private Integer getAt(int x, int y) {
-		return blockMatrix.get(new Point2D(x, y));
+	private BlockType getAt(int x, int y) {
+		BlockType blockType = blockMatrix.get(new Point2D(x, y));
+		if (blockType == null)
+			blockType = BlockType.EMPTY;
+		return blockType;
 	}
 	
-	private void setAt(int x, int y, int type) {
+	private void setAt(int x, int y, BlockType type) {
 		blockMatrix.put(new Point2D(x, y), type);
 		width = x > width ? x : width;
 		height = y > height ? y : height;
 	}
 	
 	/** absolute position */
-	private Integer getAt(Point2D position) {
+	private BlockType getAtPosition(Point2D position) {
 		int x = (int)position.getX() / SharedMazeData.GRID_GAP;
 		int y = (int)position.getY() / SharedMazeData.GRID_GAP;
 		return getAt(x, y);
 	}
 	
 	public void setBlockAt(int x, int y) {
-		setAt(x, y, BLOCK);
+		setAt(x, y, BlockType.BLOCK);
 	}
 	
 	public void setCageBoundaryBlockAt(int x, int y) {
-		setAt(x, y, CAGE_BOUNDARY_BLOCK);
+		setAt(x, y, BlockType.CAGE_BOUNDARY);
 	}
 	
 	/**
-	 * Return true if there is a block or a cage boundary block at position
-	 * <em>position</em>
+	 * Returns the block type at the given <em>position</em>
+	 * @param position
+	 * @return {@link BlockType#BLOCK} if a block is placed in position<br> {@link BlockType#CAGE_BOUNDARY}
+	 * if a cage boundary is placed in position<br> {@link BlockType#IVALID} if the coordinates of position are not a multiple of
+	 * {@link SharedMazeData#GRID_GAP}
 	 */
-	public boolean isGenericBlockAtPosition(Point2D position) {
-		if (!check(position)) return false;
-		return getAt(position) != 0;
+	public BlockType getBlockTypeAtPosition(Point2D position) {
+		if (!check(position)) return BlockType.IVALID;
+		else return getAtPosition(position);
 	}
 	
+	/**
+	 * returns true if a block is placed in (x, y).
+	 * @param x
+	 * @param y
+	 * @return true of a block is placed in (x, y)
+	 */
 	public boolean isBlockAt(int x, int y) {
-		return getAt(x, y) == BLOCK;
+		return getAt(x, y) == BlockType.BLOCK;
 	}
 	
-	public boolean isBlockAtPosition(Point2D position) {
-		if (!check(position)) return false;
-		return getAt(position) == BLOCK;
-	}
-	
-	public boolean isCageBoundaryBlockAtPosition(Point2D position) {
-		if (!check(position)) return false;
-		return getAt(position) == CAGE_BOUNDARY_BLOCK;
-	}
-	
-	public boolean isCageBoundaryAt(int x, int y) {
-		return getAt(x, y) == CAGE_BOUNDARY_BLOCK;
-	}
-
 	public int getWidth() {
 		return width;
 	}

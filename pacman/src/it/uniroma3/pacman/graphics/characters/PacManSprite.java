@@ -1,5 +1,7 @@
 package it.uniroma3.pacman.graphics.characters;
 
+import it.uniroma3.pacman.maze.BlockType;
+import it.uniroma3.pacman.maze.MazeBlockMatrix;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.AnimatedSprite;
@@ -14,15 +16,17 @@ public class PacManSprite extends AnimatedSprite implements OnMoveListener {
 	private Direction direction;
 	
 	private boolean stopped;
+	
+	private MazeBlockMatrix blockMatrix;
 
 	/**
 	 * Angles of rotating the images.
 	 */														
 	private static final int[] ROTATION_DEGREE = new int[] {0, 90, 180, 270};
 
-	public PacManSprite() {
+	public PacManSprite(MazeBlockMatrix blockMatrix) {
 		super();
-		
+		this.blockMatrix = blockMatrix;
 		setPosition(INITIAL_POSITION);
 		setDirection(Direction.LEFT);
 		stopped = true;
@@ -59,9 +63,9 @@ public class PacManSprite extends AnimatedSprite implements OnMoveListener {
 		int nextX = getX() + getDirection().getDeltaX();
 		int nextY = getY() + getDirection().getDeltaY();
 		
-		int nextCollision = SharedMazeData.getDataForPosition(nextX, nextY);
+		BlockType nextCollision = blockMatrix.getBlockTypeAtPosition(new Point2D(nextX, nextY));
 		
-		if (nextCollision == SharedMazeData.BLOCK || nextCollision == SharedMazeData.CAGE_BOUNDARY_LIMIT) {
+		if (nextCollision == BlockType.BLOCK || nextCollision == BlockType.CAGE_BOUNDARY) {
 			stopped = true;
 			pauseImageAnimation(0);
 		}
@@ -75,8 +79,8 @@ public class PacManSprite extends AnimatedSprite implements OnMoveListener {
 		int nextX = (int) (getX() +  dir.getDeltaX()); 
 		int nextY = (int) (getY() + dir.getDeltaY());
 		
-		int nextCollision = SharedMazeData.getDataForPosition(nextX, nextY);
-		if (nextCollision == SharedMazeData.BLOCK || nextCollision == SharedMazeData.CAGE_BOUNDARY_LIMIT || nextCollision == SharedMazeData.INVALID_POINT_IN_MAZE)
+		BlockType nextCollision = blockMatrix.getBlockTypeAtPosition(new Point2D(nextX, nextY));
+		if (nextCollision != BlockType.EMPTY) // null means an empty block
 			return false;
 		
 		this.setDirection(dir);

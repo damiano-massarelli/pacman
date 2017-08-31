@@ -2,8 +2,9 @@ package it.uniroma3.pacman.graphics.characters;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import it.uniroma3.resources.ResourceManager;
+import it.uniroma3.pacman.maze.BlockType;
+import it.uniroma3.pacman.maze.MazeBlockMatrix;
 import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.AnimatedSprite;
@@ -44,12 +45,16 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 	private OnTurnListener turnListener;
 	
 	private boolean usingFrightenedImages;
+	
+	private MazeBlockMatrix blockMatrix;
 
 	// the GUI of a ghost
-	public GhostSprite(String name, int x, int y) {
+	public GhostSprite(String name, int x, int y, MazeBlockMatrix blockMatrix) {
 		super(null, x, y);
 		setCollisionRadius(10);
 		addOnMoveListener(this);
+		
+		this.blockMatrix = blockMatrix;
 		
 		/* 
 		 * Image loading
@@ -150,17 +155,16 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
 				if (x*x != y*y) { // Non si può andare in diagonale e la direzione (0, 0) non è permessa
-					int nextX = (int) (getX() + x * SharedMazeData.GRID_GAP);
-					int nextY = (int) (getY() + y * SharedMazeData.GRID_GAP);
-					int dataInNextPosition = SharedMazeData.getDataForPosition(nextX, nextY);
-					if (dataInNextPosition != SharedMazeData.BLOCK) {
+					Point2D nextPosition = getPosition().add(SharedMazeData.GRID_GAP * x, SharedMazeData.GRID_GAP * y);
+					BlockType dataInNextPosition = blockMatrix.getBlockTypeAtPosition(nextPosition);
+					if (dataInNextPosition != BlockType.BLOCK) {
 						/* Quando il prossimo punto nella mappa non è un blocco si
 						 * può sempre andare in quella direzione a meno che non sia un
 						 * blocco CAGE_LIMIT: in quel caso si può andare in quella direzione
 						 * solo se si sta andando verso l'alto: x == 0, y == -1 e se stayInCageMovesLimit
 						 * è arrivato a 0, questo vuol dire che il fantasmino può uscire dalla gabbia
 						 */
-						if (dataInNextPosition == SharedMazeData.CAGE_BOUNDARY_LIMIT) {
+						if (dataInNextPosition == BlockType.CAGE_BOUNDARY) {
 							if (x == 0 && y == -1 && stayInCageMovesLimit <= 0) {
 								dirs.add(Direction.fromXY(x, y));
 							}
@@ -178,7 +182,7 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		if (stayInCageMovesLimit > 0)
 			stayInCageMovesLimit--;
 		
-		if (SharedMazeData.getDataForPosition((int)getX(), (int)getY()) != SharedMazeData.INVALID_POINT_IN_MAZE) {
+		if (blockMatrix.getBlockTypeAtPosition(getPosition()) != BlockType.IVALID) {
 			List<Direction> availableDirs = getAvailableDirections();
 			
 			

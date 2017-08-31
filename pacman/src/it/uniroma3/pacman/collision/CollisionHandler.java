@@ -4,10 +4,12 @@ import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.game.PacmanGame;
 import it.uniroma3.pacman.graphics.characters.DyingPacManSprite;
+import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.pacman.staticObjects.Teleport;
 import it.uniroma3.pacman.ui.ScoreText;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
 /**
@@ -79,11 +81,18 @@ public class CollisionHandler {
 	}
 	
 	public void handle(PacMan pacMan, Teleport teleport) {
-		
+		Direction pacManDirection = pacMan.getSprite().getDirection();
+		Point2D nextTeleportPosition = teleport.getNextTeleport().getSprite().getPosition();
+		Point2D nextPosition = nextTeleportPosition.add(pacManDirection.getDeltaX(), pacManDirection.getDeltaY());
+		pacMan.getSprite().setPosition(nextPosition);
+		System.out.println(pacMan.getSprite().getPosition());
 	}
 	
 	public void handle(Ghost ghost, Teleport teleport) {
-		
+		Direction ghostDirection = ghost.getSprite().getDirection();
+		Point2D nextTeleportPosition = teleport.getNextTeleport().getSprite().getPosition();
+		Point2D nextPosition = nextTeleportPosition.add(ghostDirection.getDeltaX(), ghostDirection.getDeltaY());
+		ghost.getSprite().setPosition(nextPosition);
 	}
 
 }

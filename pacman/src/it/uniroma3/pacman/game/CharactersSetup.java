@@ -10,6 +10,7 @@ import it.uniroma3.pacman.characters.behaviours.InkyChasingMovePolicy;
 import it.uniroma3.pacman.characters.behaviours.MovePolicy;
 import it.uniroma3.pacman.characters.behaviours.PinkyChasingMovePolicy;
 import it.uniroma3.pacman.characters.behaviours.ScatteringMovePolicy;
+import it.uniroma3.pacman.maze.MazeBlockMatrix;
 
 
 /**
@@ -20,7 +21,9 @@ import it.uniroma3.pacman.characters.behaviours.ScatteringMovePolicy;
 public class CharactersSetup {
 	
 	public void setup(PacmanGame game) {
-		PacMan pacMan = new PacMan();
+		MazeBlockMatrix blockMatrix = game.getMazeAssets().getBlockMatrix();
+		
+		PacMan pacMan = new PacMan(blockMatrix);
 		game.setPacMan(pacMan);
 	
 		
@@ -31,7 +34,8 @@ public class CharactersSetup {
 				"red",
 				blinkyMovePolicy, 
 				256,
-				192);
+				192,
+				blockMatrix);
 		game.addGhost(ghostBlinky);
 
 		
@@ -42,7 +46,8 @@ public class CharactersSetup {
 				"pink",
 				pinkyMovePolicy,
 				256,
-				240);
+				240,
+				blockMatrix);
 		game.addGhost(ghostPinky);
 		
 		MovePolicy inkyMovePolicy = new ScatteringMovePolicy(null, BOTTOM_RIGHT_CORNER);
@@ -52,7 +57,8 @@ public class CharactersSetup {
 				"cyan",
 				inkyMovePolicy,
 				224,
-				240);
+				240,
+				blockMatrix);
 		game.addGhost(ghostInky);
 
 		MovePolicy clydeMovePolicy = new ScatteringMovePolicy(null, BOTTOM_LEFT_CORNER);
@@ -62,7 +68,8 @@ public class CharactersSetup {
 				"orange",
 				clydeMovePolicy,
 				288,
-				240);
+				240,
+				blockMatrix);
 		game.addGhost(ghostClyde);
 	}
 }

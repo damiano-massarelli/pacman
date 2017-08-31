@@ -8,6 +8,7 @@ import it.uniroma3.pacman.collision.CollidableModelEntity;
 import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.graphics.characters.GhostSprite;
 import it.uniroma3.pacman.graphics.characters.OnTurnListener;
+import it.uniroma3.pacman.maze.MazeBlockMatrix;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.pacman.staticObjects.Dot;
@@ -21,8 +22,8 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	private GhostSprite ghostSprite;
 	
 
-	public Ghost(String name, MovePolicy movePolicy, int x, int y) {
-		ghostSprite = new GhostSprite(name, x, y);
+	public Ghost(String name, MovePolicy movePolicy, int x, int y, MazeBlockMatrix blockMatrix) {
+		ghostSprite = new GhostSprite(name, x, y, blockMatrix);
 		ghostSprite.setOnTurnListener(this);
 		ghostSprite.addOnMoveListener(this);
 		

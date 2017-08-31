@@ -3,6 +3,7 @@ package it.uniroma3.pacman.characters;
 import it.uniroma3.pacman.collision.CollidableModelEntity;
 import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.graphics.characters.PacManSprite;
+import it.uniroma3.pacman.maze.MazeBlockMatrix;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.pacman.staticObjects.Dot;
@@ -48,15 +49,14 @@ public class PacMan implements OnMoveListener, CollidableModelEntity {
 	 * @param x
 	 * @param y
 	 */
-	public PacMan() {
-		
+	public PacMan(MazeBlockMatrix blockMatrix) {
 		dotEatenCount = 0;
 		score = new SimpleIntegerProperty(0);   
 		lives = new SimpleIntegerProperty(3);
 		
 		keyboardBuffer = null;
 		
-		this.pacmanSprite = new PacManSprite();
+		this.pacmanSprite = new PacManSprite(blockMatrix);
 		pacmanSprite.addOnMoveListener(this);
 	}
 	

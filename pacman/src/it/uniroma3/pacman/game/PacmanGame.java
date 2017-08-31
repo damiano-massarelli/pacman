@@ -10,8 +10,6 @@ import it.uniroma3.pacman.collision.CollisionDetector;
 import it.uniroma3.pacman.collision.CollisionHandler;
 import it.uniroma3.pacman.graphics.characters.OnAnimationEndListener;
 import it.uniroma3.pacman.maze.MazeAssets;
-import it.uniroma3.pacman.maze.MazeFileLoader;
-import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.Teleport;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -77,6 +75,10 @@ public class PacmanGame implements OnAnimationEndListener {
 	
 	public PacmanGameView getView() {
 		return this.gameView;
+	}
+	
+	public MazeAssets getMazeAssets() {
+		return this.mazeAssets;
 	}
 	
 	public CollisionDetector getCollisionDetector() {
