@@ -118,7 +118,6 @@ public class PacmanGameView extends VBox {
 	
 	public void startNewLevel() {
 		messageBox.setVisible(false);
-		SharedMazeData.resetDots();
 		pacManSprite.resetStatus();
 
 		for (GhostSprite g : ghostSprites) {

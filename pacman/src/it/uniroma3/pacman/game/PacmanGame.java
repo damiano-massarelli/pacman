@@ -149,7 +149,8 @@ public class PacmanGame implements OnAnimationEndListener {
 
 	// reset status and start a new level
 	public void startNewLevel() {
-//		SharedMazeData.resetDots();
+		for (Dot d : mazeAssets.getDots())
+			d.setEaten(false);
 		pacMan.setDotEatenCount(0);
 		level.set(level.get() + 1);
 		this.gameView.startNewLevel();

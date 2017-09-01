@@ -66,6 +66,8 @@ public class CollisionHandler {
 			pacMan.setDotEatenCount(pacMan.getDotEatenCount() + 1);
 			pacMan.setScore(pacMan.getScore() + DOT_EATEN_SCORE);
 		}
+		if (pacMan.getDotEatenCount() >= pacmanGame.getMazeAssets().getDots().size())
+			pacmanGame.levelCompleted();
 	}
 	
 	public void handle(PacMan pacMan, MagicDot magicDot) {
@@ -78,6 +80,8 @@ public class CollisionHandler {
 			
 			ghostsEatenScoreMultiplier = 1;
 		}
+		if (pacMan.getDotEatenCount() >= pacmanGame.getMazeAssets().getDots().size())
+			pacmanGame.levelCompleted();
 	}
 	
 	public void handle(PacMan pacMan, Teleport teleport) {
@@ -85,7 +89,6 @@ public class CollisionHandler {
 		Point2D nextTeleportPosition = teleport.getNextTeleport().getSprite().getPosition();
 		Point2D nextPosition = nextTeleportPosition.add(pacManDirection.getDeltaX(), pacManDirection.getDeltaY());
 		pacMan.getSprite().setPosition(nextPosition);
-		System.out.println(pacMan.getSprite().getPosition());
 	}
 	
 	public void handle(Ghost ghost, Teleport teleport) {
@@ -94,5 +97,4 @@ public class CollisionHandler {
 		Point2D nextPosition = nextTeleportPosition.add(ghostDirection.getDeltaX(), ghostDirection.getDeltaY());
 		ghost.getSprite().setPosition(nextPosition);
 	}
-
 }

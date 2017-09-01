@@ -40,9 +40,6 @@ public class MazeBackgroundGraphics extends Group {
 		int height = SharedMazeData.GRID_GAP;
 		for (int x = 0; x < blockMatrix.getWidth(); x++) {
 			for (int y = 0; y < blockMatrix.getHeight(); y++) {
-				System.out.println("x: " + x + " y: " + y);
-				System.out.println("\t should " + shouldDrawWall(x, y));
-				System.out.println("\t corner " + isCorner(x, y));
 				if (blockMatrix.isBlockAt(x, y) && shouldDrawWall(x, y)) {
 					Rectangle rect = new Rectangle(x * width , y * height, width, height);
 					rect.setFill(Color.CORNFLOWERBLUE);
