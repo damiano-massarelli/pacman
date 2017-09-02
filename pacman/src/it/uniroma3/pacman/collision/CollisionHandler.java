@@ -42,7 +42,7 @@ public class CollisionHandler {
 	public void handle(PacMan pacMan, Ghost ghost) {
 		Pane gameField = pacmanGame.getView().getGameField();
 		if (ghost.isFrightened()) {
-			ghost.getSprite().resetStatus();
+			ghost.reset();
 			int score = GHOST_EATEN_SCORE * ghostsEatenScoreMultiplier;
 			pacMan.setScore(pacMan.getScore() + score);
 			ghostsEatenScoreMultiplier *= 2;

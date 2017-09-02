@@ -1,6 +1,5 @@
 package it.uniroma3.pacman.ui;
 
-import it.uniroma3.pacman.maze.SharedMazeData;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

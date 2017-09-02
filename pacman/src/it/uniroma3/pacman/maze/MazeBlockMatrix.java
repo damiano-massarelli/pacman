@@ -45,7 +45,7 @@ public class MazeBlockMatrix {
 	private boolean check(Point2D pos) {
 		double x = pos.getX();
 		double y = pos.getY();
-		boolean validPosition = (x % SharedMazeData.GRID_GAP == 0 && y % SharedMazeData.GRID_GAP == 0);
+		boolean validPosition = (x % MazeConstants.GRID_GAP == 0 && y % MazeConstants.GRID_GAP == 0);
 		return validPosition && getAtPosition(pos) != null;
 	}
 	
@@ -65,8 +65,8 @@ public class MazeBlockMatrix {
 	
 	/** absolute position */
 	private BlockType getAtPosition(Point2D position) {
-		int x = (int)position.getX() / SharedMazeData.GRID_GAP;
-		int y = (int)position.getY() / SharedMazeData.GRID_GAP;
+		int x = (int)position.getX() / MazeConstants.GRID_GAP;
+		int y = (int)position.getY() / MazeConstants.GRID_GAP;
 		return getAt(x, y);
 	}
 	
@@ -83,7 +83,7 @@ public class MazeBlockMatrix {
 	 * @param position
 	 * @return {@link BlockType#BLOCK} if a block is placed in position<br> {@link BlockType#CAGE_BOUNDARY}
 	 * if a cage boundary is placed in position<br> {@link BlockType#IVALID} if the coordinates of position are not a multiple of
-	 * {@link SharedMazeData#GRID_GAP}
+	 * {@link MazeConstants#GRID_GAP}
 	 */
 	public BlockType getBlockTypeAtPosition(Point2D position) {
 		if (!check(position)) return BlockType.IVALID;

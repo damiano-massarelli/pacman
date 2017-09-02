@@ -5,32 +5,31 @@ import static it.uniroma3.pacman.characters.behaviours.GhostConsts.CHASE_MOVES_L
 import java.util.Collections;
 import java.util.List;
 
-import it.uniroma3.pacman.characters.Ghost;
-import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.graphics.characters.PacManSprite;
-import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.maze.MazeConstants;
 import it.uniroma3.pacman.movingObjects.Direction;
+import javafx.geometry.Point2D;
 
 public class ClydeChasingMovePolicy extends AbstractMovePolicy {
 	
-	private int SOGLIA_COMPORTAMENTO_BLINKY = 8 * SharedMazeData.GRID_GAP;
+	private int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_GAP;
 	
-	private PacManSprite pacManView;
+	private PacManSprite pacManSprite;
 	
 
 	public ClydeChasingMovePolicy(PacManSprite pacManView, MovePolicy nextPolicy) {
 		super(nextPolicy, CHASE_MOVES_LIMIT);
-		this.pacManView = pacManView;
+		this.pacManSprite = pacManView;
 	}
 
 	@Override
-	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
+	public Direction makeDecision(Point2D ghostPosition, List<Direction> availableDirections) {
 		Direction direzioneScelta = null;
 		
-		double distance = ghost.getSprite().getPosition().distance(pacManView.getPosition());
+		double distance = ghostPosition.distance(pacManSprite.getPosition());
 		
 		if (distance > SOGLIA_COMPORTAMENTO_BLINKY) {
-			ComparatoreDirezione comparatoreDirezione = new ComparatoreDirezione(ghost.getSprite().getPosition(), pacManView.getPosition());
+			ComparatoreDirezione comparatoreDirezione = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
 			direzioneScelta = Collections.min(availableDirections, comparatoreDirezione);
 		}
 		else {

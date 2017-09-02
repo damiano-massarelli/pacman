@@ -5,7 +5,7 @@ import java.util.List;
 import it.uniroma3.resources.ResourceManager;
 import it.uniroma3.pacman.maze.BlockType;
 import it.uniroma3.pacman.maze.MazeBlockMatrix;
-import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.maze.MazeConstants;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.AnimatedSprite;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
@@ -43,9 +43,7 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 	private Direction direction;
 	
 	private OnTurnListener turnListener;
-	
-	private boolean usingFrightenedImages;
-	
+		
 	private MazeBlockMatrix blockMatrix;
 
 	// the GUI of a ghost
@@ -75,7 +73,6 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		
 		direction = Direction.RIGHT;
 		
-		usingFrightenedImages = false;
 		/*
 		 * Initial status
 		 */
@@ -96,10 +93,6 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-
-	public void resetPosition()  {
-		setPosition(initialPosition);
-	}
 	
 	/*
 	 *  reset the status of a ghost and place it into the cage */
@@ -107,7 +100,7 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		changeToNormal();
 		stayInCageMovesLimit = STAY_IN_CAGE_DEFAULT_MOVES;
 		
-		resetPosition();
+		setPosition(initialPosition);
 		
 		setDirection(initialDirection);
 
@@ -121,7 +114,6 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 	}
 
 	public void changeToFrightened() {
-		usingFrightenedImages = true;
 		// switch the animation images
 		setImages(hollowImages);
 
@@ -133,7 +125,6 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 	
 	
 	public void changeToNormal() {
-		usingFrightenedImages = false;
 		setImages(defaultImages);
 		
 		getTimeline().stop();
@@ -141,9 +132,6 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		getTimeline().play();
 	}
 	
-	public boolean isUsingFrightenedImages() {
-		return usingFrightenedImages;
-	}
 
 	public void changeToFlashingFrightened() {
 		setImages(flashHollowImages);
@@ -155,7 +143,7 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
 				if (x*x != y*y) { // Non si può andare in diagonale e la direzione (0, 0) non è permessa
-					Point2D nextPosition = getPosition().add(SharedMazeData.GRID_GAP * x, SharedMazeData.GRID_GAP * y);
+					Point2D nextPosition = getPosition().add(MazeConstants.GRID_GAP * x, MazeConstants.GRID_GAP * y);
 					BlockType dataInNextPosition = blockMatrix.getBlockTypeAtPosition(nextPosition);
 					if (dataInNextPosition != BlockType.BLOCK) {
 						/* Quando il prossimo punto nella mappa non è un blocco si
@@ -203,11 +191,5 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		
 	}
 	
-
-	public void hide() {
-		setVisible(false);
-		getTimeline().stop();
-	}
-
 	
 }

@@ -2,8 +2,8 @@ package it.uniroma3.pacman.characters.behaviours;
 
 import java.util.List;
 
-import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
+import javafx.geometry.Point2D;
 
 public abstract class AbstractMovePolicy implements MovePolicy {
 	
@@ -18,23 +18,28 @@ public abstract class AbstractMovePolicy implements MovePolicy {
 	}
 
 	@Override
-	public abstract Direction makeDecision(Ghost ghost, List<Direction> availableDirections);
+	public abstract Direction makeDecision(Point2D ghostPosition, List<Direction> availableDirections);
 
 	@Override
-	public MovePolicy nextPolicy() {
-		this.moves++;
+	public MovePolicy next() {
 		if (this.moves > this.movesLimit) {
 			this.moves = 0;
 			return nextPolicy;
 		}
 		return this;
 	}
-
+	
 	@Override
+	public boolean hasNext() {
+		this.moves++;
+		return this.moves > this.movesLimit;
+	}
+
 	public void setNextPolicy(MovePolicy next) {
 		this.nextPolicy = next;
 		
 	}
+	
 	public int getRemainingMovesToNextPolicy() {
 		return this.movesLimit - this.moves;
 	}

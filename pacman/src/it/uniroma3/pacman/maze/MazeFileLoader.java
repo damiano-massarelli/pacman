@@ -18,7 +18,7 @@ import it.uniroma3.resources.ResourceManager;
  *
  */
 public class MazeFileLoader {
-	private Teleport firstTeleport = null;
+	private Teleport previousTeleport = null;
 	private MazeAssets mazeAssets;
 	/**
 	 * Creates a new instance of MazeFileLoader
@@ -29,7 +29,7 @@ public class MazeFileLoader {
 		mazeAssets = new MazeAssets();
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(ResourceManager.getInstance().getResourceAsStream("/maze.txt"), "UTF-8"));
+			br = new BufferedReader(new InputStreamReader(ResourceManager.getInstance().getResourceAsStream(filePath), "UTF-8"));
 			readMazeData(br);
 		} catch (IOException e) {
 			System.out.println("impossibile caricare il labirinto");
@@ -61,6 +61,7 @@ public class MazeFileLoader {
 			}
 			yPos++;
 		}
+		
 	}
 
 	private void setMazeData(int xPos, int yPos, char blockType) {
@@ -70,24 +71,25 @@ public class MazeFileLoader {
 			break;
 		case '.':
 							  // convert matrix pos to absolute pos
-			Dot dot = new Dot(xPos * SharedMazeData.GRID_GAP, yPos * SharedMazeData.GRID_GAP); 
+			Dot dot = new Dot(xPos * MazeConstants.GRID_GAP, yPos * MazeConstants.GRID_GAP); 
 			mazeAssets.addDot(dot);
 			break;
 		case '+':
-			Dot magicDot = new MagicDot(xPos * SharedMazeData.GRID_GAP, yPos * SharedMazeData.GRID_GAP);
+			Dot magicDot = new MagicDot(xPos * MazeConstants.GRID_GAP, yPos * MazeConstants.GRID_GAP);
 			mazeAssets.addDot(magicDot);
 			break;
 		case 'U':
 			mazeAssets.getBlockMatrix().setCageBoundaryBlockAt(xPos, yPos);
 			break;
 		case 'T':
-			Teleport teleport = new Teleport(SharedMazeData.xPositionForGridX(xPos), SharedMazeData.yPositionForGridY(yPos));
-			if (firstTeleport != null) {
-				firstTeleport.setNextTeleport(teleport);
-				teleport.setNextTeleport(firstTeleport);
+			Teleport teleport = new Teleport(xPos * MazeConstants.GRID_GAP, yPos * MazeConstants.GRID_GAP);
+			if (previousTeleport == null)
+				previousTeleport = teleport;
+			else {
+				teleport.setNextTeleport(previousTeleport);
+				previousTeleport.setNextTeleport(teleport);
+				previousTeleport = null;
 			}
-			else
-				firstTeleport = teleport;
 			
 			mazeAssets.addTeleport(teleport);
 			break;

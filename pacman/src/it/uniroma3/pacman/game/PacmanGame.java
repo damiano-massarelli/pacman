@@ -15,14 +15,6 @@ import it.uniroma3.pacman.staticObjects.Teleport;
 import javafx.beans.property.SimpleIntegerProperty;
 
 
-/**
- * Maze.fx created on 2<<008-12-20, 20:22:15 <br>
- * Maze.java created October 2011
- *
- * @see <a href="http://www.javafxgame.com">http://www.javafxgame.com</a>
- * @author Henry Zhang
- * @author Patrick Webster
- */
 
 public class PacmanGame implements OnAnimationEndListener {
 
@@ -138,13 +130,14 @@ public class PacmanGame implements OnAnimationEndListener {
 		
 		this.collisionDetector.startDetecting();
 		level.set(1);
-		
-//		SharedMazeData.resetDots();
 		pacMan.setScore(0);
 		pacMan.setDotEatenCount(0);
 
 		pacMan.getLivesProperty().set(3);
 		this.gameView.startNewGame();
+		pacMan.reset();
+		for (Ghost g : ghosts)
+			g.reset();
 	}
 
 	// reset status and start a new level
@@ -154,13 +147,17 @@ public class PacmanGame implements OnAnimationEndListener {
 		pacMan.setDotEatenCount(0);
 		level.set(level.get() + 1);
 		this.gameView.startNewLevel();
+		pacMan.reset();
+		for (Ghost g : ghosts)
+			g.reset();
 	}
 
 	// reset status and start a new life
 	public void startNewLife() {
 		this.collisionDetector.startDetecting();
 		this.pacMan.reset();
-		this.gameView.startNewLife();
+		for (Ghost g : this.ghosts)
+			g.reset();
 	}
 	
 	/** This method is called by DyingPacManSprite when its animation is over */

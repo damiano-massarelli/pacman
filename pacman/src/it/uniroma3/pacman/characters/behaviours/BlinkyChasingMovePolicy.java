@@ -5,23 +5,23 @@ import static it.uniroma3.pacman.characters.behaviours.GhostConsts.CHASE_MOVES_L
 import java.util.Collections;
 import java.util.List;
 
-import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.graphics.characters.PacManSprite;
 import it.uniroma3.pacman.movingObjects.Direction;
+import javafx.geometry.Point2D;
 
 public class BlinkyChasingMovePolicy extends AbstractMovePolicy {
 	
-	private PacManSprite pacManView;
+	private PacManSprite pacManSprite;
 	
-	public BlinkyChasingMovePolicy(PacManSprite pacManView, MovePolicy nextPolicy) {
+	public BlinkyChasingMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy) {
 		super(nextPolicy, CHASE_MOVES_LIMIT);
-		this.pacManView = pacManView;
+		this.pacManSprite = pacManSprite;
 	}
 
 
 	@Override
-	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
-		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getSprite().getPosition(), pacManView.getPosition());
+	public Direction makeDecision(Point2D ghostPosition, List<Direction> availableDirections) {
+		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
 		return Collections.min(availableDirections, comparatore); // c'e' sempre almeno una direzione
 	}
 

@@ -9,7 +9,7 @@ import it.uniroma3.pacman.graphics.characters.GhostSprite;
 import it.uniroma3.pacman.graphics.characters.PacManSprite;
 import it.uniroma3.pacman.maze.MazeAssets;
 import it.uniroma3.pacman.maze.MazeBackgroundGraphics;
-import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.maze.MazeConstants;
 import it.uniroma3.pacman.ui.CustomText;
 import it.uniroma3.pacman.ui.MessageBox;
 import javafx.beans.property.IntegerProperty;
@@ -35,8 +35,8 @@ public class PacmanGameView extends VBox {
 
 		gameField = new Pane(); 
 		
-		int width = mazeAssets.getBlockMatrix().getWidth() * SharedMazeData.GRID_GAP;
-		int height = mazeAssets.getBlockMatrix().getHeight() * SharedMazeData.GRID_GAP;
+		int width = mazeAssets.getBlockMatrix().getWidth() * MazeConstants.GRID_GAP;
+		int height = mazeAssets.getBlockMatrix().getHeight() * MazeConstants.GRID_GAP;
 		gameField.setPrefSize(width, height);
 		getChildren().add(gameField);
 		gameField.getChildren().add(backgroundGraphics);
@@ -108,30 +108,10 @@ public class PacmanGameView extends VBox {
 
 	public void startNewGame() {
 		messageBox.setVisible(false);
-
-		pacManSprite.resetStatus();
-
-		for (GhostSprite g : ghostSprites) {
-			g.resetStatus();
-		}
 	}
 	
 	public void startNewLevel() {
 		messageBox.setVisible(false);
-		pacManSprite.resetStatus();
-
-		for (GhostSprite g : ghostSprites) {
-			g.resetStatus();
-		}
-
 	}
 
-	// reset status and start a new life
-	public void startNewLife() {
-		pacManSprite.resetStatus();
-
-		for (GhostSprite g : ghostSprites) {
-			g.resetStatus();
-		}
-	}
 }

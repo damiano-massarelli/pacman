@@ -1,15 +1,14 @@
 package it.uniroma3.pacman.game;
 
-import static it.uniroma3.pacman.characters.behaviours.GhostConsts.*;
-
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
+import it.uniroma3.pacman.characters.behaviours.AbstractMovePolicy;
 import it.uniroma3.pacman.characters.behaviours.BlinkyChasingMovePolicy;
 import it.uniroma3.pacman.characters.behaviours.ClydeChasingMovePolicy;
 import it.uniroma3.pacman.characters.behaviours.InkyChasingMovePolicy;
-import it.uniroma3.pacman.characters.behaviours.MovePolicy;
 import it.uniroma3.pacman.characters.behaviours.PinkyChasingMovePolicy;
 import it.uniroma3.pacman.characters.behaviours.ScatteringMovePolicy;
+import it.uniroma3.pacman.maze.MazeAssets;
 import it.uniroma3.pacman.maze.MazeBlockMatrix;
 
 
@@ -21,13 +20,14 @@ import it.uniroma3.pacman.maze.MazeBlockMatrix;
 public class CharactersSetup {
 	
 	public void setup(PacmanGame game) {
-		MazeBlockMatrix blockMatrix = game.getMazeAssets().getBlockMatrix();
+		MazeAssets mazeAssets = game.getMazeAssets();
+		MazeBlockMatrix blockMatrix = mazeAssets.getBlockMatrix();
 		
 		PacMan pacMan = new PacMan(blockMatrix);
 		game.setPacMan(pacMan);
 	
 		
-		MovePolicy blinkyMovePolicy = new ScatteringMovePolicy(null, TOP_RIGHT_CORNER);
+		AbstractMovePolicy blinkyMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeTopRightCorner());
 		blinkyMovePolicy.setNextPolicy(new BlinkyChasingMovePolicy(pacMan.getSprite(), blinkyMovePolicy));
 		
 		Ghost ghostBlinky = new Ghost(
@@ -39,7 +39,7 @@ public class CharactersSetup {
 		game.addGhost(ghostBlinky);
 
 		
-		MovePolicy pinkyMovePolicy = new ScatteringMovePolicy(null, TOP_LEFT_CORNER);
+		AbstractMovePolicy pinkyMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeTopLeftCorner());
 		pinkyMovePolicy.setNextPolicy(new PinkyChasingMovePolicy(pacMan.getSprite(), pinkyMovePolicy));
 		
 		Ghost ghostPinky = new Ghost(
@@ -50,8 +50,8 @@ public class CharactersSetup {
 				blockMatrix);
 		game.addGhost(ghostPinky);
 		
-		MovePolicy inkyMovePolicy = new ScatteringMovePolicy(null, BOTTOM_RIGHT_CORNER);
-		inkyMovePolicy.setNextPolicy(new InkyChasingMovePolicy(ghostBlinky, pacMan.getSprite(), inkyMovePolicy));
+		AbstractMovePolicy inkyMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeBottomRightCorner());
+		inkyMovePolicy.setNextPolicy(new InkyChasingMovePolicy(ghostBlinky.getSprite(), pacMan.getSprite(), inkyMovePolicy));
 
 		Ghost ghostInky = new Ghost(
 				"cyan",
@@ -61,7 +61,7 @@ public class CharactersSetup {
 				blockMatrix);
 		game.addGhost(ghostInky);
 
-		MovePolicy clydeMovePolicy = new ScatteringMovePolicy(null, BOTTOM_LEFT_CORNER);
+		AbstractMovePolicy clydeMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeBottomLeftCorner());
 		clydeMovePolicy.setNextPolicy(new ClydeChasingMovePolicy(pacMan.getSprite(), clydeMovePolicy));
 		
 		Ghost ghostClyde = new Ghost(

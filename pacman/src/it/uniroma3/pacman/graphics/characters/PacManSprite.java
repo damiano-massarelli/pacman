@@ -2,7 +2,6 @@ package it.uniroma3.pacman.graphics.characters;
 
 import it.uniroma3.pacman.maze.BlockType;
 import it.uniroma3.pacman.maze.MazeBlockMatrix;
-import it.uniroma3.pacman.maze.SharedMazeData;
 import it.uniroma3.pacman.movingObjects.Direction;
 import it.uniroma3.pacman.movingObjects.AnimatedSprite;
 import it.uniroma3.pacman.movingObjects.OnMoveListener;
@@ -60,10 +59,9 @@ public class PacManSprite extends AnimatedSprite implements OnMoveListener {
 		setX(getX() + getDirection().getDirX() * MOVE_SPEED);
 		setY(getY() + getDirection().getDirY() * MOVE_SPEED);
 		
-		int nextX = getX() + getDirection().getDeltaX();
-		int nextY = getY() + getDirection().getDeltaY();
+		Point2D nextPosition = getPosition().add(getDirection().getDeltaX(), getDirection().getDeltaY());
 		
-		BlockType nextCollision = blockMatrix.getBlockTypeAtPosition(new Point2D(nextX, nextY));
+		BlockType nextCollision = blockMatrix.getBlockTypeAtPosition(nextPosition);
 		
 		if (nextCollision == BlockType.BLOCK || nextCollision == BlockType.CAGE_BOUNDARY) {
 			stopped = true;
@@ -76,11 +74,10 @@ public class PacManSprite extends AnimatedSprite implements OnMoveListener {
 		if (this.getDirection().equals(dir))
 			return false;
 		
-		int nextX = (int) (getX() +  dir.getDeltaX()); 
-		int nextY = (int) (getY() + dir.getDeltaY());
+		Point2D nextPosition = getPosition().add(dir.getDeltaX(), dir.getDeltaY());
 		
-		BlockType nextCollision = blockMatrix.getBlockTypeAtPosition(new Point2D(nextX, nextY));
-		if (nextCollision != BlockType.EMPTY) // null means an empty block
+		BlockType nextCollision = blockMatrix.getBlockTypeAtPosition(nextPosition);
+		if (nextCollision != BlockType.EMPTY) 
 			return false;
 		
 		this.setDirection(dir);

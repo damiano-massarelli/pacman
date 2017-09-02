@@ -1,6 +1,6 @@
 package it.uniroma3.pacman.movingObjects;
 
-import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.maze.MazeConstants;
 
 public enum Direction {
 	
@@ -40,7 +40,13 @@ public enum Direction {
 		
 	};
 	
-	
+	/** 
+	 * Returns the direction having its x component equal to x and its y component equal to y
+	 * @param x x component of the direction (must be and integer ranging between -1 and 1)
+	 * @param y y component of the direction (must be and integer ranging between -1 and 1)
+	 * @return a direction having x and y as components, null if there isn't a direction whose components are
+	 * (x, y)
+	 */
 	public static Direction fromXY(int x, int y) {
 		for (Direction dir : values())
 			if (dir.getDirX() == x && dir.getDirY() == y)
@@ -56,21 +62,34 @@ public enum Direction {
 		this.dirY = dirY;
 	}
 
+	/**
+	 * 
+	 * @return x component of this direction
+	 */
 	public int getDirX() {
 		return dirX;
 	}
 
-
+	/**
+	 * 
+	 * @return y component of this direction
+	 */
 	public int getDirY() {
 		return dirY;
 	}
 	
+	/** 
+	 * @return the distance that would be trodden in the x axis if this direction were used
+	 */
 	public int getDeltaX() {
-		return SharedMazeData.GRID_GAP * this.dirX;
+		return MazeConstants.GRID_GAP * this.dirX;
 	}
 	
+	/** 
+	 * @return the distance that would be trodden in the y axis if this direction were used
+	 */
 	public int getDeltaY() {
-		return SharedMazeData.GRID_GAP * this.dirY;
+		return MazeConstants.GRID_GAP * this.dirY;
 	}
 	
 	public abstract Direction getInverse();

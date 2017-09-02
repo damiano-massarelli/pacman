@@ -14,6 +14,7 @@ import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.pacman.staticObjects.Teleport;
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.FALSING_FRIGHTENED_MOVES_THRESHOLD;
 
 public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEntity {
 	
@@ -21,12 +22,13 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	
 	private GhostSprite ghostSprite;
 	
-
+	private MovePolicy initialMovePolicy;
+	
 	public Ghost(String name, MovePolicy movePolicy, int x, int y, MazeBlockMatrix blockMatrix) {
 		ghostSprite = new GhostSprite(name, x, y, blockMatrix);
 		ghostSprite.setOnTurnListener(this);
 		ghostSprite.addOnMoveListener(this);
-		
+		this.initialMovePolicy = movePolicy;
 		this.movePolicy = movePolicy;
 	}
 	
@@ -35,32 +37,33 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	public void onTurn(List<Direction> availableDirections) {
 		Direction direzioneScelta = availableDirections.get(0);
 		
-		direzioneScelta = movePolicy.makeDecision(this, availableDirections);
+		direzioneScelta = movePolicy.makeDecision(this.ghostSprite.getPosition(), availableDirections);
 		
 		ghostSprite.setDirection(direzioneScelta);
 	}
 
 
 	public void changeToFrightened() {
-		this.movePolicy = new FrightenedMovePolicy(this.movePolicy, this);
+		this.movePolicy = new FrightenedMovePolicy(this.movePolicy);
 		ghostSprite.changeToFrightened();  // Cambia aspetto grafico
 	}
 
 	public boolean isFrightened() {
-		return getSprite().isUsingFrightenedImages();
+		return this.movePolicy.getClass() == FrightenedMovePolicy.class;
 	}
 	
 	
 	@Override
 	public void onMove() {
-		/*
-		 * TODO: change movePolicy to implement an iterable interface, if next() is FrightenedMovePolicy.class
-		 * then change to hollow ghost, when movePolicy is FrightenedMovePolicy.class and remainingTime is equal
-		 * to something (say 7) then switch to flashing. If next() is not equal to FrightenedMovePolicy.class then
-		 * change to normal. I'm a bit concerned it may be difficult to understand but as long as it is simple it
-		 * make sense to have this code here
-		 */
-		this.movePolicy = movePolicy.nextPolicy();
+		if (this.movePolicy.hasNext()) {
+			this.movePolicy = this.movePolicy.next();
+			if (this.movePolicy.getClass() != FrightenedMovePolicy.class)
+				this.ghostSprite.changeToNormal();
+		}
+		
+		if (this.movePolicy.getClass() == FrightenedMovePolicy.class 
+				&& this.movePolicy.getRemainingMovesToNextPolicy() == FALSING_FRIGHTENED_MOVES_THRESHOLD)
+			this.ghostSprite.changeToFlashingFrightened();
 	}
 	
 	@Override
@@ -68,6 +71,10 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 		return ghostSprite;
 	}
 
+	public void reset() {
+		this.movePolicy = initialMovePolicy;
+		this.getSprite().resetStatus();
+	}
 
 	@Override
 	public void accept(CollisionHandler visitor, CollidableModelEntity other) {
@@ -110,6 +117,4 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 		
 	}
 
-	
-	
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniroma3.pacman.graphics.Sprite;
-import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.maze.MazeConstants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -22,7 +22,7 @@ import javafx.util.Duration;
  */
 public class AnimatedSprite extends Sprite {
 	protected static final int ANIMATION_STEP = 4;
-	protected static final int MOVE_SPEED = SharedMazeData.GRID_GAP / ANIMATION_STEP;
+	protected static final int MOVE_SPEED = MazeConstants.GRID_GAP / ANIMATION_STEP;
 
 
 	private int currentImageIndex;

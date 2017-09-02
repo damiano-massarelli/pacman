@@ -5,7 +5,7 @@
 # T rappresenta un punto di teletrasporto
 # U rappresenta un blocco di muro oltrepassabile solo se la direzione e' (0, -1): UP
 # gli spazi tra i caratteri non sono necessari, servono solo a rendere il labirinto leggibile, si possono levare
-# i muri devono sempre essere doppi ( :( )
+# !!! i muri devono sempre essere doppi !!! 
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X
 X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X
 X X . . . . . . . . . . . . . X X . . . . . . . . . . . . . X X

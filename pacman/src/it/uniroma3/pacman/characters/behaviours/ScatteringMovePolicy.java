@@ -4,8 +4,6 @@ import static it.uniroma3.pacman.characters.behaviours.GhostConsts.SCATTER_MOVES
 
 import java.util.Collections;
 import java.util.List;
-
-import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
 import javafx.geometry.Point2D;
 
@@ -19,11 +17,9 @@ public class ScatteringMovePolicy extends AbstractMovePolicy {
 		this.scatterTarget = scatterTarget;
 	}
 
-
-
 	@Override
-	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
-		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghost.getSprite().getPosition(), scatterTarget);
+	public Direction makeDecision(Point2D ghostPosition, List<Direction> availableDirections) {
+		ComparatoreDirezione comparatore = new ComparatoreDirezione(ghostPosition, scatterTarget);
 		return Collections.min(availableDirections, comparatore);
 	}
 

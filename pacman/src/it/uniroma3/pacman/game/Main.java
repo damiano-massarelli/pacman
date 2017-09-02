@@ -4,10 +4,11 @@ import java.io.IOException;
 
 import it.uniroma3.pacman.maze.MazeAssets;
 import it.uniroma3.pacman.maze.MazeFileLoader;
-import it.uniroma3.pacman.maze.SharedMazeData;
+import it.uniroma3.pacman.maze.MazeConstants;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -29,17 +30,20 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		MazeFileLoader loader = new MazeFileLoader("/resources/maze.txt");
+		MazeFileLoader loader = new MazeFileLoader("/maze.txt");
 		MazeAssets mazeAssets = loader.getMazeAssets();
 		PacmanGame game = new PacmanGame(mazeAssets);
-		primaryStage.setTitle("Pac-Man by Henry Zhang www.javafxgame.com and Patrick Webster");
+		primaryStage.setTitle("PacMan - POO");
 		//primaryStage.setResizable(true);
 
 		final Group root = new Group();
 		final Scene scene = new Scene(root);
+		scene.setFill(Color.BLACK);
+		
 		root.getChildren().add(game.getView());
-		primaryStage.setWidth(mazeAssets.getBlockMatrix().getWidth() * SharedMazeData.GRID_GAP);
-		primaryStage.setHeight(mazeAssets.getBlockMatrix().getHeight() * SharedMazeData.GRID_GAP + 100);
+		
+		primaryStage.setWidth(mazeAssets.getBlockMatrix().getWidth() * MazeConstants.GRID_GAP);
+		primaryStage.setHeight(mazeAssets.getBlockMatrix().getHeight() * MazeConstants.GRID_GAP + 100);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		game.getView().requestFocus();
