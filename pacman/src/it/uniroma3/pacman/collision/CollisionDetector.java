@@ -10,20 +10,11 @@ import javafx.util.Duration;
 
 
 /**
- * Un CollisionDetectorn permette di individuare collisioni fra oggetti di tipo
- * {@link Collidable} o tra oggetti di qualsiasi tipo attraverso i {@link CollisionTrigger}.
- * 
- * Due oggetti {@link Collidable} entrano in collisione se la loro distanza è minore
- * della somma dei loro raggi. In questo caso i due oggetti vengono passati ai 
- * collisionHandlers che si occuperanno di gestire questa collisione.
- * 
- * Una collisione può essere scatenata anche da un {@link CollisionTrigger}. La gestione
- * avviene allo stesso modo, ossia i due oggetti in collisione vengono passati ai
- * collisionHandler.
- * 
- * @see CollisionHandler
- * @author damiano
+ * A CollisionDetector is responsible for detecting collisions among objects implementing
+ * the {@link CollidableModelEntity} interface added to it. Every collision is handled by 
+ * the {@link CollisionHandler} passed to the constructor. 
  *
+ *	@author damiano
  */
 public class CollisionDetector {
 	/* A little bit faster than Ghost and Pacman */
@@ -36,11 +27,10 @@ public class CollisionDetector {
 	private List<CollidableModelEntity> collidables;
 	
 	
-	/** 
-	 * Crea un nuovo {@link CollisionDetector}
-	 * @param detectFrequencyMillis ogni quanti millisecondi si controlla per una nuova
-	 * collisione
-	 * @param handler un {@link CollisionHandler} che gestirà le collisioni
+	/**
+	 * Creates a new CollisionDetector
+	 * @param handler a {@link CollisionHandler} to handle detected collisions
+	 * @param detectFrequencyMillis how often collisions are detected (in milliseconds)
 	 */
 	public CollisionDetector(CollisionHandler handler, double detectFrequencyMillis) {
 		collidables = new ArrayList<>();
@@ -58,15 +48,15 @@ public class CollisionDetector {
 		timeline.play();
 	}
 	/** 
-	 * Crea un nuovo {@link CollisionDetector}
-	 * @param handler un {@link CollisionHandler} che gestirà le collisioni
+	 * Creates a new CollisionDetector
+	 * @param handler a {@link CollisionHandler} to handle detected collisions
 	 */
 	public CollisionDetector(CollisionHandler handler) {
 		this(handler, DEFAULT_DETECT_FREQ_MILLIS);
 	}
 	
 	
-	public void detectCollisions() {
+	private void detectCollisions() {
 		//System.out.println("detecting..");
 		for (int i = 0; i < collidables.size(); i++) {
 			for (int j = i+1; j < collidables.size(); j++) {
@@ -84,11 +74,6 @@ public class CollisionDetector {
 	}
 
 	
-	/**
-	 * Aggiunge un nuovo {@link Collidable} alla lista degli oggetti che possono
-	 * entrare in collisione
-	 * @param collidable l'oggetto da aggiungere
-	 */
 	public void addCollidable(CollidableModelEntity collidable) {
 		this.collidables.add(collidable);
 	}

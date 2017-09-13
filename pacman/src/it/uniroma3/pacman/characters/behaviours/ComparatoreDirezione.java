@@ -54,7 +54,4 @@ public class ComparatoreDirezione implements Comparator<Direction> {
 	public void setTargetPos(Point2D targetPos) {
 		this.targetPos = targetPos;
 	}
-
-	
-	
 }

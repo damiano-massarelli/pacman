@@ -7,6 +7,12 @@ import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.pacman.staticObjects.Teleport;
 
+/**
+ * This interface must be implemented by <em>domain objects</em> whose sprites can collide with
+ * other sprites 
+ * @author damiano massarelli
+ *
+ */
 public interface CollidableModelEntity {
 	public Sprite getSprite();
 	

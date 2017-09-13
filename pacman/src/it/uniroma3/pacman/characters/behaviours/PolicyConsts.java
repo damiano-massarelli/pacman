@@ -1,6 +1,6 @@
 package it.uniroma3.pacman.characters.behaviours;
 
-public interface GhostConsts {
+public interface PolicyConsts {
 	/** Circa 20 secondi (22 mosse al secondo) */
 	public static final int CHASE_MOVES_LIMIT = 450; 
 	/** Circa 7 secondi (22 mosse al secondo) */

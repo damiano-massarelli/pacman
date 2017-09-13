@@ -10,10 +10,9 @@ import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.resources.ResourceManager;
 
 /**
- * Reads a simple maze file and puts its data in SharedMazeData.
+ * Reads a simple maze file and puts its data in a {@link MazeAssets} object.
  * A maze file describes a maze using predefined chars for blocks, dots, 
- * teleport ecc... (see maze.txt). Every maze file must contain the maze dimension
- * in the first line: &lt;width&gt;, &lt;height&gt;
+ * teleport ecc... (see maze.txt). 
  * @author damiano
  *
  */

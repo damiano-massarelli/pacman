@@ -13,8 +13,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
 /**
- * Un oggetto di una classe che implementa questa interfaccia può essere utilizzato
- * come Gestore delle collisioni per un {@link CollisionDetector}
+ * A CollisionHandler is responsible for handling collisions among objects which are detected
+ * by a specific {@link CollisionDetector}.
  * @author damiano
  *
  */
@@ -32,13 +32,7 @@ public class CollisionHandler {
 		this.pacmanGame = pacmanGame;
 		ghostsEatenScoreMultiplier = 2;
 	}
-	/**
-	 * handle viene chiamato dal {@link CollisionDetector} a cui questo handler è
-	 * stato aggiunto quando si verifica una collisione tra due oggetti gestiti 
-	 * dal {@link CollisionDetector}
-	 * @param o1 il primo oggetto
-	 * @param o2 il secondo oggetto
-	 */
+	
 	public void handle(PacMan pacMan, Ghost ghost) {
 		Pane gameField = pacmanGame.getView().getGameField();
 		if (ghost.isFrightened()) {
