@@ -24,20 +24,28 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 	
 	private MovePolicy initialMovePolicy;
 	
+	private String name;
+	
 	public Ghost(String name, MovePolicy movePolicy, int x, int y, MazeBlockMatrix blockMatrix) {
 		ghostSprite = new GhostSprite(name, x, y, blockMatrix);
 		ghostSprite.setOnTurnListener(this);
 		ghostSprite.addOnMoveListener(this);
+		
+		
 		this.initialMovePolicy = movePolicy;
 		this.movePolicy = movePolicy;
+		this.name = name;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
 
 	@Override
 	public void onTurn(List<Direction> availableDirections) {
 		Direction direzioneScelta = availableDirections.get(0);
 		
-		direzioneScelta = movePolicy.makeDecision(this.ghostSprite.getPosition(), availableDirections);
+		direzioneScelta = movePolicy.makeDecision(this, availableDirections);
 		
 		ghostSprite.setDirection(direzioneScelta);
 	}

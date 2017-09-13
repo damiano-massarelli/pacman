@@ -1,19 +1,45 @@
 package it.uniroma3.pacman.characters.behaviours;
-
 import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.FRIGHTENED_MOVES_LIMIT;
 import java.util.List;
+
+import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
-import javafx.geometry.Point2D;
-public class FrightenedMovePolicy extends AbstractMovePolicy {
+
+public class FrightenedMovePolicy implements MovePolicy {
 	
+	private int moves;
+	private int movesLimit;
+	private MovePolicy nextPolicy;
 
 	public FrightenedMovePolicy(MovePolicy nextPolicy) {
-		super(nextPolicy, FRIGHTENED_MOVES_LIMIT);
+		this.nextPolicy = nextPolicy;
+		this.moves = 0;
+		this.movesLimit = FRIGHTENED_MOVES_LIMIT;
+	}
+	
+	@Override
+	public boolean hasNext() {
+		this.moves++;
+		return this.moves > this.movesLimit;
 	}
 
+	@Override
+	public MovePolicy next() {
+		if (this.moves > this.movesLimit) {
+			this.moves = 0;
+			return nextPolicy;
+		}
+		else 
+			return this;
+	}
 
 	@Override
-	public Direction makeDecision(Point2D ghostPosition, List<Direction> availableDirections) {
+	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
 		return availableDirections.get((int) (Math.random() * availableDirections.size()));
+	}
+	
+	@Override
+	public int getRemainingMovesToNextPolicy() {
+		return this.movesLimit - this.moves;
 	}
 }
