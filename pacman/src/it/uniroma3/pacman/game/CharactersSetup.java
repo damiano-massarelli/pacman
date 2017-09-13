@@ -31,7 +31,7 @@ public class CharactersSetup {
 		blinkyMovePolicy.setNextPolicy(new BlinkyChasingMovePolicy(pacMan.getSprite(), blinkyMovePolicy));
 		
 		Ghost ghostBlinky = new Ghost(
-				"red",
+				"blinky",
 				blinkyMovePolicy, 
 				256,
 				192,
@@ -43,7 +43,7 @@ public class CharactersSetup {
 		pinkyMovePolicy.setNextPolicy(new PinkyChasingMovePolicy(pacMan.getSprite(), pinkyMovePolicy));
 		
 		Ghost ghostPinky = new Ghost(
-				"pink",
+				"pinky",
 				pinkyMovePolicy,
 				256,
 				240,
@@ -54,7 +54,7 @@ public class CharactersSetup {
 		inkyMovePolicy.setNextPolicy(new InkyChasingMovePolicy(ghostBlinky.getSprite(), pacMan.getSprite(), inkyMovePolicy));
 
 		Ghost ghostInky = new Ghost(
-				"cyan",
+				"inky",
 				inkyMovePolicy,
 				224,
 				240,
@@ -65,7 +65,7 @@ public class CharactersSetup {
 		clydeMovePolicy.setNextPolicy(new ClydeChasingMovePolicy(pacMan.getSprite(), clydeMovePolicy));
 		
 		Ghost ghostClyde = new Ghost(
-				"orange",
+				"clyde",
 				clydeMovePolicy,
 				288,
 				240,

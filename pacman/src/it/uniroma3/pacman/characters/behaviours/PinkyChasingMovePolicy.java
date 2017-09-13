@@ -1,6 +1,6 @@
 package it.uniroma3.pacman.characters.behaviours;
 
-import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.CHASE_MOVES_LIMIT;
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.CHASE_MOVES_LIMIT;
 
 import java.util.Collections;
 import java.util.List;

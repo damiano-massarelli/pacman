@@ -1,6 +1,6 @@
 package it.uniroma3.pacman.characters.behaviours;
 
-import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.SCATTER_MOVES_LIMIT;
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.SCATTER_MOVES_LIMIT;
 
 import java.util.Collections;
 import java.util.List;

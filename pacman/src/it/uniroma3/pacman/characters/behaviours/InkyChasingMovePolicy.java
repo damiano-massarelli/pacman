@@ -1,6 +1,6 @@
 package it.uniroma3.pacman.characters.behaviours;
 
-import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.CHASE_MOVES_LIMIT;
+import static it.uniroma3.pacman.characters.behaviours.GhostConsts.CHASE_MOVES_LIMIT;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,20 +13,20 @@ import javafx.geometry.Point2D;
 public class InkyChasingMovePolicy extends AbstractMovePolicy {
 	
 	private GhostSprite blinkySprite;
-	private PacManSprite pacManView;
+	private PacManSprite pacManSprite;
 	
 
-	public InkyChasingMovePolicy(GhostSprite blinky, PacManSprite pacManView, MovePolicy nextPolicy) {
+	public InkyChasingMovePolicy(GhostSprite blinky, PacManSprite pacManSprite, MovePolicy nextPolicy) {
 		super(nextPolicy, CHASE_MOVES_LIMIT);
 		this.blinkySprite = blinky;
-		this.pacManView = pacManView;
+		this.pacManSprite = pacManSprite;
 	}
 
 
 	@Override
 	public Direction makeDecision(Point2D ghostPosition, List<Direction> availableDirections) {
-		int pacmanFacingX = pacManView.getX() + pacManView.getDirection().getDeltaX() * 2;
-		int pacmanFacingY = pacManView.getY() + pacManView.getDirection().getDeltaY() * 2;
+		int pacmanFacingX = pacManSprite.getX() + pacManSprite.getDirection().getDeltaX() * 2;
+		int pacmanFacingY = pacManSprite.getY() + pacManSprite.getDirection().getDeltaY() * 2;
 		
 		int deltaX = (pacmanFacingX - blinkySprite.getX()) * 2;
 		int deltaY = (pacmanFacingY - blinkySprite.getY()) * 2;
