@@ -13,7 +13,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 
 /**
- * A CollisionHandler is responsible for handling collisions among objects which are detected
+ * A CollisionHandler is responsible for handling collisions among objects. Those collisions are detected
  * by a specific {@link CollisionDetector}.
  * @author damiano
  *
