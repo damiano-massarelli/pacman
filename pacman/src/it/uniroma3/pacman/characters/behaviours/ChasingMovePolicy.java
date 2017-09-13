@@ -11,7 +11,7 @@ import it.uniroma3.pacman.movingObjects.Direction;
 import javafx.geometry.Point2D;
 import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.CHASE_MOVES_LIMIT;
 
-public class StandardMovePolicy implements MovePolicy {
+public class ChasingMovePolicy implements MovePolicy {
 	
 	private int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_GAP;
 	
@@ -24,7 +24,7 @@ public class StandardMovePolicy implements MovePolicy {
 	
 	private PacManSprite pacManSprite;
 
-	public StandardMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy, Sprite blinkySprite) {
+	public ChasingMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy, Sprite blinkySprite) {
 		this.nextPolicy = nextPolicy;
 		this.movesLimit = CHASE_MOVES_LIMIT;
 		this.moves = 0;

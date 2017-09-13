@@ -3,7 +3,7 @@ package it.uniroma3.pacman.game;
 import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.characters.PacMan;
 import it.uniroma3.pacman.characters.behaviours.ScatteringMovePolicy;
-import it.uniroma3.pacman.characters.behaviours.StandardMovePolicy;
+import it.uniroma3.pacman.characters.behaviours.ChasingMovePolicy;
 import it.uniroma3.pacman.maze.MazeAssets;
 import it.uniroma3.pacman.maze.MazeBlockMatrix;
 
@@ -24,7 +24,7 @@ public class CharactersSetup {
 	
 		
 		ScatteringMovePolicy blinkyMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeTopRightCorner());
-		blinkyMovePolicy.setNextPolicy(new StandardMovePolicy(pacMan.getSprite(), blinkyMovePolicy, null));
+		blinkyMovePolicy.setNextPolicy(new ChasingMovePolicy(pacMan.getSprite(), blinkyMovePolicy, null));
 		
 		Ghost ghostBlinky = new Ghost(
 				"blinky",
@@ -36,7 +36,7 @@ public class CharactersSetup {
 
 		
 		ScatteringMovePolicy pinkyMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeTopLeftCorner());
-		pinkyMovePolicy.setNextPolicy(new StandardMovePolicy(pacMan.getSprite(), pinkyMovePolicy, null));
+		pinkyMovePolicy.setNextPolicy(new ChasingMovePolicy(pacMan.getSprite(), pinkyMovePolicy, null));
 		
 		Ghost ghostPinky = new Ghost(
 				"pinky",
@@ -47,7 +47,7 @@ public class CharactersSetup {
 		game.addGhost(ghostPinky);
 		
 		ScatteringMovePolicy inkyMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeBottomRightCorner());
-		inkyMovePolicy.setNextPolicy(new StandardMovePolicy(pacMan.getSprite(), inkyMovePolicy, ghostBlinky.getSprite()));
+		inkyMovePolicy.setNextPolicy(new ChasingMovePolicy(pacMan.getSprite(), inkyMovePolicy, ghostBlinky.getSprite()));
 
 		Ghost ghostInky = new Ghost(
 				"inky",
@@ -58,7 +58,7 @@ public class CharactersSetup {
 		game.addGhost(ghostInky);
 
 		ScatteringMovePolicy clydeMovePolicy = new ScatteringMovePolicy(null, mazeAssets.getMazeBottomLeftCorner());
-		clydeMovePolicy.setNextPolicy(new StandardMovePolicy(pacMan.getSprite(), clydeMovePolicy, null));
+		clydeMovePolicy.setNextPolicy(new ChasingMovePolicy(pacMan.getSprite(), clydeMovePolicy, null));
 		
 		Ghost ghostClyde = new Ghost(
 				"clyde",
