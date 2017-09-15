@@ -56,13 +56,13 @@ public class ChasingMovePolicy implements MovePolicy {
 		Direction choosenDirection = null;
 		
 		/* --- BLINKY --- */
-		if (ghost.getName().equals("red")) {
+		if (ghost.getName().equals("blinky")) {
 			ComparatoreDirezione comparatore = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
 			choosenDirection = Collections.min(availableDirections, comparatore); // c'e' sempre almeno una direzione
 		}
 		
 		/* --- CLYDE --- */
-		else if (ghost.getName().equals("orange")) {
+		else if (ghost.getName().equals("clyde")) {
 			double distance = ghostPosition.distance(pacManSprite.getPosition());
 			
 			if (distance > SOGLIA_COMPORTAMENTO_BLINKY) {
@@ -75,7 +75,7 @@ public class ChasingMovePolicy implements MovePolicy {
 			}
 		}
 		
-		else if (ghost.getName().equals("pink")) {
+		else if (ghost.getName().equals("pinky")) {
 			Point2D targetPos = new Point2D(pacManSprite.getX() + pacManSprite.getDirection().getDeltaX() * 4, 
 					pacManSprite.getY() + pacManSprite.getDirection().getDeltaY() * 4);
 			
@@ -83,7 +83,7 @@ public class ChasingMovePolicy implements MovePolicy {
 			choosenDirection = Collections.min(availableDirections, comparatore);
 		}
 		
-		else if (ghost.getName().equals("cyan")) {
+		else if (ghost.getName().equals("inky")) {
 			int pacmanFacingX = pacManSprite.getX() + pacManSprite.getDirection().getDeltaX() * 2;
 			int pacmanFacingY = pacManSprite.getY() + pacManSprite.getDirection().getDeltaY() * 2;
 			

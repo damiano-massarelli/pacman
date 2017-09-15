@@ -180,7 +180,6 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 			/* Se esclusa la direzione corrente non rimane solo quella opposta,
 			allora valuta la possibilità di girare */
 			if (availableDirs.size() - hasCurrentDirection > 1) {
-				System.out.println(getDirection());
 				availableDirs.remove(getDirection().getInverse());
 				if (turnListener != null)
 					turnListener.onTurn(availableDirs);
