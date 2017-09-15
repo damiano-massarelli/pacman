@@ -1,5 +1,7 @@
 package it.uniroma3.pacman.characters.behaviours;
 import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.FRIGHTENED_MOVES_LIMIT;
+
+import java.util.Collections;
 import java.util.List;
 
 import it.uniroma3.pacman.characters.Ghost;
@@ -35,7 +37,8 @@ public class FrightenedMovePolicy implements MovePolicy {
 
 	@Override
 	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
-		return availableDirections.get((int) (Math.random() * availableDirections.size()));
+		Collections.shuffle(availableDirections);
+		return availableDirections.get(0);
 	}
 	
 	@Override
