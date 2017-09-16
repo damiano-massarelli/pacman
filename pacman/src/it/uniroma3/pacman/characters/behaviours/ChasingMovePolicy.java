@@ -13,10 +13,12 @@ import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.CHASE_MOVES_
 
 public class ChasingMovePolicy implements MovePolicy {
 	
-	private int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_GAP;
+	private static final int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_GAP;
 	
 	// Usato per il comportamento di inky
 	private Sprite blinkySprite;
+	
+	private Point2D clydeScatterTarget;
 
 	private int moves;
 	private int movesLimit;
@@ -24,13 +26,14 @@ public class ChasingMovePolicy implements MovePolicy {
 	
 	private PacManSprite pacManSprite;
 
-	public ChasingMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy, Sprite blinkySprite) {
+	public ChasingMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy, Sprite blinkySprite, Point2D clydeScatterTarget) {
 		this.nextPolicy = nextPolicy;
 		this.movesLimit = CHASE_MOVES_LIMIT;
 		this.moves = 0;
 		
 		this.pacManSprite = pacManSprite;
 		this.blinkySprite = blinkySprite;
+		this.clydeScatterTarget = clydeScatterTarget;
 	}
 
 	@Override
@@ -52,27 +55,27 @@ public class ChasingMovePolicy implements MovePolicy {
 	@Override
 	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections) {
 		Point2D ghostPosition = ghost.getSprite().getPosition();
+		Point2D pacManPos = pacManSprite.getPosition();
 		
-		Direction choosenDirection = null;
+		Direction dirScelta = null;
 		
 		/* --- BLINKY --- */
 		if (ghost.getName().equals("blinky")) {
-			ComparatoreDirezione comparatore = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
-			choosenDirection = Collections.min(availableDirections, comparatore); // c'e' sempre almeno una direzione
+			ComparatoreDirezione comparatore = new ComparatoreDirezione(ghostPosition, pacManPos);
+			dirScelta = Collections.min(availableDirections, comparatore); // c'e' sempre almeno una direzione
 		}
 		
 		/* --- CLYDE --- */
 		else if (ghost.getName().equals("clyde")) {
 			double distance = ghostPosition.distance(pacManSprite.getPosition());
 			
-			if (distance > SOGLIA_COMPORTAMENTO_BLINKY) {
-				ComparatoreDirezione comparatoreDirezione = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
-				choosenDirection = Collections.min(availableDirections, comparatoreDirezione);
-			}
-			else {
-				Collections.shuffle(availableDirections);
-				choosenDirection = availableDirections.get(0);
-			}
+			ComparatoreDirezione comparatore;
+			if (distance > SOGLIA_COMPORTAMENTO_BLINKY) 
+				comparatore = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
+			else 
+				comparatore = new ComparatoreDirezione(ghostPosition, clydeScatterTarget); 
+			
+			dirScelta = Collections.min(availableDirections, comparatore);
 		}
 		
 		else if (ghost.getName().equals("pinky")) {
@@ -80,7 +83,7 @@ public class ChasingMovePolicy implements MovePolicy {
 					pacManSprite.getY() + pacManSprite.getDirection().getDeltaY() * 4);
 			
 			ComparatoreDirezione comparatore = new ComparatoreDirezione(ghostPosition, targetPos);
-			choosenDirection = Collections.min(availableDirections, comparatore);
+			dirScelta = Collections.min(availableDirections, comparatore);
 		}
 		
 		else if (ghost.getName().equals("inky")) {
@@ -94,10 +97,10 @@ public class ChasingMovePolicy implements MovePolicy {
 			
 			ComparatoreDirezione comparatore = new ComparatoreDirezione(ghostPosition, targetPos);
 			
-			choosenDirection = Collections.min(availableDirections, comparatore);
+			dirScelta = Collections.min(availableDirections, comparatore);
 		}
 		
-		return choosenDirection;
+		return dirScelta;
 	}
 
 	@Override
