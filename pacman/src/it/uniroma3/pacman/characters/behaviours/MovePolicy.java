@@ -10,4 +10,6 @@ public interface MovePolicy extends Iterator<MovePolicy> {
 	public Direction makeDecision(Ghost ghost, List<Direction> availableDirections);
 	
 	public int getRemainingMovesToNextPolicy();
+	
+	public void setNextPolicy(MovePolicy next);
 }

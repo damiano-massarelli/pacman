@@ -26,14 +26,20 @@ public class ChasingMovePolicy implements MovePolicy {
 	
 	private PacManSprite pacManSprite;
 
-	public ChasingMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy, Sprite blinkySprite, Point2D clydeScatterTarget) {
-		this.nextPolicy = nextPolicy;
+	public ChasingMovePolicy(PacManSprite pacManSprite, Sprite blinkySprite, Point2D clydeScatterTarget) {
 		this.movesLimit = CHASE_MOVES_LIMIT;
 		this.moves = 0;
 		
 		this.pacManSprite = pacManSprite;
 		this.blinkySprite = blinkySprite;
 		this.clydeScatterTarget = clydeScatterTarget;
+	}
+	
+	
+
+	@Override
+	public void setNextPolicy(MovePolicy next) {
+		this.nextPolicy = next;
 	}
 
 	@Override

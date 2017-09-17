@@ -8,17 +8,25 @@ import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.movingObjects.Direction;
 
 public class FrightenedMovePolicy implements MovePolicy {
-	
+
 	private int moves;
 	private int movesLimit;
 	private MovePolicy nextPolicy;
 
-	public FrightenedMovePolicy(MovePolicy nextPolicy) {
-		this.nextPolicy = nextPolicy;
+	public FrightenedMovePolicy() {
 		this.moves = 0;
 		this.movesLimit = FRIGHTENED_MOVES_LIMIT;
 	}
-	
+
+
+
+	@Override
+	public void setNextPolicy(MovePolicy next) {
+		this.nextPolicy = next;		
+	}
+
+
+
 	@Override
 	public boolean hasNext() {
 		this.moves++;
@@ -40,7 +48,7 @@ public class FrightenedMovePolicy implements MovePolicy {
 		Collections.shuffle(availableDirections);
 		return availableDirections.get(0);
 	}
-	
+
 	@Override
 	public int getRemainingMovesToNextPolicy() {
 		return this.movesLimit - this.moves;

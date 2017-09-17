@@ -17,13 +17,13 @@ public class ScatteringMovePolicy implements MovePolicy {
 	private int movesLimit;
 	private MovePolicy nextPolicy;
 
-	public ScatteringMovePolicy(MovePolicy nextPolicy, Point2D scatterTarget) {
-		this.nextPolicy = nextPolicy;
+	public ScatteringMovePolicy( Point2D scatterTarget) {
 		this.moves = 0;
 		this.movesLimit = SCATTER_MOVES_LIMIT;
 		this.scatterTarget = scatterTarget;
 	}
 	
+	@Override
 	public void setNextPolicy(MovePolicy next) {
 		this.nextPolicy = next;
 	}

@@ -52,7 +52,9 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 
 
 	public void changeToFrightened() {
-		this.movePolicy = new FrightenedMovePolicy(this.movePolicy);
+		MovePolicy frightenedPolicy = new FrightenedMovePolicy();
+		frightenedPolicy.setNextPolicy(this.movePolicy);
+		this.movePolicy = frightenedPolicy;
 		ghostSprite.changeToFrightened();  // Cambia aspetto grafico
 	}
 
