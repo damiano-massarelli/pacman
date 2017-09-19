@@ -36,8 +36,8 @@ public class MazeBackgroundGraphics extends Group {
 	 * put data in SharedMazeData before calling this method
 	 */
 	public void createBackground() {
-		int width = MazeConstants.GRID_GAP;
-		int height = MazeConstants.GRID_GAP;
+		int width = MazeConstants.GRID_SIZE;
+		int height = MazeConstants.GRID_SIZE;
 		for (int x = 0; x < blockMatrix.getWidth(); x++) {
 			for (int y = 0; y < blockMatrix.getHeight(); y++) {
 				if (blockMatrix.isBlockAt(x, y) && shouldDrawWall(x, y)) {

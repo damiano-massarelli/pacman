@@ -143,7 +143,7 @@ public class GhostSprite extends AnimatedSprite implements OnMoveListener{
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
 				if (x*x != y*y) { // Non si può andare in diagonale e la direzione (0, 0) non è permessa
-					Point2D nextPosition = getPosition().add(MazeConstants.GRID_GAP * x, MazeConstants.GRID_GAP * y);
+					Point2D nextPosition = getPosition().add(MazeConstants.GRID_SIZE * x, MazeConstants.GRID_SIZE * y);
 					BlockType dataInNextPosition = blockMatrix.getBlockTypeAtPosition(nextPosition);
 					if (dataInNextPosition != BlockType.BLOCK) {
 						/* Quando il prossimo punto nella mappa non è un blocco si

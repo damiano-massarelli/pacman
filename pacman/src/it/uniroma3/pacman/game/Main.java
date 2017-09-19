@@ -42,8 +42,8 @@ public class Main extends Application {
 		
 		root.getChildren().add(game.getView());
 		
-		primaryStage.setWidth(mazeAssets.getBlockMatrix().getWidth() * MazeConstants.GRID_GAP);
-		primaryStage.setHeight(mazeAssets.getBlockMatrix().getHeight() * MazeConstants.GRID_GAP + 100);
+		primaryStage.setWidth(mazeAssets.getBlockMatrix().getWidth() * MazeConstants.GRID_SIZE);
+		primaryStage.setHeight(mazeAssets.getBlockMatrix().getHeight() * MazeConstants.GRID_SIZE + 100);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		game.getView().requestFocus();

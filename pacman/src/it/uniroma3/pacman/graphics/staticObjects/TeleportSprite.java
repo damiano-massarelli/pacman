@@ -12,7 +12,7 @@ public class TeleportSprite extends Sprite {
 
 	public TeleportSprite(int x, int y) {
 		super(x, y, COLLISION_RADIUS);
-		rect = new Rectangle(MazeConstants.GRID_GAP * 2, MazeConstants.GRID_GAP * 2, Color.BLACK);
+		rect = new Rectangle(MazeConstants.GRID_SIZE * 2, MazeConstants.GRID_SIZE * 2, Color.BLACK);
 		rect.xProperty().bind(getxProperty().subtract(rect.widthProperty().divide(2)));
 		rect.yProperty().bind(getyProperty().subtract(rect.heightProperty().divide(2)));
 		getChildren().add(rect);

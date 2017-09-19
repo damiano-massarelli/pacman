@@ -13,7 +13,7 @@ import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.CHASE_MOVES_
 
 public class ChasingMovePolicy implements MovePolicy {
 	
-	private static final int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_GAP;
+	private static final int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_SIZE;
 	
 	// Usato per il comportamento di inky
 	private Sprite blinkySprite;
@@ -45,12 +45,12 @@ public class ChasingMovePolicy implements MovePolicy {
 	@Override
 	public boolean hasNext() {
 		this.moves++;
-		return this.moves > this.movesLimit;
+		return getRemainingMovesToNextPolicy() == 0;
 	}
 
 	@Override
 	public MovePolicy next() {
-		if (this.moves > this.movesLimit) {
+		if (getRemainingMovesToNextPolicy() == 0) {
 			this.moves = 0;
 			return nextPolicy;
 		}

@@ -31,12 +31,12 @@ public class ScatteringMovePolicy implements MovePolicy {
 	@Override
 	public boolean hasNext() {
 		this.moves++;
-		return this.moves > this.movesLimit;
+		return getRemainingMovesToNextPolicy() == 0;
 	}
 
 	@Override
 	public MovePolicy next() {
-		if (this.moves > this.movesLimit) {
+		if (getRemainingMovesToNextPolicy() == 0) {
 			this.moves = 0;
 			return nextPolicy;
 		}
