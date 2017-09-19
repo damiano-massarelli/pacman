@@ -8,7 +8,6 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.pacman.characters.Ghost;
 import it.uniroma3.pacman.graphics.characters.GhostSprite;
 import it.uniroma3.pacman.graphics.characters.PacManSprite;
 import it.uniroma3.pacman.movingObjects.Direction;
@@ -31,6 +30,7 @@ public class InkyChasingMovePolicyTest {
 		this.policy = new InkyChasingMovePolicy(blinkySprite, pacManSprite);
 	}
 
+	@Test
 	public void testMakeDecision() {
 		Point2D ghostPos = Point2D.ZERO;
 		Direction choosen = this.policy.makeDecision(ghostPos, Arrays.asList(Direction.values()));
