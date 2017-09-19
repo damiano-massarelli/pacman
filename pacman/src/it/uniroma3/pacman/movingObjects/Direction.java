@@ -82,14 +82,14 @@ public enum Direction {
 	 * @return the distance that would be trodden in the x axis if this direction were used
 	 */
 	public int getDeltaX() {
-		return MazeConstants.GRID_GAP * this.dirX;
+		return MazeConstants.GRID_SIZE * this.dirX;
 	}
 	
 	/** 
 	 * @return the distance that would be trodden in the y axis if this direction were used
 	 */
 	public int getDeltaY() {
-		return MazeConstants.GRID_GAP * this.dirY;
+		return MazeConstants.GRID_SIZE * this.dirY;
 	}
 	
 	public abstract Direction getInverse();

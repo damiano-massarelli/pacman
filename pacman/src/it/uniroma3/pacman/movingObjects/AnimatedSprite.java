@@ -22,7 +22,7 @@ import javafx.util.Duration;
  */
 public class AnimatedSprite extends Sprite {
 	protected static final int ANIMATION_STEP = 4;
-	protected static final int MOVE_SPEED = MazeConstants.GRID_GAP / ANIMATION_STEP;
+	protected static final int MOVE_SPEED = MazeConstants.GRID_SIZE / ANIMATION_STEP;
 
 
 	private int currentImageIndex;

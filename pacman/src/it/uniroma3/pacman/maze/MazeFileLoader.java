@@ -70,18 +70,18 @@ public class MazeFileLoader {
 			break;
 		case '.':
 							  // convert matrix pos to absolute pos
-			Dot dot = new Dot(xPos * MazeConstants.GRID_GAP, yPos * MazeConstants.GRID_GAP); 
+			Dot dot = new Dot(xPos * MazeConstants.GRID_SIZE, yPos * MazeConstants.GRID_SIZE); 
 			mazeAssets.addDot(dot);
 			break;
 		case '+':
-			Dot magicDot = new MagicDot(xPos * MazeConstants.GRID_GAP, yPos * MazeConstants.GRID_GAP);
+			Dot magicDot = new MagicDot(xPos * MazeConstants.GRID_SIZE, yPos * MazeConstants.GRID_SIZE);
 			mazeAssets.addDot(magicDot);
 			break;
 		case 'U':
 			mazeAssets.getBlockMatrix().setCageBoundaryBlockAt(xPos, yPos);
 			break;
 		case 'T':
-			Teleport teleport = new Teleport(xPos * MazeConstants.GRID_GAP, yPos * MazeConstants.GRID_GAP);
+			Teleport teleport = new Teleport(xPos * MazeConstants.GRID_SIZE, yPos * MazeConstants.GRID_SIZE);
 			if (previousTeleport == null)
 				previousTeleport = teleport;
 			else {

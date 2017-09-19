@@ -44,15 +44,15 @@ public class MazeAssets {
 	}
 	
 	public Point2D getMazeBottomLeftCorner() {
-		return new Point2D(0, blockMatrix.getHeight() * MazeConstants.GRID_GAP);
+		return new Point2D(0, blockMatrix.getHeight() * MazeConstants.GRID_SIZE);
 	}
 	
 	public Point2D getMazeTopRightCorner() {
-		return new Point2D(blockMatrix.getWidth() * MazeConstants.GRID_GAP, 0);
+		return new Point2D(blockMatrix.getWidth() * MazeConstants.GRID_SIZE, 0);
 	}
 	
 	public Point2D getMazeBottomRightCorner() {
-		return new Point2D(blockMatrix.getWidth() * MazeConstants.GRID_GAP, blockMatrix.getHeight() * MazeConstants.GRID_GAP);
+		return new Point2D(blockMatrix.getWidth() * MazeConstants.GRID_SIZE, blockMatrix.getHeight() * MazeConstants.GRID_SIZE);
 	}
 	
 }

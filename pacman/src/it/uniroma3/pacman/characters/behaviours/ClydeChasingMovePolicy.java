@@ -12,31 +12,28 @@ import javafx.geometry.Point2D;
 
 public class ClydeChasingMovePolicy extends AbstractMovePolicy {
 	
-	private int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_GAP;
+	private int SOGLIA_COMPORTAMENTO_BLINKY = 8 * MazeConstants.GRID_SIZE;
 	
 	private PacManSprite pacManSprite;
-	
+	private Point2D scatterTarget;
 
-	public ClydeChasingMovePolicy(PacManSprite pacManView, MovePolicy nextPolicy) {
-		super(nextPolicy, CHASE_MOVES_LIMIT);
+	public ClydeChasingMovePolicy(PacManSprite pacManView, Point2D scatterTarget) {
+		super(CHASE_MOVES_LIMIT);
 		this.pacManSprite = pacManView;
+		this.scatterTarget = scatterTarget;
 	}
 
 	@Override
 	public Direction makeDecision(Point2D ghostPosition, List<Direction> availableDirections) {
-		Direction direzioneScelta = null;
-		
 		double distance = ghostPosition.distance(pacManSprite.getPosition());
+		ComparatoreDirezione comparatoreDirezione;
 		
-		if (distance > SOGLIA_COMPORTAMENTO_BLINKY) {
-			ComparatoreDirezione comparatoreDirezione = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
-			direzioneScelta = Collections.min(availableDirections, comparatoreDirezione);
-		}
-		else {
-			Collections.shuffle(availableDirections);
-			direzioneScelta = availableDirections.get(0);
-		}
-		return direzioneScelta;
+		if (distance > SOGLIA_COMPORTAMENTO_BLINKY) 
+			comparatoreDirezione = new ComparatoreDirezione(ghostPosition, pacManSprite.getPosition());
+		else 
+			comparatoreDirezione = new ComparatoreDirezione(ghostPosition, scatterTarget);
+		
+		return Collections.min(availableDirections, comparatoreDirezione);
 	}
 
 }

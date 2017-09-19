@@ -13,8 +13,8 @@ public class BlinkyChasingMovePolicy extends AbstractMovePolicy {
 	
 	private PacManSprite pacManSprite;
 	
-	public BlinkyChasingMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy) {
-		super(nextPolicy, CHASE_MOVES_LIMIT);
+	public BlinkyChasingMovePolicy(PacManSprite pacManSprite) {
+		super(CHASE_MOVES_LIMIT);
 		this.pacManSprite = pacManSprite;
 	}
 

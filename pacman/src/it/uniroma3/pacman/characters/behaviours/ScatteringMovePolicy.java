@@ -12,8 +12,8 @@ public class ScatteringMovePolicy extends AbstractMovePolicy {
 	private Point2D scatterTarget;
 	
 
-	public ScatteringMovePolicy(MovePolicy nextPolicy, Point2D scatterTarget) {
-		super(nextPolicy, SCATTER_MOVES_LIMIT);
+	public ScatteringMovePolicy(Point2D scatterTarget) {
+		super(SCATTER_MOVES_LIMIT);
 		this.scatterTarget = scatterTarget;
 	}
 

@@ -7,8 +7,8 @@ import javafx.geometry.Point2D;
 public class FrightenedMovePolicy extends AbstractMovePolicy {
 	
 
-	public FrightenedMovePolicy(MovePolicy nextPolicy) {
-		super(nextPolicy, FRIGHTENED_MOVES_LIMIT);
+	public FrightenedMovePolicy() {
+		super(FRIGHTENED_MOVES_LIMIT);
 	}
 
 

@@ -35,8 +35,8 @@ public class PacmanGameView extends VBox {
 
 		gameField = new Pane(); 
 		
-		int width = mazeAssets.getBlockMatrix().getWidth() * MazeConstants.GRID_GAP;
-		int height = mazeAssets.getBlockMatrix().getHeight() * MazeConstants.GRID_GAP;
+		int width = mazeAssets.getBlockMatrix().getWidth() * MazeConstants.GRID_SIZE;
+		int height = mazeAssets.getBlockMatrix().getHeight() * MazeConstants.GRID_SIZE;
 		gameField.setPrefSize(width, height);
 		getChildren().add(gameField);
 		gameField.getChildren().add(backgroundGraphics);

@@ -12,8 +12,8 @@ public class PinkyChasingMovePolicy extends AbstractMovePolicy {
 
 	private PacManSprite pacManSprite;
 	
-	public PinkyChasingMovePolicy(PacManSprite pacManSprite, MovePolicy nextPolicy) {
-		super(nextPolicy, CHASE_MOVES_LIMIT);
+	public PinkyChasingMovePolicy(PacManSprite pacManSprite) {
+		super(CHASE_MOVES_LIMIT);
 		this.pacManSprite = pacManSprite;
 	}
 

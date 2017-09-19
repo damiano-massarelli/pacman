@@ -11,8 +11,7 @@ public abstract class AbstractMovePolicy implements MovePolicy {
 	private int movesLimit;
 	private MovePolicy nextPolicy;
 	
-	public AbstractMovePolicy(MovePolicy nextPolicy, int movesLimit) {
-		this.nextPolicy = nextPolicy;
+	public AbstractMovePolicy(int movesLimit) {
 		this.movesLimit = movesLimit;
 		this.moves = 0;
 	}
@@ -22,7 +21,7 @@ public abstract class AbstractMovePolicy implements MovePolicy {
 
 	@Override
 	public MovePolicy next() {
-		if (this.moves > this.movesLimit) {
+		if (getRemainingMovesToNextPolicy() == 0) {
 			this.moves = 0;
 			return nextPolicy;
 		}
@@ -32,9 +31,10 @@ public abstract class AbstractMovePolicy implements MovePolicy {
 	@Override
 	public boolean hasNext() {
 		this.moves++;
-		return this.moves > this.movesLimit;
+		return getRemainingMovesToNextPolicy() == 0;
 	}
 
+	@Override
 	public void setNextPolicy(MovePolicy next) {
 		this.nextPolicy = next;
 		
