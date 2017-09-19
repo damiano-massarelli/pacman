@@ -1,6 +1,6 @@
 package it.uniroma3.pacman.characters.behaviours;
 
-import static it.uniroma3.pacman.characters.behaviours.GhostConsts.FRIGHTENED_MOVES_LIMIT;
+import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.FRIGHTENED_MOVES_LIMIT;
 import java.util.List;
 import it.uniroma3.pacman.movingObjects.Direction;
 import javafx.geometry.Point2D;

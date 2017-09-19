@@ -14,7 +14,7 @@ import it.uniroma3.pacman.movingObjects.OnMoveListener;
 import it.uniroma3.pacman.staticObjects.Dot;
 import it.uniroma3.pacman.staticObjects.MagicDot;
 import it.uniroma3.pacman.staticObjects.Teleport;
-import static it.uniroma3.pacman.characters.behaviours.GhostConsts.FALSING_FRIGHTENED_MOVES_THRESHOLD;
+import static it.uniroma3.pacman.characters.behaviours.PolicyConsts.FALSING_FRIGHTENED_MOVES_THRESHOLD;
 
 public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEntity {
 	
@@ -44,7 +44,9 @@ public class Ghost implements OnTurnListener, OnMoveListener, CollidableModelEnt
 
 
 	public void changeToFrightened() {
-		this.movePolicy = new FrightenedMovePolicy(this.movePolicy);
+		MovePolicy frightenedPolicy = new FrightenedMovePolicy();
+		frightenedPolicy.setNextPolicy(this.movePolicy);
+		this.movePolicy = frightenedPolicy;
 		ghostSprite.changeToFrightened();  // Cambia aspetto grafico
 	}
 
